@@ -11,7 +11,6 @@ namespace Targil0
         static partial void Welcome9142()
         {
             Console.WriteLine("I am also here!");
-            global::System.Console.WriteLine("dfghj");
         }
     }
 }
