@@ -1,4 +1,4 @@
 ﻿using DO;
 
 Order o = new();
-    Console.WriteLine(o.ToString());
+    Console.WriteLine(o);
