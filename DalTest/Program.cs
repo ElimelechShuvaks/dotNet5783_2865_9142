@@ -1,4 +1,4 @@
 ﻿using DO;
 
-Product car = new Product();
-Console.WriteLine(car);
+Order o = new();
+    Console.WriteLine(o.ToString());
