@@ -1,5 +1,5 @@
 ﻿namespace Dal;
 
-internal class DalOrderitem
+public class DalOrderitem
 {
 }

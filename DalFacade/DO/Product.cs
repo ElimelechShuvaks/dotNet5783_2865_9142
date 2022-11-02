@@ -2,7 +2,7 @@
 namespace DO;
 
 /// <summary>
-/// 
+/// Details of a product
 /// </summary>
 public struct Product
 {
