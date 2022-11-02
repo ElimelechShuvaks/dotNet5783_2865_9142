@@ -17,4 +17,13 @@ public struct OrderItem
     public int OrderId { get => orderId; set => orderId = value; }
     public double Price { get => price; set => price = value; }
     public int Amount { get => amount; set => amount = value; }
+
+    public override string ToString()
+    {
+        return $@"Item ID: {id}
+Product ID: {productId}
+Order ID: {orderId}
+Price: {price}
+Amount: {amount}";
+    }
 }
