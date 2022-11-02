@@ -1,5 +1,4 @@
-﻿
-namespace DO;
+﻿namespace DO;
 
 /// <summary>
 /// data of Order item.
