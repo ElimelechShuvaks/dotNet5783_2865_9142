@@ -24,13 +24,13 @@ public struct Order
 
     public override string ToString()
     {
-        return $@"
-Order Number: {id}
+        return $@"Order Number: {id}
 Customer Name: {customerName}
 Customer Email: {customerEmail}
-Customer Adress {customerAdress}
+Customer Adress: {customerAdress}
 Order Date: {orderDate}
-Ship Date: {shipDate}
-Delivery Date: {deliveryDate}";
+Ship Date: {shipDate.ToShortDateString()}
+Delivery Date: {deliveryDate}
+";
     }
 }

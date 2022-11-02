@@ -4,7 +4,7 @@ namespace DO;
 
 public enum Categories
 {
-    Simpie,
+    Simple,
     Electric,
     Suv,
     Sport,
