@@ -1,4 +1,4 @@
 ﻿using DO;
 
-Order o = new();
+OrderItem o = new();
     Console.WriteLine(o);
