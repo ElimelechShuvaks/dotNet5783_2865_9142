@@ -22,10 +22,15 @@ internal static class DataSource
 
         internal static int counterOrders=0;    
 
-        internal static int counterOrderitem=0; 
+        internal static int counterOrderitem=0;
+        //Counter for amount in number run.
+        private static int num_runOrder=0;
 
+        private static int num_runOrderitem = 0;
 
-
+        //get for Counter for amount in number run.
+        internal static int getnum_runOrder() { return num_runOrder++; }
+        internal static int getnum_runOrderitem() { return num_runOrderitem++; }
     }
 
 
