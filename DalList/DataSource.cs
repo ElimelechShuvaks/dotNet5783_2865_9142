@@ -13,7 +13,7 @@ internal static class DataSource
     internal static OrderItem[] OrderItems = new OrderItem[200]; 
 
  
-    //class Config.
+    //class "Config".
     internal static class Config
     {
         //Counter for amount.
