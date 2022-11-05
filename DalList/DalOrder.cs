@@ -5,9 +5,8 @@ public class DalOrder
 {
     public int add(Order order)
     {
-
+        order.Id = DataSource.Config.getNum_runOrder();
         DataSource.Orders[DataSource.Config.counterOrders++] = order;
-
         return order.Id;
     }
     public Order get(int id)

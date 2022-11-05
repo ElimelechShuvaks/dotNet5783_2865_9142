@@ -27,11 +27,11 @@ internal static class DataSource
 
         //get for Counter for amount in number run.
         internal static int getNum_runOrder() { return ++num_runOrder; }
-        internal static int getNum_runOrderitem() { return ++num_runOrderitem; }
+        internal static int getNum_runOrderItem() { return ++num_runOrderitem; }
     }
 
     private static void add_Product(Product product) { Products[Config.counterProduct++] = product;  }
     private static void add_Order(Order order) { Orders[Config.counterOrders++] = order; }
-    private static void add_Orderitem(OrderItem orderItem) { OrderItems[Config.counterOrderitem++] = orderItem; } 
+    private static void add_OrderItem(OrderItem orderItem) { OrderItems[Config.counterOrderitem++] = orderItem; } 
 
 }
