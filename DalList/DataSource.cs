@@ -102,9 +102,9 @@ internal static class DataSource
     }
     public static void s_Initialize_orderitem()
     {
-        int rundom_Order = _random_.Next(0,20);
         for(int i = 0; i < 20; i++)
         {
+            int rundom_Order = _random_.Next(0, 20);
             OrderItems[i].Id=Config.counterOrderitem;//?
             OrderItems[i].ProductId= Products[rundom_Order].ID;
             OrderItems[i].OrderId = Orders[rundom_Order].Id;
