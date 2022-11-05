@@ -1,6 +1,4 @@
 ﻿using DO;
-using System.Numerics;
-using System;
 
 namespace Dal;
 
@@ -10,7 +8,7 @@ internal static class DataSource
     {
         s_Initialize();
     }
-    //Because its Random it's class we need to make a = new();.
+    //Because its Random it's class we need to make a = new();. 
     public static readonly Random _random_ = new Random();
 
     //the arrys.
@@ -51,9 +49,9 @@ internal static class DataSource
 
         string[] productNane = { };
 
-
+        
         int[] ProductPrice = { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 };
-        //Enum?
+        
 
         int[] productInStock = { 20, 25, 30, 20, 25, 30, 20, 25, 30, 20 };
         for (int i = 0; i < 10; i++)
