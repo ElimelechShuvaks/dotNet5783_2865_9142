@@ -1,8 +1,5 @@
 ﻿
 using DO;
-using Microsoft.VisualBasic.FileIO;
-using System;
-
 namespace Dal;
 
 public class DalProduct
@@ -14,6 +11,7 @@ public class DalProduct
             if (p.ID == product.ID)
                 throw new Exception("Product already exsist in data source");
         }
+
         DataSource.Products[DataSource.Config.counterProduct++] = product;
         return product.ID;
     }
@@ -55,6 +53,7 @@ public class DalProduct
         {
             DataSource.Products[i] = DataSource.Products[i + 1];
         }
+        DataSource.Config.counterProduct--;
     }
 
     public void update(Product product)
