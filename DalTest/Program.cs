@@ -1,5 +1,4 @@
-﻿
-using DO;
+﻿using DO;
 using Dal;
 
 #nullable disable
@@ -36,7 +35,10 @@ while (true)
 
     b = int.TryParse(Console.ReadLine(), out choice);
     if (!b)
+    {
         Console.WriteLine("invail choise");
+        continue;
+    }
 
     switch ((Menu)choice)
     {

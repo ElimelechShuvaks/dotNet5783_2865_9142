@@ -5,8 +5,8 @@ public class DalOrderitem
 {
     public int add(OrderItem orderitem)
     {
-        orderitem.Id = DataSource.Config.getNum_runOrderItem();
-        DataSource.OrderItems[DataSource.Config.counterOrderitem++] = orderitem;
+        orderitem.Id = DataSource.Config.Num_runOrderitem;
+        DataSource.OrderItems[DataSource.Config.CounterOrderitem++] = orderitem;
         return orderitem.Id;
     }
 
@@ -53,8 +53,8 @@ public class DalOrderitem
 
     public OrderItem[] getarry_all()
     {
-        OrderItem[] OrderItems = new OrderItem[DataSource.Config.counterOrderitem];
-        for (int i = 0; i < DataSource.Config.counterOrderitem; i++)
+        OrderItem[] OrderItems = new OrderItem[DataSource.Config.CounterOrderitem];
+        for (int i = 0; i < DataSource.Config.CounterOrderitem; i++)
         {
             OrderItems[i] = DataSource.OrderItems[i];
         }
@@ -64,23 +64,23 @@ public class DalOrderitem
     public void delete(int id)
     {
         int i = 0;
-        for (; i < DataSource.Config.counterOrderitem; i++)
+        for (; i < DataSource.Config.CounterOrderitem; i++)
             if (DataSource.OrderItems[i].Id == id)
                 break;
-        if (i == DataSource.Config.counterOrderitem)
+        if (i == DataSource.Config.CounterOrderitem)
             throw new Exception("not found the orderitem");
-        while (i < DataSource.Config.counterOrderitem - 1)
+        while (i < DataSource.Config.CounterOrderitem - 1)
         {
             DataSource.OrderItems[i] = DataSource.OrderItems[i + 1];
             i++;
         }
-        DataSource.Config.counterOrderitem--;
+        DataSource.Config.CounterOrderitem--;
     }
 
     public void update(OrderItem orderitem)
     {
         int i = 0;
-        for (; i < DataSource.Config.counterOrderitem; i++)
+        for (; i < DataSource.Config.CounterOrderitem; i++)
         {
             if (orderitem.Id == DataSource.OrderItems[i].Id)
             {
@@ -88,7 +88,7 @@ public class DalOrderitem
                 break;
             }
         }
-        if (i == DataSource.Config.counterOrderitem)
+        if (i == DataSource.Config.CounterOrderitem)
             throw new Exception("not found the orderitem");
     }
 

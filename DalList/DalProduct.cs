@@ -12,7 +12,7 @@ public class DalProduct
                 throw new Exception("Product already exsist in data source");
         }
 
-        DataSource.Products[DataSource.Config.counterProduct++] = product;
+        DataSource.Products[DataSource.Config.CounterProduct++] = product;
         return product.ID;
     }
 
@@ -28,8 +28,8 @@ public class DalProduct
 
     public Product[] getArray()
     {
-        Product[] ret = new Product[DataSource.Config.counterProduct];
-        for (int i = 0; i < DataSource.Config.counterProduct; i++)
+        Product[] ret = new Product[DataSource.Config.CounterProduct];
+        for (int i = 0; i < DataSource.Config.CounterProduct; i++)
         {
             ret[i] = DataSource.Products[i];
         }
@@ -40,26 +40,26 @@ public class DalProduct
     {
 
         int indx;
-        for(indx = 0; indx < DataSource.Config.counterProduct; indx++)
+        for(indx = 0; indx < DataSource.Config.CounterProduct; indx++)
         {
             if (DataSource.Products[indx].ID == idNum)
                 break;
         }
 
-        if (indx == DataSource.Config.counterProduct)
+        if (indx == DataSource.Config.CounterProduct)
             throw new Exception("Product doesn't exsist in data source");
 
-        for (int i = indx; i < DataSource.Config.counterProduct - 1; i++)
+        for (int i = indx; i < DataSource.Config.CounterProduct - 1; i++)
         {
             DataSource.Products[i] = DataSource.Products[i + 1];
         }
-        DataSource.Config.counterProduct--;
+        DataSource.Config.CounterProduct--;
     }
 
     public void update(Product product)
     {
         int indx;
-        for (indx = 0; indx < DataSource.Config.counterProduct; indx++)
+        for (indx = 0; indx < DataSource.Config.CounterProduct; indx++)
         {
             if (DataSource.Products[indx].ID == product.ID)
             {
@@ -68,7 +68,7 @@ public class DalProduct
             }
         }
 
-        if (indx == DataSource.Config.counterProduct)
+        if (indx == DataSource.Config.CounterProduct)
             throw new Exception("Product doesn't exsist in data source");
     }
 
