@@ -85,18 +85,22 @@ void choises_Product(DalProduct dalProduct)
 
                 Product product = new Product();
                 int id = 0;
+                Console.WriteLine("cout id");
                 product.ID = checkTryParse(ref id);
-
+                Console.WriteLine("cout name");
                 product.Name = Console.ReadLine();
 
                 double price;
+                Console.WriteLine("cout price");
                 double.TryParse(Console.ReadLine(), out price);
                 product.Price = price;
 
                 int category = 0;
+                Console.WriteLine("cout category");
                 product.Category = (Categories)checkTryParse(ref category);
 
                 int instock = 0;
+                Console.WriteLine("cout instock");
                 product.InStock = checkTryParse(ref instock);
 
                 try
@@ -131,6 +135,7 @@ void choises_Product(DalProduct dalProduct)
                 int del = 0;
                 try
                 {
+                    Console.WriteLine("cout id for delit");
                     dalProduct.del(checkTryParse(ref del));
                 }
                 catch (Exception ex)
