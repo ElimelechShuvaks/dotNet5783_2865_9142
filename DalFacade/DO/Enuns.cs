@@ -8,11 +8,3 @@ public enum Categories
     Sport,
     Luxury
 }
-
-public enum Menu
-{
-    Exsit,
-    Product, //Product,
-    Order, //Order,
-    OrderItem //Order Item.
-}

@@ -33,10 +33,9 @@ internal static class DataSource
         internal static int getNum_runOrderItem() { return ++num_runOrderitem; }
     }
 
-    private static void add_Product(Product product) { Products[Config.counterProduct++] = product; }
-    private static void add_Order(Order order) { Orders[Config.counterOrders++] = order; }
-    private static void add_Orderitem(OrderItem orderItem) { OrderItems[Config.counterOrderitem++] = orderItem; }
-    private static void add_OrderItem(OrderItem orderItem) { OrderItems[Config.counterOrderitem++] = orderItem; } 
+    //private static void add_Product(Product product) { Products[Config.counterProduct++] = product; }
+    //private static void add_Order(Order order) { Orders[Config.counterOrders++] = order; }
+    //private static void add_Orderitem(OrderItem orderItem) { OrderItems[Config.counterOrderitem++] = orderItem; }
 
     private static void s_Initialize()
     {

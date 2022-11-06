@@ -6,11 +6,7 @@ namespace DO;
 /// </summary>
 public struct Product
 {
-    public override string ToString() => $@"Product ID: {ID}
-Name: {Name}
-Category: {Category}
-Price: {Price}
-";
+
 
     public int ID { get; set; }
     public string Name { get; set; }
@@ -19,4 +15,10 @@ Price: {Price}
    // public string Company { get; set; }//הורדתי את זה לבנתתים זה קצת מסבך
   //  public string Image { get; set; }
     public int InStock { get; set; }
+
+    public override string ToString() => $@"Product ID: {ID}
+Name: {Name}
+Category: {Category}
+Price: {Price}
+";
 }
