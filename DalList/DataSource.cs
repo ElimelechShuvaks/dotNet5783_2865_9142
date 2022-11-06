@@ -10,6 +10,7 @@ internal static class DataSource
     {
         s_Initialize();
     }
+    public static readonly Random _random_ = new Random();
     /// <summary>
     /// a random variable to use when it's needed.
     /// </summary>
@@ -62,6 +63,11 @@ internal static class DataSource
 
         string[][] productNane = new string[5][];
 
+        
+        int[] ProductPrice = { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 };
+        
+
+        int[] productInStock = { 20, 25, 30, 20, 25, 30, 20, 25, 30, 20 };
         int[,] ProductPrice = new int[5, 10]{
         { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 },
         { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 },
@@ -175,6 +181,12 @@ internal static class DataSource
         OrderItem orderItem = new OrderItem();  
         for(int i = 0; i < 20; i++)
         {
+            int rundom_Order = _random_.Next(0, 20);
+            OrderItems[i].Id=Config.counterOrderitem;//?
+            OrderItems[i].ProductId= Products[rundom_Order].ID;
+            OrderItems[i].OrderId = Orders[rundom_Order].Id;
+            OrderItems[i].Amount= _random_.Next(2,4);
+            OrderItems[i].Price = Products[rundom_Order].Price;
             for(int j = 0; j < random.Next(4); j++)
             {
                 indx = random.Next(10);
