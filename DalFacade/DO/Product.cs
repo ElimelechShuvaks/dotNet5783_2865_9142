@@ -16,7 +16,6 @@ Price: {Price}
     public string Name { get; set; }
     public double Price { get; set; }
     public Categories Category { get; set; }
-   // public string Company { get; set; }//הורדתי את זה לבנתתים זה קצת מסבך
-  //  public string Image { get; set; }
+    public string Image { get; set; }
     public int InStock { get; set; }
 }

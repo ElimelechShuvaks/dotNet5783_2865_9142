@@ -12,7 +12,7 @@ public enum Categories
 public enum Menu
 {
     Exsit,
-    Product, //Product,
-    Order, //Order,
-    OrderItem //Order Item.
+    Product, 
+    Order, 
+    OrderItem 
 }

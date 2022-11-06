@@ -1,5 +1,4 @@
-﻿
-using DO;
+﻿using DO;
 using Dal;
 
 int x;
@@ -16,7 +15,10 @@ while (true)
 
     b = int.TryParse(Console.ReadLine(), out x);
     if (!b)
+    {
         Console.WriteLine("invail choise");
+        continue;
+    }
 
     switch ((Menu)x)
     {
