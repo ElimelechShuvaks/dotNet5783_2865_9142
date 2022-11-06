@@ -58,10 +58,17 @@ internal static class DataSource
 
     public static void s_Initialize_product()
     {
-        Product product = new Product();   
+        DalProduct dalProduct = new DalProduct();
+        Product product = new Product();
         int[] IDarray = new int[10];
 
-        string[][] productNane = new string[5][];        
+        string[][] productNane = new string[5][] {
+            new string[] { "aaa", "bbb", "ccc" },
+            new string[] { "aaa", "bbb", "ccc" },
+            new string[] { "aaa", "bbb", "ccc" },
+            new string[] { "aaa", "bbb", "ccc" },
+            new string[] { "aaa", "bbb", "ccc" }
+        };
 
         int[,] ProductPrice = new int[5, 10]{
         { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 },
@@ -80,13 +87,14 @@ internal static class DataSource
                 continue;
             IDarray[i] = tempID;
             product.ID = tempID;
-            product.Name = productNane[num][random.Next(10)];//???????????צריך לראות שהמספר ברנדום מעודכן
+            product.Name = productNane[num][random.Next(3)];//???????????צריך לראות שהמספר ברנדום מעודכן
             product.Price = ProductPrice[num, random.Next(10)];//???????????צריך לראות שהמספר ברנדום מעודכן
             product.Category = (Categories)num;
             product.Image = ".png";
             product.InStock = productInStock[random.Next(productInStock.Length)];
-            
-            Products[i] = product;
+
+            dalProduct.add(product);    
+            //Products[Config.CounterProduct++] = product;
         }
     }
 
@@ -173,10 +181,10 @@ internal static class DataSource
     public static void s_Initialize_orderitem()
     {
         int indx;
-        OrderItem orderItem = new OrderItem();  
-        for(int i = 0; i < 20; i++)
+        OrderItem orderItem = new OrderItem();
+        for (int i = 0; i < 20; i++)
         {
-            for(int j = 0; j < random.Next(4); j++)
+            for (int j = 0; j < random.Next(4); j++)
             {
                 indx = random.Next(10);
                 orderItem.Id = Config.Num_runOrderitem;
