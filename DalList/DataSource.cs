@@ -14,7 +14,7 @@ internal static class DataSource
     /// <summary>
     /// a random variable to use when it's needed.
     /// </summary>
-    public static readonly Random random = new Random();
+    public static readonly Random random = new Random(DateTime.Now.Millisecond);
 
     /// <summary>
     /// Products array in Data source.
@@ -87,14 +87,13 @@ internal static class DataSource
                 continue;
             IDarray[i] = tempID;
             product.ID = tempID;
-            product.Name = productNane[num][random.Next(10)];//???????????צריך לראות שהמספר ברנדום מעודכן
-            product.Price = ProductPrice[num, random.Next(10)];//???????????צריך לראות שהמספר ברנדום מעודכן
+            product.Name = productNane[num][random.Next(10)];
+            product.Price = ProductPrice[num, random.Next(10)];
             product.Category = (Categories)num;
             product.Image = ".png";
             product.InStock = productInStock[random.Next(productInStock.Length)];
 
-            dalProduct.add(product);
-        }
+            dalProduct.add(product);            }
     }
 
     public static void s_Initialize_order()
@@ -127,6 +126,7 @@ internal static class DataSource
             "13191 Kim Drive","6282 Calypso Place","7736 Jenna Center"
         };
 
+        DalOrder dalOrder = new DalOrder(); 
         Order order = new Order();
         TimeSpan timeSpan;
         for (int i = 0; i < 12; i++) // orders with ship date and delivery date
@@ -142,7 +142,7 @@ internal static class DataSource
             timeSpan = new TimeSpan(random.Next(5), random.Next(23), random.Next(59));
             order.DeliveryDate = order.ShipDate - timeSpan;
 
-            Orders[i] = order;
+            dalOrder.add(order);
         }
 
         for (int i = 0; i < 4; i++) // orders with ship date and without delivery date
@@ -157,7 +157,7 @@ internal static class DataSource
             order.ShipDate = order.OrderDate + timeSpan;
             order.DeliveryDate = DateTime.MinValue;
 
-            Orders[i] = order;
+            dalOrder.add(order);
         }
 
         for (int i = 0; i < 4; i++) // orders without ship date and without delivery date
@@ -173,13 +173,14 @@ internal static class DataSource
             timeSpan = new TimeSpan(random.Next(5), random.Next(24), random.Next(60));
             order.DeliveryDate = order.ShipDate - timeSpan;
 
-            Orders[i] = order;
+            dalOrder.add(order);
         }
     }
 
     public static void s_Initialize_orderitem()
     {
         int indx;
+        DalOrderitem dalOrderitem = new DalOrderitem();
         OrderItem orderItem = new OrderItem();
         for (int i = 0; i < 20; i++)
         {
@@ -191,6 +192,8 @@ internal static class DataSource
                 orderItem.ProductId = Products[indx].ID;
                 orderItem.Price = Products[indx].Price;
                 orderItem.Amount = random.Next(10);
+
+                dalOrderitem.add(orderItem);
             }
         }
     }

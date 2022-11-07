@@ -2,19 +2,20 @@
 using Dal;
 #nullable disable
 
-int choice;
-bool b;
+int choice = 0;
+
 //------------------functions---------------------------------------------
 
 //the func printArray,Product and Order and orderItem.
 void printArray<T>(T[] items)
 {
     foreach (var item in items)
+    {
         Console.WriteLine(item);
 }
 
-//the func checkTryParse for int.
-int checkTryParse1(ref int Cin)
+//the func TryParse for int.
+int intTryParse(ref int Cin)
 {
     bool succes = false;
     while (!succes)
@@ -26,8 +27,20 @@ int checkTryParse1(ref int Cin)
     return Cin;
 }
 
+double doubleTryParse(ref double Cin)
+{
+    bool succes = false;
+    while (!succes)
+    {
+        succes = double.TryParse(Console.ReadLine(), out Cin);
+        if (!succes)
+            Console.WriteLine("invail Cin, Please try again");
+    }
+    return Cin;
+}
+
 //the func checkTryParse for DateTime.
-DateTime checkTryParse2(ref DateTime Cin)
+DateTime dateTimeTryParse(ref DateTime Cin)
 {
     bool succes = false;
     while (!succes)
@@ -45,7 +58,7 @@ Product Cinproduct(Product product)
 
     int id = 0;
     Console.WriteLine("cin id");
-    product.ID = checkTryParse1(ref id);
+    product.ID = intTryParse(ref id);
     Console.WriteLine("cin name");
     product.Name = Console.ReadLine();
 
@@ -56,11 +69,11 @@ Product Cinproduct(Product product)
 
     int category = 0;
     Console.WriteLine("cin category");
-    product.Category = (Categories)checkTryParse1(ref category);
+    product.Category = (Categories)intTryParse(ref category);
 
     int instock = 0;
     Console.WriteLine("cin instock");
-    product.InStock = checkTryParse1(ref instock);
+    product.InStock = intTryParse(ref instock);
 
 
     return product;
@@ -73,7 +86,7 @@ Order Cinorder(Order order)
     DateTime dateTime = new DateTime();
 
     Console.WriteLine("cin id");
-    order.Id = checkTryParse1(ref id);
+    order.Id = intTryParse(ref id);
 
     Console.WriteLine("cin name");
     order.CustomerName = Console.ReadLine();
@@ -85,17 +98,18 @@ Order Cinorder(Order order)
     order.CustomerAdress = Console.ReadLine();
 
     Console.WriteLine("cin OrderDate");
-    order.OrderDate = checkTryParse2(ref dateTime);
+    order.OrderDate = dateTimeTryParse(ref dateTime);
 
     Console.WriteLine("cin ShipDate");
-    order.ShipDate = checkTryParse2(ref dateTime);
+    order.ShipDate = dateTimeTryParse(ref dateTime);
 
     Console.WriteLine("cin DeliveryDate");
-    order.DeliveryDate = checkTryParse2(ref dateTime);
+    order.DeliveryDate = dateTimeTryParse(ref dateTime);
 
 
     return order;
 }
+
 //--------------main------------------------------------------------
 while (true)
 {
@@ -106,14 +120,7 @@ while (true)
  press 3 to check an Order Item.
 "
 );
- 
-    b = int.TryParse(Console.ReadLine(), out choice);
-    if (!b)
-    {
-        Console.WriteLine("invail choise");
-        continue;
-    }
-
+    choice = intTryParse(ref choice);
     switch ((Menu)choice)
     {
         case Menu.Product:
@@ -133,6 +140,9 @@ while (true)
 
         case Menu.Exsit:
             return;
+
+        default:
+            break;
     }
 }
 
@@ -174,8 +184,7 @@ void choises_Product(DalProduct dalProduct)
                 int idproduct = 0;
                 try
                 {
-                    Console.WriteLine(dalProduct.get(checkTryParse1(ref idproduct)));
-                }
+                    Console.WriteLine(dalProduct.get(intTryParse(ref idproduct)));                }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -183,8 +192,8 @@ void choises_Product(DalProduct dalProduct)
                 break;
 
             case Functions.togetArray:
-                Product[] newarray = dalProduct.getArray();
-                printArray<Product>(newarray);
+                Product[] newArray = dalProduct.getArray();
+                printArray<Product>(newArray);
                 break;
 
             case Functions.toDal:
@@ -192,8 +201,7 @@ void choises_Product(DalProduct dalProduct)
                 try
                 {
                     Console.WriteLine("cin id for delit");
-                    dalProduct.del(checkTryParse1(ref del));
-                }
+                    dalProduct.del(intTryParse(ref del));                }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -222,6 +230,7 @@ void choises_Product(DalProduct dalProduct)
 }
 
 
+
 //if you choose Order.
 void choises_Order(DalOrder dalOrder)
 {
@@ -238,7 +247,7 @@ void choises_Order(DalOrder dalOrder)
  press 5 for to toUpdata an Order.
 "
     );
-        chice_Order = checkTryParse1(ref chice_Order);
+        chice_Order = intTryParse(ref chice_Order);
 
         switch ((Functions)chice_Order)
         {
@@ -260,7 +269,7 @@ void choises_Order(DalOrder dalOrder)
                 int idOrder = 0;
                 try
                 {
-                    Console.WriteLine(dalOrder.get(checkTryParse1(ref idOrder)));
+                    Console.WriteLine(dalOrder.get(intTryParse(ref idOrder)));
                 }
                 catch (Exception ex)
                 {
@@ -278,7 +287,7 @@ void choises_Order(DalOrder dalOrder)
                 try
                 {
                     Console.WriteLine("cin id for delit");
-                    dalOrder.delete(checkTryParse1(ref del));
+                    dalOrder.delete(intTryParse(ref del));
                 }
                 catch (Exception ex)
                 {
@@ -307,19 +316,129 @@ void choises_Order(DalOrder dalOrder)
 
 
 }
+
 void choises_Orderitem(DalOrderitem dalOrderitem)
 {
+    int orderChice = 0;
+    int num = 0;
+    int num1 = 0;
+    while (true)
+    {
+        Console.WriteLine(@" what function you want to test?
+ press 0 to Exsit.
+ press 1 to add an Order Item.
+ press 2 to get a specific Order Item.
+ press 3 to get a specific Order Item by product ID and order ID.
+ press 4 to get an Array of specific Order.
+ press 5 to get an Array of all Order Items.
+ press 6 to Delete an Order Item.
+ press 7 to Updata an Order Item.
+"
+);
 
+        switch ((OrderItemFunctions)intTryParse(ref orderChice))
+        {
+            case OrderItemFunctions.Exsit:
+                return;
+
+            case OrderItemFunctions.Add:
+                Console.WriteLine(dalOrderitem.add(receiveOrderItemData()));
+                break;
+
+            case OrderItemFunctions.Get:
+                try
+                {
+                    Console.WriteLine("type an Order Item ID");
+                    Console.WriteLine(dalOrderitem.getById(intTryParse(ref num)));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                break;
+
+            case OrderItemFunctions.GetBy_2Id:
+                try
+                {
+                    Console.WriteLine("type an Order ID");
+                    num = intTryParse(ref num);
+                    Console.WriteLine("type an product ID");
+                    num1 = intTryParse(ref num1);
+                    Console.WriteLine(dalOrderitem.getBy_2Id(oId: num, pId: num1));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                break;
+
+            case OrderItemFunctions.GetItemArray:
+                Console.WriteLine("type an Order ID");
+                printArray(dalOrderitem.getItemArray(intTryParse(ref num)));
+                break;
+
+            case OrderItemFunctions.getArray:
+                printArray(dalOrderitem.getarry_all());
+                break;
+
+            case OrderItemFunctions.Dal:
+                try
+                {
+                    Console.WriteLine("type an Order Item ID to delete");
+                    dalOrderitem.delete(intTryParse(ref num));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                break;
+
+            case OrderItemFunctions.Updata:
+                try
+                {
+                    dalOrderitem.add(receiveOrderItemData());
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
 }
+
+//function that receive an Order Item from the user.
+OrderItem receiveOrderItemData()
+{
+    OrderItem ret = new OrderItem();
+    int num = 0;
+    double numD = 0;
+    Console.WriteLine("type an Order ID");
+    ret.Id = intTryParse(ref num);
+    Console.WriteLine("type a product ID");
+    ret.ProductId = intTryParse(ref num);
+    Console.WriteLine("type an Order ID");
+    ret.OrderId = intTryParse(ref num);
+    Console.WriteLine("type an amount of the product");
+    ret.Amount = intTryParse(ref num);
+    Console.WriteLine("type the price of a product");
+    ret.Price = doubleTryParse(ref numD);
+    return ret;
+}
+
 
 //-------------enum--------------------------i 
 enum Menu
 {
     Exsit,
-    Product, //Product,
-    Order, //Order,
-    OrderItem //Order Item.
+    Product,
+    Order,
+    OrderItem
 }
+
 enum Functions
 {
     Exsit,
@@ -328,4 +447,16 @@ enum Functions
     togetArray,
     toDal,
     toUpdata
+}
+
+enum OrderItemFunctions
+{
+    Exsit,
+    Add,
+    Get,
+    GetBy_2Id,
+    GetItemArray,
+    getArray,
+    Dal,
+    Updata
 }
