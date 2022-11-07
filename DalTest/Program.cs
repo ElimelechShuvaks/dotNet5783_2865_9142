@@ -85,10 +85,13 @@ Order Cinorder(Order order)
     Console.WriteLine("cin Adress");
     order.CustomerAdress = Console.ReadLine();
 
+    Console.WriteLine("cin OrderDate");
     order.OrderDate = checkTryParse2(ref dateTime);
 
+    Console.WriteLine("cin ShipDate");
     order.ShipDate = checkTryParse2(ref dateTime);
 
+    Console.WriteLine("cin DeliveryDate");
     order.DeliveryDate = checkTryParse2(ref dateTime);
 
 
