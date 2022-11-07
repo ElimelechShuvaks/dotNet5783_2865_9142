@@ -13,6 +13,7 @@ public class DalProduct
         }
 
         DataSource.Products[DataSource.Config.CounterProduct++] = product;
+
         return product.ID;
     }
 
@@ -36,7 +37,7 @@ public class DalProduct
         return ret;
     }
 
-    public void del(int idNum)
+    public void delete(int idNum)
     {
 
         int indx;
