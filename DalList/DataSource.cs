@@ -79,21 +79,24 @@ internal static class DataSource
         };
         int[] productInStock = { 0, 0, 0, 125, 9, 178, 150, 209, 248, 39, 88, 63, 91, 63, 49, 76, 18 };
 
-        int num = random.Next(4);
+
         for (int i = 0; i < 10; i++)
         {
+            int num = random.Next(4);
             int tempID = random.Next(100000, 999999);
             if (IDarray.Contains(tempID))
                 continue;
             IDarray[i] = tempID;
             product.ID = tempID;
-            product.Name = productNane[num][random.Next(10)];
-            product.Price = ProductPrice[num, random.Next(10)];
+            int temprandom = random.Next(10);
+            product.Name = productNane[num][temprandom];
+            product.Price = ProductPrice[num, temprandom];
             product.Category = (Categories)num;
             product.Image = ".png";
             product.InStock = productInStock[random.Next(productInStock.Length)];
 
-            dalProduct.add(product);            }
+            dalProduct.add(product);
+        }
     }
 
     public static void s_Initialize_order()
@@ -126,15 +129,16 @@ internal static class DataSource
             "13191 Kim Drive","6282 Calypso Place","7736 Jenna Center"
         };
 
-        DalOrder dalOrder = new DalOrder(); 
+        DalOrder dalOrder = new DalOrder();
         Order order = new Order();
         TimeSpan timeSpan;
         for (int i = 0; i < 12; i++) // orders with ship date and delivery date
         {
             order.Id = Config.Num_runOrder;
-            order.CustomerName = customer_Name[random.Next(customer_Name.Length)];
-            order.CustomerEmail = customer_Email[random.Next(customer_Email.Length)];
-            order.CustomerAdress = customer_Adress[random.Next(customer_Adress.Length)];
+            int temprandom = random.Next(customer_Name.Length);
+            order.CustomerName = customer_Name[temprandom];
+            order.CustomerEmail = customer_Email[temprandom];
+            order.CustomerAdress = customer_Adress[temprandom];
             timeSpan = new TimeSpan(random.Next(2, 30), random.Next(23), random.Next(59));
             order.OrderDate = DateTime.Now - timeSpan;
             timeSpan = new TimeSpan(random.Next(2, 60), random.Next(23), random.Next(59));
@@ -148,9 +152,10 @@ internal static class DataSource
         for (int i = 0; i < 4; i++) // orders with ship date and without delivery date
         {
             order.Id = Config.Num_runOrder;
-            order.CustomerName = customer_Name[random.Next(customer_Name.Length)];
-            order.CustomerEmail = customer_Email[random.Next(customer_Email.Length)];
-            order.CustomerAdress = customer_Adress[random.Next(customer_Adress.Length)];
+            int temprandom = random.Next(customer_Name.Length);
+            order.CustomerName = customer_Name[temprandom];
+            order.CustomerEmail = customer_Email[temprandom];
+            order.CustomerAdress = customer_Adress[temprandom];
             timeSpan = new TimeSpan(random.Next(2, 30), random.Next(23), random.Next(59));
             order.OrderDate = DateTime.Now - timeSpan;
             timeSpan = new TimeSpan(random.Next(2, 60), random.Next(23), random.Next(59));
@@ -163,9 +168,10 @@ internal static class DataSource
         for (int i = 0; i < 4; i++) // orders without ship date and without delivery date
         {
             order.Id = Config.Num_runOrder;
-            order.CustomerName = customer_Name[random.Next(customer_Name.Length)];
-            order.CustomerEmail = customer_Email[random.Next(customer_Email.Length)];
-            order.CustomerAdress = customer_Adress[random.Next(customer_Adress.Length)];
+            int temprandom = random.Next(customer_Name.Length);
+            order.CustomerName = customer_Name[temprandom];
+            order.CustomerEmail = customer_Email[temprandom];
+            order.CustomerAdress = customer_Adress[temprandom];
             timeSpan = new TimeSpan(random.Next(2, 30), random.Next(24), random.Next(60));
             order.OrderDate = DateTime.Now - timeSpan;
             timeSpan = new TimeSpan(random.Next(2, 60), random.Next(24), random.Next(60));

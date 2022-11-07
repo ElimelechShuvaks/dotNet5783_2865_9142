@@ -24,5 +24,6 @@ public struct Product
 Name: {Name}
 Category: {Category}
 Price: {Price}
+Amount in stock: {InStock}
 ";
 }

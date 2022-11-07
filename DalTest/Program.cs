@@ -12,8 +12,8 @@ void printArray<T>(T[] items)
     foreach (var item in items)
     {
         Console.WriteLine(item);
+    }
 }
-
 //the func TryParse for int.
 int intTryParse(ref int Cin)
 {
@@ -57,22 +57,24 @@ Product Cinproduct(Product product)
 {
 
     int id = 0;
-    Console.WriteLine("cin id");
+    Console.WriteLine("cin id:");
     product.ID = intTryParse(ref id);
-    Console.WriteLine("cin name");
+
+    Console.WriteLine("cin name:");
     product.Name = Console.ReadLine();
 
-    double price;
-    Console.WriteLine("cin price");
-    double.TryParse(Console.ReadLine(), out price);
-    product.Price = price;
+    double price = 0;
+    Console.WriteLine("cin price:");
+    product.Price = doubleTryParse(ref price);
 
     int category = 0;
-    Console.WriteLine("cin category");
+    Console.WriteLine("cin category:");
     product.Category = (Categories)intTryParse(ref category);
 
+
+
     int instock = 0;
-    Console.WriteLine("cin instock");
+    Console.WriteLine("cin instock:");
     product.InStock = intTryParse(ref instock);
 
 
@@ -85,25 +87,25 @@ Order Cinorder(Order order)
     int id = 0;
     DateTime dateTime = new DateTime();
 
-    Console.WriteLine("cin id");
+    Console.WriteLine("cin id:");
     order.Id = intTryParse(ref id);
 
-    Console.WriteLine("cin name");
+    Console.WriteLine("cin name:");
     order.CustomerName = Console.ReadLine();
 
-    Console.WriteLine("cin Email");
+    Console.WriteLine("cin Email:");
     order.CustomerEmail = Console.ReadLine();
 
-    Console.WriteLine("cin Adress");
+    Console.WriteLine("cin Adress:");
     order.CustomerAdress = Console.ReadLine();
 
-    Console.WriteLine("cin OrderDate");
+    Console.WriteLine("cin OrderDate:");
     order.OrderDate = dateTimeTryParse(ref dateTime);
 
-    Console.WriteLine("cin ShipDate");
+    Console.WriteLine("cin ShipDate:");
     order.ShipDate = dateTimeTryParse(ref dateTime);
 
-    Console.WriteLine("cin DeliveryDate");
+    Console.WriteLine("cin DeliveryDate:");
     order.DeliveryDate = dateTimeTryParse(ref dateTime);
 
 
@@ -153,7 +155,7 @@ void choises_Product(DalProduct dalProduct)
 
     while (true)
     {
-        Console.WriteLine(@" for which struct you want a test?
+        Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
  press 1 to add a Product.
  press 2 to get a Product specific.
@@ -162,16 +164,17 @@ void choises_Product(DalProduct dalProduct)
  press 5 for to toUpdata an Product  Item.
 "
     );
-        chice_product = checkTryParse1(ref chice_product);
+        chice_product = intTryParse(ref chice_product);
 
         switch ((Functions)chice_product)
         {
-            case Functions.toAdd:
+            case Functions.ToAdd:
 
                 Product product = new Product();
                 try
                 {
                     int product_id = dalProduct.add(Cinproduct(product));
+                    Console.WriteLine("Prints the id of the new product");
                     Console.WriteLine(product_id);
                 }
                 catch (Exception ex)
@@ -180,35 +183,38 @@ void choises_Product(DalProduct dalProduct)
                 }
                 break;
 
-            case Functions.toGet:
+            case Functions.ToGet:
                 int idproduct = 0;
                 try
                 {
-                    Console.WriteLine(dalProduct.get(intTryParse(ref idproduct)));                }
+                    Console.WriteLine("cin the id thet you want to get:");
+                    Console.WriteLine(dalProduct.get(intTryParse(ref idproduct)));
+                }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
                 break;
 
-            case Functions.togetArray:
+            case Functions.TogetArray:
                 Product[] newArray = dalProduct.getArray();
                 printArray<Product>(newArray);
                 break;
 
-            case Functions.toDal:
+            case Functions.ToDal:
                 int del = 0;
                 try
                 {
-                    Console.WriteLine("cin id for delit");
-                    dalProduct.del(intTryParse(ref del));                }
+                    Console.WriteLine("cin id for product thet you want to delete:");
+                    dalProduct.delete(intTryParse(ref del));
+                }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
                 break;
 
-            case Functions.toUpdata:
+            case Functions.ToUpdata:
                 try
                 {
                     Product product1 = new Product();
@@ -238,7 +244,7 @@ void choises_Order(DalOrder dalOrder)
 
     while (true)
     {
-        Console.WriteLine(@" for which struct you want a test?
+        Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
  press 1 to add a Order.
  press 2 to get a Order specific.
@@ -251,12 +257,14 @@ void choises_Order(DalOrder dalOrder)
 
         switch ((Functions)chice_Order)
         {
-            case Functions.toAdd:
+            case Functions.ToAdd:
 
                 Order order = new Order();
                 try
                 {
+
                     int Order_id = dalOrder.add(Cinorder(order));
+                    Console.WriteLine("Prints the id of the new order");
                     Console.WriteLine(Order_id);
                 }
                 catch (Exception ex)
@@ -265,10 +273,11 @@ void choises_Order(DalOrder dalOrder)
                 }
                 break;
 
-            case Functions.toGet:
+            case Functions.ToGet:
                 int idOrder = 0;
                 try
                 {
+                    Console.WriteLine("cin the idorder thet you want to get:");
                     Console.WriteLine(dalOrder.get(intTryParse(ref idOrder)));
                 }
                 catch (Exception ex)
@@ -277,16 +286,16 @@ void choises_Order(DalOrder dalOrder)
                 }
                 break;
 
-            case Functions.togetArray:
+            case Functions.TogetArray:
                 Order[] newarray = dalOrder.getArray();
                 printArray<Order>(newarray);
                 break;
 
-            case Functions.toDal:
+            case Functions.ToDal:
                 int del = 0;
                 try
                 {
-                    Console.WriteLine("cin id for delit");
+                    Console.WriteLine("cin id for order thet you want to delete:");
                     dalOrder.delete(intTryParse(ref del));
                 }
                 catch (Exception ex)
@@ -295,7 +304,7 @@ void choises_Order(DalOrder dalOrder)
                 }
                 break;
 
-            case Functions.toUpdata:
+            case Functions.ToUpdata:
                 try
                 {
                     Order order1 = new Order();
@@ -429,7 +438,6 @@ OrderItem receiveOrderItemData()
     return ret;
 }
 
-
 //-------------enum--------------------------i 
 enum Menu
 {
@@ -442,11 +450,11 @@ enum Menu
 enum Functions
 {
     Exsit,
-    toAdd,
-    toGet,
-    togetArray,
-    toDal,
-    toUpdata
+    ToAdd,
+    ToGet,
+    TogetArray,
+    ToDal,
+    ToUpdata
 }
 
 enum OrderItemFunctions
