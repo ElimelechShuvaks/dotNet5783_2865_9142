@@ -324,8 +324,6 @@ void choises_Order(DalOrder dalOrder)
                 break;
         }
     }
-
-
 }
 
 void choises_Orderitem(DalOrderitem dalOrderitem)
