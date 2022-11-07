@@ -61,7 +61,7 @@ Product Cinproduct(Product product)
 
     int id = 0;
     Console.WriteLine("cin id");
-    product.ID = checkTryParse1(ref id);
+    product.ID = intTryParse(ref id);
     Console.WriteLine("cin name");
     product.Name = Console.ReadLine();
 
@@ -72,11 +72,11 @@ Product Cinproduct(Product product)
 
     int category = 0;
     Console.WriteLine("cin category");
-    product.Category = (Categories)checkTryParse1(ref category);
+    product.Category = (Categories)intTryParse(ref category);
 
     int instock = 0;
     Console.WriteLine("cin instock");
-    product.InStock = checkTryParse1(ref instock);
+    product.InStock = intTryParse(ref instock);
 
 
     return product;
@@ -89,7 +89,7 @@ Order Cinorder(Order order)
     DateTime dateTime = new DateTime();
 
     Console.WriteLine("cin id");
-    order.Id = checkTryParse1(ref id);
+    order.Id = intTryParse(ref id);
 
     Console.WriteLine("cin name");
     order.CustomerName = Console.ReadLine();
@@ -101,13 +101,13 @@ Order Cinorder(Order order)
     order.CustomerAdress = Console.ReadLine();
 
     Console.WriteLine("cin OrderDate");
-    order.OrderDate = checkTryParse2(ref dateTime);
+    order.OrderDate = dateTimeTryParse(ref dateTime);
 
     Console.WriteLine("cin ShipDate");
-    order.ShipDate = checkTryParse2(ref dateTime);
+    order.ShipDate = dateTimeTryParse(ref dateTime);
 
     Console.WriteLine("cin DeliveryDate");
-    order.DeliveryDate = checkTryParse2(ref dateTime);
+    order.DeliveryDate = dateTimeTryParse(ref dateTime);
 
 
     return order;
@@ -197,7 +197,7 @@ void choises_Product(DalProduct dalProduct)
 
             case Functions.togetArray:
                 Product[] newArray = dalProduct.getArray();
-                printArray<Product>(newarray);
+                printArray<Product>(newArray);
                 break;
 
             case Functions.toDal:
@@ -251,7 +251,7 @@ void choises_Order(DalOrder dalOrder)
  press 5 for to toUpdata an Order.
 "
     );
-        chice_Order = checkTryParse1(ref chice_Order);
+        chice_Order = intTryParse(ref chice_Order);
 
         switch ((Functions)chice_Order)
         {
@@ -420,7 +420,7 @@ OrderItem receiveOrderItemData()
     OrderItem ret = new OrderItem();
     int num = 0;
     double numD = 0;
-    Console.WriteLine("type a temp Order ID");
+    Console.WriteLine("type an Order ID");
     ret.Id = intTryParse(ref num);
     Console.WriteLine("type a product ID");
     ret.ProductId = intTryParse(ref num);
@@ -433,7 +433,6 @@ OrderItem receiveOrderItemData()
     return ret;
 }
 
-}
 
 //-------------enum--------------------------i 
 enum Menu
