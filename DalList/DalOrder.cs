@@ -21,7 +21,7 @@ public class DalOrder
         throw new Exception("not found the order");
 
     }
-    public Order[] getarry()
+    public Order[] getArray()
     {
         Order[] orders = new Order[DataSource.Config.CounterOrders];
         for (int i = 0; i < DataSource.Config.CounterOrders; i++)

@@ -94,7 +94,6 @@ internal static class DataSource
             product.InStock = productInStock[random.Next(productInStock.Length)];
 
             dalProduct.add(product);    
-            //Products[Config.CounterProduct++] = product;
         }
     }
 
