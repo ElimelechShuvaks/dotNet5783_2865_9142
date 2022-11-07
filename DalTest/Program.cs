@@ -12,8 +12,10 @@ void printArray<T>(T[] items)
     foreach (var item in items)
     {
         Console.WriteLine(item);
+        Console.WriteLine();    
     }
 }
+
 //the func TryParse for int.
 int intTryParse(ref int Cin)
 {
@@ -159,10 +161,10 @@ void choises_Product(DalProduct dalProduct)
         Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
  press 1 to add a Product.
- press 2 to get a Product specific.
- press 3  togetArray an Product  Item.
- press 4 toDal an Product  Item.
- press 5 for to toUpdata an Product  Item.
+ press 2 to get a specific Product.
+ press 3 to get an Array of Product Item.
+ press 4 to ealete an Product Item.
+ press 5 to Updata a Product Item.
 "
     );
         chice_product = intTryParse(ref chice_product);
@@ -247,11 +249,11 @@ void choises_Order(DalOrder dalOrder)
     {
         Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
- press 1 to add a Order.
- press 2 to get a Order specific.
- press 3  togetArray an Order .
- press 4 toDal an Order .
- press 5 for to toUpdata an Order.
+ press 1 to add an Order.
+ press 2 to get a specific Order.
+ press 3 to get an Array of Orders .
+ press 4 to Delete an Order .
+ press 5 to Updata an Order.
 "
     );
         chice_Order = intTryParse(ref chice_Order);
@@ -263,7 +265,6 @@ void choises_Order(DalOrder dalOrder)
                 Order order = new Order();
                 try
                 {
-
                     int Order_id = dalOrder.add(Cinorder(order));
                     Console.WriteLine("Prints the id of the new order");
                     Console.WriteLine(Order_id);
@@ -278,7 +279,7 @@ void choises_Order(DalOrder dalOrder)
                 int idOrder = 0;
                 try
                 {
-                    Console.WriteLine("cin the idorder thet you want to get:");
+                    Console.WriteLine("cin the id order thet you want to get:");
                     Console.WriteLine(dalOrder.get(intTryParse(ref idOrder)));
                 }
                 catch (Exception ex)
@@ -406,7 +407,7 @@ void choises_Orderitem(DalOrderitem dalOrderitem)
             case OrderItemFunctions.Updata:
                 try
                 {
-                    dalOrderitem.add(receiveOrderItemData());
+                    dalOrderitem.update(receiveOrderItemData());
                 }
                 catch (Exception ex)
                 {

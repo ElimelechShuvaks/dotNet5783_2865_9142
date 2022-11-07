@@ -79,7 +79,6 @@ internal static class DataSource
         };
         int[] productInStock = { 0, 0, 0, 125, 9, 178, 150, 209, 248, 39, 88, 63, 91, 63, 49, 76, 18 };
 
-
         for (int i = 0; i < 10; i++)
         {
             int num = random.Next(4);
@@ -88,7 +87,7 @@ internal static class DataSource
                 continue;
             IDarray[i] = tempID;
             product.ID = tempID;
-            int temprandom = random.Next(10);
+            int temprandom = random.Next(11);
             product.Name = productNane[num][temprandom];
             product.Price = ProductPrice[num, temprandom];
             product.Category = (Categories)num;
@@ -134,7 +133,7 @@ internal static class DataSource
         TimeSpan timeSpan;
         for (int i = 0; i < 12; i++) // orders with ship date and delivery date
         {
-            order.Id = Config.Num_runOrder;
+            order.Id = 0;//garbech, becouse in the add function it receive a ran number
             int temprandom = random.Next(customer_Name.Length);
             order.CustomerName = customer_Name[temprandom];
             order.CustomerEmail = customer_Email[temprandom];
@@ -151,7 +150,7 @@ internal static class DataSource
 
         for (int i = 0; i < 4; i++) // orders with ship date and without delivery date
         {
-            order.Id = Config.Num_runOrder;
+            order.Id = 0;//garbech, becouse in the add function it receive a ran number
             int temprandom = random.Next(customer_Name.Length);
             order.CustomerName = customer_Name[temprandom];
             order.CustomerEmail = customer_Email[temprandom];
@@ -167,7 +166,7 @@ internal static class DataSource
 
         for (int i = 0; i < 4; i++) // orders without ship date and without delivery date
         {
-            order.Id = Config.Num_runOrder;
+            order.Id = 0;//garbech, becouse in the add function it receive a ran number
             int temprandom = random.Next(customer_Name.Length);
             order.CustomerName = customer_Name[temprandom];
             order.CustomerEmail = customer_Email[temprandom];
@@ -190,10 +189,10 @@ internal static class DataSource
         OrderItem orderItem = new OrderItem();
         for (int i = 0; i < 20; i++)
         {
-            for (int j = 0; j < random.Next(4); j++)
+            for (int j = 0; j < random.Next(1, 5); j++)
             {
                 indx = random.Next(10);
-                orderItem.Id = Config.Num_runOrderitem;
+                orderItem.Id = 0;//garbech, becouse in the add function it receive a ran number
                 orderItem.OrderId = Orders[i].Id;
                 orderItem.ProductId = Products[indx].ID;
                 orderItem.Price = Products[indx].Price;
