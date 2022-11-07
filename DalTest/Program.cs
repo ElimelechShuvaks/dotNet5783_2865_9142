@@ -1,6 +1,5 @@
 ﻿using DO;
 using Dal;
-
 #nullable disable
 
 int choice;
@@ -107,7 +106,7 @@ while (true)
  press 3 to check an Order Item.
 "
 );
-
+ 
     b = int.TryParse(Console.ReadLine(), out choice);
     if (!b)
     {
