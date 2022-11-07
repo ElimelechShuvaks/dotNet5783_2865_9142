@@ -144,6 +144,7 @@ while (true)
             return;
 
         default:
+            Console.WriteLine("Invalid selection");
             break;
     }
 }
@@ -229,7 +230,7 @@ void choises_Product(DalProduct dalProduct)
                 return;
             default:
                 Console.WriteLine("Invalid selection");
-                return;
+                break;
         }
     }
 
@@ -319,7 +320,7 @@ void choises_Order(DalOrder dalOrder)
                 return;
             default:
                 Console.WriteLine("Invalid selection");
-                return;
+                break;
         }
     }
 
@@ -414,6 +415,7 @@ void choises_Orderitem(DalOrderitem dalOrderitem)
                 break;
 
             default:
+                Console.WriteLine("Invalid selection");
                 break;
         }
     }
