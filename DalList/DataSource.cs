@@ -63,19 +63,19 @@ internal static class DataSource
         int[] IDarray = new int[10];
 
         string[][] productNane = new string[5][] {
-            new string[] { "aaa", "bbb", "ccc" },
-            new string[] { "aaa", "bbb", "ccc" },
-            new string[] { "aaa", "bbb", "ccc" },
-            new string[] { "aaa", "bbb", "ccc" },
-            new string[] { "aaa", "bbb", "ccc" }
+            new string[] { "Toyota Corolla","Toyota Yaris","Hyundai i40" ,"Hyundai Ioniq","Mazda 3","SEAT Ibiza","SEAT Leon","Skoda Rapid","Skoda Octavia","Ford Focus"},
+            new string[] { "Geely Geometric","MG ZS EV", "Hyundai buys","Tesla Model 3" ,"Tesla Model y","Tesla Model s","Tesla Model x","Aiways U5","Kia Niro Plus","Hyundai Ioniq 5"},
+            new string[] { "Toyota Rav 4","Toyota Highlander","Mercedes GLB Class","Jeep Compass","Jeep Wrangler" ,"Cadillac Escalade","Volvo XC90","Volvo XC60","Porsche Macan","Porsche Cayenne"},
+            new string[] { "Chevrolet Camaro", "Ford Mustang", "Audi A3" ,"Audi TT","Volkswagen - Polo","Nissan GT-R","Alfa Romeo Giulia","mini cooper","Cupra Leon","Maserati MC20"},
+            new string[] { "Audi A8", "Volvo S90", "Genesis G80", "BMW 5 Series", "Bentley Flying Spur", "Cadillac CT5", "BYD here", "BMW 7 Series", "Mercedes S", "Audi A7" }
         };
 
         int[,] ProductPrice = new int[5, 10]{
-        { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 },
-        { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 },
-        { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 },
-        { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 },
-        { 450000, 670000, 890000, 900000, 510000, 270000, 320000, 250000, 780000, 420000 }
+        { 155138,114527, 150000, 162800, 148500, 103900, 134900, 110000, 178990,144900 },
+        { 142900, 144981, 152000, 299469, 371946, 825418, 848590, 162500, 135000, 199900 },
+        { 220000, 289900, 349900, 189900, 289000, 899990, 770900, 540000, 577900,715000},
+        { 430000, 320000, 368000, 602900,189000, 880000, 699900, 195900, 239000,1880000 },
+        { 925000, 469900, 349000,588000, 1745000,359900,299000, 895000, 1450000, 634400 }
         };
         int[] productInStock = { 0, 0, 0, 125, 9, 178, 150, 209, 248, 39, 88, 63, 91, 63, 49, 76, 18 };
 
@@ -87,13 +87,13 @@ internal static class DataSource
                 continue;
             IDarray[i] = tempID;
             product.ID = tempID;
-            product.Name = productNane[num][random.Next(3)];//???????????צריך לראות שהמספר ברנדום מעודכן
+            product.Name = productNane[num][random.Next(10)];//???????????צריך לראות שהמספר ברנדום מעודכן
             product.Price = ProductPrice[num, random.Next(10)];//???????????צריך לראות שהמספר ברנדום מעודכן
             product.Category = (Categories)num;
             product.Image = ".png";
             product.InStock = productInStock[random.Next(productInStock.Length)];
 
-            dalProduct.add(product);    
+            dalProduct.add(product);
         }
     }
 
