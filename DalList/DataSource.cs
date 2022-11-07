@@ -131,7 +131,7 @@ internal static class DataSource
         TimeSpan timeSpan;
         for (int i = 0; i < 12; i++) // orders with ship date and delivery date
         {
-            order.Id = Config.Num_runOrder;
+            order.Id = 0;//garbech, becouse in the add function it receive a ran number
             order.CustomerName = customer_Name[random.Next(customer_Name.Length)];
             order.CustomerEmail = customer_Email[random.Next(customer_Email.Length)];
             order.CustomerAdress = customer_Adress[random.Next(customer_Adress.Length)];
@@ -147,7 +147,7 @@ internal static class DataSource
 
         for (int i = 0; i < 4; i++) // orders with ship date and without delivery date
         {
-            order.Id = Config.Num_runOrder;
+            order.Id = 0;//garbech, becouse in the add function it receive a ran number
             order.CustomerName = customer_Name[random.Next(customer_Name.Length)];
             order.CustomerEmail = customer_Email[random.Next(customer_Email.Length)];
             order.CustomerAdress = customer_Adress[random.Next(customer_Adress.Length)];
@@ -162,7 +162,7 @@ internal static class DataSource
 
         for (int i = 0; i < 4; i++) // orders without ship date and without delivery date
         {
-            order.Id = Config.Num_runOrder;
+            order.Id = 0;//garbech, becouse in the add function it receive a ran number
             order.CustomerName = customer_Name[random.Next(customer_Name.Length)];
             order.CustomerEmail = customer_Email[random.Next(customer_Email.Length)];
             order.CustomerAdress = customer_Adress[random.Next(customer_Adress.Length)];
@@ -184,10 +184,10 @@ internal static class DataSource
         OrderItem orderItem = new OrderItem();
         for (int i = 0; i < 20; i++)
         {
-            for (int j = 0; j < random.Next(4); j++)
+            for (int j = 0; j < random.Next(1, 5); j++)
             {
                 indx = random.Next(10);
-                orderItem.Id = Config.Num_runOrderitem;
+                orderItem.Id = 0;//garbech, becouse in the add function it receive a ran number
                 orderItem.OrderId = Orders[i].Id;
                 orderItem.ProductId = Products[indx].ID;
                 orderItem.Price = Products[indx].Price;

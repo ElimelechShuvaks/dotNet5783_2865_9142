@@ -12,6 +12,8 @@ void printArray<T>(T[] items)
     foreach (var item in items)
     {
         Console.WriteLine(item);
+        Console.WriteLine();    
+    }
 }
 
 //the func TryParse for int.
@@ -153,16 +155,16 @@ void choises_Product(DalProduct dalProduct)
 
     while (true)
     {
-        Console.WriteLine(@" for which struct you want a test?
+        Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
  press 1 to add a Product.
- press 2 to get a Product specific.
- press 3  togetArray an Product  Item.
- press 4 toDal an Product  Item.
- press 5 for to toUpdata an Product  Item.
+ press 2 to get a specific Product.
+ press 3 to get an Array of Product Item.
+ press 4 to ealete an Product Item.
+ press 5 to Updata a Product Item.
 "
     );
-        chice_product = checkTryParse1(ref chice_product);
+        chice_product = intTryParse(ref chice_product);
 
         switch ((Functions)chice_product)
         {
@@ -184,7 +186,9 @@ void choises_Product(DalProduct dalProduct)
                 int idproduct = 0;
                 try
                 {
-                    Console.WriteLine(dalProduct.get(intTryParse(ref idproduct)));                }
+                    Console.WriteLine("cin id to receive");
+                    Console.WriteLine(dalProduct.get(intTryParse(ref idproduct)));
+                }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -200,8 +204,9 @@ void choises_Product(DalProduct dalProduct)
                 int del = 0;
                 try
                 {
-                    Console.WriteLine("cin id for delit");
-                    dalProduct.del(intTryParse(ref del));                }
+                    Console.WriteLine("cin id to delete");
+                    dalProduct.del(intTryParse(ref del));
+                }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -238,13 +243,13 @@ void choises_Order(DalOrder dalOrder)
 
     while (true)
     {
-        Console.WriteLine(@" for which struct you want a test?
+        Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
- press 1 to add a Order.
- press 2 to get a Order specific.
- press 3  togetArray an Order .
- press 4 toDal an Order .
- press 5 for to toUpdata an Order.
+ press 1 to add an Order.
+ press 2 to get a specific Order.
+ press 3 to get an Array of Orders .
+ press 4 to Delete an Order .
+ press 5 to Updata an Order.
 "
     );
         chice_Order = intTryParse(ref chice_Order);
@@ -286,7 +291,7 @@ void choises_Order(DalOrder dalOrder)
                 int del = 0;
                 try
                 {
-                    Console.WriteLine("cin id for delit");
+                    Console.WriteLine("cin id to delete");
                     dalOrder.delete(intTryParse(ref del));
                 }
                 catch (Exception ex)
@@ -396,7 +401,7 @@ void choises_Orderitem(DalOrderitem dalOrderitem)
             case OrderItemFunctions.Updata:
                 try
                 {
-                    dalOrderitem.add(receiveOrderItemData());
+                    dalOrderitem.update(receiveOrderItemData());
                 }
                 catch (Exception ex)
                 {
