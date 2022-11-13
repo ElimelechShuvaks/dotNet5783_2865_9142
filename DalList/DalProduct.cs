@@ -1,76 +1,69 @@
-﻿ 
+﻿
+using DalApi;
 using DO;
+using System;
+
 namespace Dal;
 
-public class DalProduct
+public class DalProduct : IProduct
 {
-    public int add(Product product)
+    public int Add(Product newProduct)
     {
-        foreach(Product p in DataSource.Products)
+        int index = existProduct(newProduct.ID);
+
+        if (index != -1)
         {
-            if (p.ID == product.ID)
-                throw new Exception("Product already exsist in data source");
+            OtherFunctions.exceptionFound("product", newProduct.ID);
         }
-
-        DataSource.Products[DataSource.Config.CounterProduct++] = product;
-
-        return product.ID;
+      
+        DataSource._products.Add(newProduct);
+        return newProduct.ID;
     }
 
-    public Product get(int idNum)
+    public Product Get(int idNum)
     {
-        foreach (Product p in DataSource.Products)
+        int index = existProduct(idNum);
+
+        if (index == -1)
         {
-            if (p.ID == idNum)
-                return p;
+            OtherFunctions.exceptionNotFound("product", idNum);
         }
-        throw new Exception("Product doesn't exsist in data source");
+
+        return DataSource._products[index];     
     }
 
-    public Product[] getArray()
+    public IEnumerable<Product> GetList()
     {
-        Product[] ret = new Product[DataSource.Config.CounterProduct];
-        for (int i = 0; i < DataSource.Config.CounterProduct; i++)
-        {
-            ret[i] = DataSource.Products[i];
-        }
-        return ret;
+        return DataSource._products.Select(product => product);
     }
 
-    public void delete(int idNum)
+    public void Delete(int idNum)
     {
+        Product? product = Get(idNum);
 
-        int indx;
-        for(indx = 0; indx < DataSource.Config.CounterProduct; indx++)
+        if (product != null)
         {
-            if (DataSource.Products[indx].ID == idNum)
-                break;
+            DataSource._products.Remove(product.Value);
+            return;
         }
+        OtherFunctions.exceptionNotFound("product", idNum);
 
-        if (indx == DataSource.Config.CounterProduct)
-            throw new Exception("Product doesn't exsist in data source");
-
-        for (int i = indx; i < DataSource.Config.CounterProduct - 1; i++)
-        {
-            DataSource.Products[i] = DataSource.Products[i + 1];
-        }
-        DataSource.Config.CounterProduct--;
     }
 
-    public void update(Product product)
+    public void Update(Product product)
     {
-        int indx;
-        for (indx = 0; indx < DataSource.Config.CounterProduct; indx++)
+        int index = existProduct(product.ID);
+
+        if (index != -1)
         {
-            if (DataSource.Products[indx].ID == product.ID)
-            {
-                DataSource.Products[indx] = product;
-                break;
-            }
+            DataSource._products[index] = product;
         }
 
-        if (indx == DataSource.Config.CounterProduct)
-            throw new Exception("Product doesn't exsist in data source");
+        OtherFunctions.exceptionNotFound("product", product.ID);
     }
 
+    private int existProduct(int id)
+    {
+        return DataSource._products.FindIndex(product => product.ID == id);
+    }
 }

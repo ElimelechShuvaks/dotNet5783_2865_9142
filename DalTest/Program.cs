@@ -6,8 +6,8 @@ int choice = 0;
 
 //------------------functions---------------------------------------------
 
-//the func printArray,Product and Order and orderItem.
-void printArray<T>(T[] items)
+//the func printList,Product and Order and orderItem.
+void printList<T>(IEnumerable<T> items)
 {
     foreach (var item in items)
     {
@@ -54,7 +54,7 @@ DateTime dateTimeTryParse(ref DateTime Cin)
     return Cin;
 }
 
-//the func Cinproduct for func add and updata.
+//the func Cinproduct for func Add and updata.
 Product Cinproduct(Product product)
 {
 
@@ -83,7 +83,7 @@ Product Cinproduct(Product product)
     return product;
 }
 
-//the func Cinorder for func add and updata.
+//the func Cinorder for func Add and updata.
 Order Cinorder(Order order)
 {
     int id = 0;
@@ -160,9 +160,9 @@ void choises_Product(DalProduct dalProduct)
     {
         Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
- press 1 to add a Product.
- press 2 to get a specific Product.
- press 3 to get an Array of Product Item.
+ press 1 to Add a Product.
+ press 2 to Get a specific Product.
+ press 3 to Get an Array of Product Item.
  press 4 to ealete an Product Item.
  press 5 to Updata a Product Item.
 "
@@ -176,7 +176,7 @@ void choises_Product(DalProduct dalProduct)
                 Product product = new Product();
                 try
                 {
-                    int product_id = dalProduct.add(Cinproduct(product));
+                    int product_id = dalProduct.Add(Cinproduct(product));
                     Console.WriteLine("Prints the id of the new product");
                     Console.WriteLine(product_id);
                 }
@@ -190,8 +190,8 @@ void choises_Product(DalProduct dalProduct)
                 int idproduct = 0;
                 try
                 {
-                    Console.WriteLine("cin the id thet you want to get:");
-                    Console.WriteLine(dalProduct.get(intTryParse(ref idproduct)));
+                    Console.WriteLine("cin the id thet you want to Get:");
+                    Console.WriteLine(dalProduct.Get(intTryParse(ref idproduct)));
                 }
                 catch (Exception ex)
                 {
@@ -200,16 +200,15 @@ void choises_Product(DalProduct dalProduct)
                 break;
 
             case Functions.TogetArray:
-                Product[] newArray = dalProduct.getArray();
-                printArray<Product>(newArray);
+                printList(dalProduct.GetList());
                 break;
 
             case Functions.ToDal:
                 int del = 0;
                 try
                 {
-                    Console.WriteLine("cin id for product thet you want to delete:");
-                    dalProduct.delete(intTryParse(ref del));
+                    Console.WriteLine("cin id for product thet you want to Delete:");
+                    dalProduct.Delete(intTryParse(ref del));
                 }
                 catch (Exception ex)
                 {
@@ -221,7 +220,7 @@ void choises_Product(DalProduct dalProduct)
                 try
                 {
                     Product product1 = new Product();
-                    dalProduct.update(Cinproduct(product1));
+                    dalProduct.Update(Cinproduct(product1));
                 }
                 catch (Exception ex)
                 {
@@ -249,9 +248,9 @@ void choises_Order(DalOrder dalOrder)
     {
         Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
- press 1 to add an Order.
- press 2 to get a specific Order.
- press 3 to get an Array of Orders .
+ press 1 to Add an Order.
+ press 2 to Get a specific Order.
+ press 3 to Get an Array of _orders .
  press 4 to Delete an Order .
  press 5 to Updata an Order.
 "
@@ -279,7 +278,7 @@ void choises_Order(DalOrder dalOrder)
                 int idOrder = 0;
                 try
                 {
-                    Console.WriteLine("cin the id order thet you want to get:");
+                    Console.WriteLine("cin the id order thet you want to Get:");
                     Console.WriteLine(dalOrder.get(intTryParse(ref idOrder)));
                 }
                 catch (Exception ex)
@@ -290,14 +289,14 @@ void choises_Order(DalOrder dalOrder)
 
             case Functions.TogetArray:
                 Order[] newarray = dalOrder.getArray();
-                printArray<Order>(newarray);
+                printList<Order>(newarray);
                 break;
 
             case Functions.ToDal:
                 int del = 0;
                 try
                 {
-                    Console.WriteLine("cin id for order thet you want to delete:");
+                    Console.WriteLine("cin id for order thet you want to Delete:");
                     dalOrder.delete(intTryParse(ref del));
                 }
                 catch (Exception ex)
@@ -335,11 +334,11 @@ void choises_Orderitem(DalOrderitem dalOrderitem)
     {
         Console.WriteLine(@" what function you want to test?
  press 0 to Exsit.
- press 1 to add an Order Item.
- press 2 to get a specific Order Item.
- press 3 to get a specific Order Item by product ID and order ID.
- press 4 to get an Array of specific Order.
- press 5 to get an Array of all Order Items.
+ press 1 to Add an Order Item.
+ press 2 to Get a specific Order Item.
+ press 3 to Get a specific Order Item by product ID and order ID.
+ press 4 to Get an Array of specific Order.
+ press 5 to Get an Array of all Order Items.
  press 6 to Delete an Order Item.
  press 7 to Updata an Order Item.
 "
@@ -383,17 +382,17 @@ void choises_Orderitem(DalOrderitem dalOrderitem)
 
             case OrderItemFunctions.GetItemArray:
                 Console.WriteLine("type an Order ID");
-                printArray(dalOrderitem.getItemArray(intTryParse(ref num)));
+                printList(dalOrderitem.getItemArray(intTryParse(ref num)));
                 break;
 
             case OrderItemFunctions.getArray:
-                printArray(dalOrderitem.getarry_all());
+                printList(dalOrderitem.getarry_all());
                 break;
 
             case OrderItemFunctions.Dal:
                 try
                 {
-                    Console.WriteLine("type an Order Item ID to delete");
+                    Console.WriteLine("type an Order Item ID to Delete");
                     dalOrderitem.delete(intTryParse(ref num));
                 }
                 catch (Exception ex)
