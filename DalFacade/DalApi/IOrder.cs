@@ -2,7 +2,7 @@
 using DO;
 namespace DalApi;
 
-internal interface IOrder : ICrud<Order>
+public interface IOrder : ICrud<Order>
 {
 
 }

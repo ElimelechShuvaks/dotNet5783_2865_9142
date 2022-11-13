@@ -2,8 +2,8 @@
 using DO;
 namespace DalApi;
 
-internal interface IOrderItem : ICrud<OrderItem>
+public interface IOrderItem : ICrud<OrderItem>
 {
-    public OrderItem getBuy_2Id(int pId, int oId);
-    public List<OrderItem> getItemArray(int orderId);
+    public OrderItem GetBuy_2Id(int pId, int oId);
+    public List<OrderItem> GetListItem(int id);
 }

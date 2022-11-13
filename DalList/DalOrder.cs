@@ -1,63 +1,56 @@
 ﻿using DO;
+using DalApi;
 namespace Dal;
 
-public class DalOrder
+public class DalOrder : IOrder
 {
-    public int add(Order order)
+    public int Add(Order newOrder)
     {
-        order.Id = DataSource.Config.Num_runOrder;
-        DataSource._orders[DataSource.Config.CounterOrders++] = order;
-        return order.Id;
+        newOrder.Id = DataSource.Config.Num_runOrder;
+        DataSource._orders.Add(newOrder);
+        return newOrder.Id;
     }
-    public Order get(int id)
-    {
-        foreach (Order order in DataSource._orders)
-        {
-            if (order.Id == id)
-            {
-                return order;
-            }
-        }
-        throw new Exception("not found the order");
 
-    }
-    public Order[] getArray()
+    public Order Get(int idNum)
     {
-        Order[] orders = new Order[DataSource.Config.CounterOrders];
-        for (int i = 0; i < DataSource.Config.CounterOrders; i++)
-        {
-            orders[i] = DataSource._orders[i];
+        int index = existOrder(idNum);
+        if(index == -1)
+        { 
+            OtherFunctions.exceptionNotFound("order",idNum);
         }
-        return orders;
+       return DataSource._orders[index];
     }
-    public void delete(int id)
+
+    public IEnumerable<Order> GetList()
     {
-        int i = 0;
-        for (; i < DataSource.Config.CounterOrders; i++)
-            if (DataSource._orders[i].Id == id)
-                break;
-        if (i == DataSource.Config.CounterOrders)
-            throw new Exception("not found the order");
-        while (i < DataSource.Config.CounterOrders - 1)
-        {
-            DataSource._orders[i] = DataSource._orders[i + 1];
-            i++;
-        }
-        DataSource.Config.CounterOrders--;
+        return DataSource._orders.Select(order => order);
     }
-    public void update(Order order)
+
+    public void Delete(int idNum)
     {
-        int i = 0;
-        for (; i < DataSource.Config.CounterOrders; i++)
+        
+        Order? order=Get(idNum);
+
+        if(order != null)
         {
-            if (order.Id == DataSource._orders[i].Id)
-            {
-                DataSource._orders[i] = order;
-                break;
-            }
+            DataSource._orders.Remove(order.Value);
+            return;
         }
-        if (i == DataSource.Config.CounterOrders)
-            throw new Exception("not found the order");
+        OtherFunctions.exceptionNotFound("order",idNum);
+    }
+    public void Update(Order order)
+    {
+        int index = existOrder(order.Id);
+        if (index != -1)
+        {
+            DataSource._orders[index] = order;
+        }
+        OtherFunctions.exceptionNotFound("order", order.Id);
+    }
+
+    private int existOrder(int id)
+    {
+        return DataSource._orders.FindIndex(order => order.Id == id);
     }
 }
 

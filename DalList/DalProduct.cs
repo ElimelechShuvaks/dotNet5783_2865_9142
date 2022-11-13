@@ -1,8 +1,6 @@
 ﻿
 using DalApi;
 using DO;
-using System;
-
 namespace Dal;
 
 public class DalProduct : IProduct
@@ -47,7 +45,6 @@ public class DalProduct : IProduct
             return;
         }
         OtherFunctions.exceptionNotFound("product", idNum);
-
     }
 
     public void Update(Product product)

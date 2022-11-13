@@ -1,95 +1,110 @@
 ﻿using DO;
+using DalApi;
+using System;
+
 namespace Dal;
 
-public class DalOrderitem
+public class DalOrderitem : IOrderItem
 {
-    public int add(OrderItem orderitem)
+
+    //public OrderItem getBy_2Id(int pId, int oId)
+    //{
+    //    foreach (OrderItem orderitem in DataSource._orderItems)
+    //    {
+    //        if (orderitem.ProductId == pId && orderitem.OrderId == oId)
+    //        {
+    //            return orderitem;
+    //        }
+    //    }
+    //    throw new Exception("not found the orderitem");
+    //}
+
+    //public OrderItem[] getItemArray(int orderId)
+    //{
+    //    int num;
+    //    num = DataSource._orderItems.Count(o => o.OrderId == orderId);
+    //    OrderItem[] items = new OrderItem[num];
+    //    int i = 0;
+    //    foreach (OrderItem orderitem in DataSource._orderItems)
+    //    {
+    //        if (orderitem.OrderId == orderId)
+    //        {
+    //            items[i++] = orderitem;
+    //        }
+    //    }
+    //    return items;
+    //}
+
+
+ 
+    public int Add(OrderItem newOrderItem)
     {
-        orderitem.Id = DataSource.Config.Num_runOrderitem;
-         DataSource._orderItems[DataSource.Config.CounterOrderitem++] = orderitem;
-        return orderitem.Id;
+        newOrderItem.Id = DataSource.Config.Num_runOrderitem;
+        
+        DataSource._orderItems.Add(newOrderItem);
+ 
+        return newOrderItem.Id;
     }
 
-    public OrderItem getById(int id)
+    public void Delete(int idNum)
     {
-        foreach (OrderItem orderitem in DataSource._orderItems)
+        OrderItem? orderItem = Get(idNum);
+
+        if (orderItem != null)
         {
-            if (orderitem.Id == id)
-            {
-                return orderitem;
-            }
+            DataSource._orderItems.Remove(orderItem.Value);
+            return;
         }
-        throw new Exception("not found the orderitem");
-
+        OtherFunctions.exceptionNotFound("order item", idNum);
     }
 
-    public OrderItem getBy_2Id(int pId, int oId)
+    public OrderItem Get(int idNum)
     {
-        foreach (OrderItem orderitem in DataSource._orderItems)
+        int index = existOrderItem(idNum);
+
+        if (index == -1)
         {
-            if (orderitem.ProductId == pId && orderitem.OrderId == oId)
-            {
-                return orderitem;
-            }
+            OtherFunctions.exceptionNotFound("order item", idNum);
         }
-        throw new Exception("not found the orderitem");
+        return DataSource._orderItems[index];
     }
 
-    public OrderItem[] getItemArray(int orderId)
+    public OrderItem GetBuy_2Id(int pId, int oId)
     {
-        int num;
-        num = DataSource._orderItems.Count(o => o.OrderId == orderId);
-        OrderItem[] items = new OrderItem[num];
-        int i = 0;
-        foreach (OrderItem orderitem in DataSource._orderItems)
+        int index = DataSource._orderItems.FindIndex(orderItem => orderItem.ProductId == pId && orderItem.OrderId == oId);
+
+        if (index == -1)
         {
-            if (orderitem.OrderId == orderId)
-            {
-                items[i++] = orderitem;
-            }
+            OtherFunctions.exceptionNotFound("order item", pId, oId);
         }
-        return items;
+
+        return DataSource._orderItems[index];
     }
 
-    public OrderItem[] getarry_all()
+    public IEnumerable<OrderItem> GetList()
     {
-        OrderItem[] OrderItems = new OrderItem[DataSource.Config.CounterOrderitem];
-        for (int i = 0; i < DataSource.Config.CounterOrderitem; i++)
-        {
-            OrderItems[i] = DataSource._orderItems[i];
-        }
-        return OrderItems;
+        return DataSource._orderItems.Select(orderItem => orderItem);
     }
 
-    public void delete(int id)
+    public IEnumerable<OrderItem> GetListItem(int id)
     {
-        int i = 0;
-        for (; i < DataSource.Config.CounterOrderitem; i++)
-            if (DataSource._orderItems[i].Id == id)
-                break;
-        if (i == DataSource.Config.CounterOrderitem)
-            throw new Exception("not found the orderitem");
-        while (i < DataSource.Config.CounterOrderitem - 1)
-        {
-            DataSource._orderItems[i] = DataSource._orderItems[i + 1];
-            i++;
-        }
-        DataSource.Config.CounterOrderitem--;
+        return DataSource._orderItems.Select(orderItem => orderItem.OrderId == id); //////////////////////////////////////////
     }
 
-    public void update(OrderItem orderitem)
+    public void Update(OrderItem newOrderItem)
     {
-        int i = 0;
-        for (; i < DataSource.Config.CounterOrderitem; i++)
+        int index = existOrderItem(newOrderItem.Id);
+
+        if (index != -1)
         {
-            if (orderitem.Id == DataSource._orderItems[i].Id)
-            {
-                DataSource._orderItems[i] = orderitem;
-                break;
-            }
+            DataSource._orderItems[index] = newOrderItem;
         }
-        if (i == DataSource.Config.CounterOrderitem)
-            throw new Exception("not found the orderitem");
+
+        OtherFunctions.exceptionNotFound("order item", newOrderItem.Id);
     }
 
+    private int existOrderItem(int idNum)
+    {
+        return DataSource._orderItems.FindIndex(orderItem => orderItem.Id == idNum);
+    }
 }
