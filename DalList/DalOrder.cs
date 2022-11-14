@@ -2,7 +2,7 @@
 using DalApi;
 namespace Dal;
 
-public class DalOrder : IOrder
+internal class DalOrder : IOrder
 {
     public int Add(Order newOrder)
     {

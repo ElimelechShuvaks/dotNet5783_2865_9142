@@ -4,39 +4,8 @@ using System;
 
 namespace Dal;
 
-public class DalOrderitem : IOrderItem
+internal class DalOrderitem : IOrderItem
 {
-
-    //public OrderItem getBy_2Id(int pId, int oId)
-    //{
-    //    foreach (OrderItem orderitem in DataSource._orderItems)
-    //    {
-    //        if (orderitem.ProductId == pId && orderitem.OrderId == oId)
-    //        {
-    //            return orderitem;
-    //        }
-    //    }
-    //    throw new Exception("not found the orderitem");
-    //}
-
-    //public OrderItem[] getItemArray(int orderId)
-    //{
-    //    int num;
-    //    num = DataSource._orderItems.Count(o => o.OrderId == orderId);
-    //    OrderItem[] items = new OrderItem[num];
-    //    int i = 0;
-    //    foreach (OrderItem orderitem in DataSource._orderItems)
-    //    {
-    //        if (orderitem.OrderId == orderId)
-    //        {
-    //            items[i++] = orderitem;
-    //        }
-    //    }
-    //    return items;
-    //}
-
-
- 
     public int Add(OrderItem newOrderItem)
     {
         newOrderItem.Id = DataSource.Config.Num_runOrderitem;

@@ -1,9 +1,9 @@
 ﻿
-using DalApi;
 using DO;
+using DalApi;
 namespace Dal;
 
-public class DalProduct : IProduct
+internal class DalProduct : IProduct
 {
     public int Add(Product newProduct)
     {
