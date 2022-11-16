@@ -1,14 +1,12 @@
 ﻿using DO;
 using DalApi;
-using System;
-
 namespace Dal;
 
 internal class DalOrderitem : IOrderItem
 {
     public int Add(OrderItem newOrderItem)
     {
-        newOrderItem.Id = DataSource.Config.Num_runOrderitem;
+        newOrderItem.Id = DataSource.Num_runOrderitem;
         
         DataSource._orderItems.Add(newOrderItem);
  

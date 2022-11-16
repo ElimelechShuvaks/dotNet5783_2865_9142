@@ -1,9 +1,9 @@
-﻿namespace DalApi;
+﻿namespace DO;
 
 
 public class IdNotExistException : Exception
 {
-  public IdNotExistException(string message) : base(message) { }
+    public IdNotExistException(string message) : base(message) { }
 
 }
 

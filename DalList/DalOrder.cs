@@ -6,7 +6,7 @@ internal class DalOrder : IOrder
 {
     public int Add(Order newOrder)
     {
-        newOrder.Id = DataSource.Config.Num_runOrder;
+        newOrder.Id = DataSource.Num_runOrder;
         DataSource._orders.Add(newOrder);
         return newOrder.Id;
     }

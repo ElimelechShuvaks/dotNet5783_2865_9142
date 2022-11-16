@@ -10,7 +10,7 @@ internal static class DataSource
     {
         s_Initialize();
     }
-    
+
     /// <summary>
     /// a random variable to use when it's needed.
     /// </summary>
@@ -31,16 +31,12 @@ internal static class DataSource
     /// </summary>
     internal static List<OrderItem> _orderItems = new List<OrderItem>(100);
 
-    //class "Config".
-    internal static class Config
-    {
-        //Counter for amount in number run.
-        private static int num_runOrder = 0;
-        private static int num_runOrderitem = 0;
+    //Counter for amount in number run.
+    private static int num_runOrder = 0;
+    private static int num_runOrderitem = 0;
 
-        public static int Num_runOrder { get => ++num_runOrder; }
-        public static int Num_runOrderitem { get => ++num_runOrderitem; }
-    }
+    public static int Num_runOrder { get => ++num_runOrder; }
+    public static int Num_runOrderitem { get => ++num_runOrderitem; }
 
     private static void s_Initialize()
     {
