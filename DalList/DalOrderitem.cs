@@ -57,7 +57,7 @@ internal class DalOrderitem : IOrderItem
 
     public IEnumerable<OrderItem> GetListItem(int id)
     {
-        return DataSource._orderItems.Select(orderItem => orderItem.OrderId == id); //////////////////////////////////////////
+        return DataSource._orderItems.Where(orderItem => orderItem.OrderId == id);
     }
 
     public void Update(OrderItem newOrderItem)

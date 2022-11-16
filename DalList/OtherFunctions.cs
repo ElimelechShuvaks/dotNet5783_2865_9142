@@ -19,6 +19,19 @@ namespace Dal
             throw new IdExistException($"{entityName} with id: {id} already exsist in data source");
         }
 
+        /// <summary>
+        /// exeption for get an order item by product id and order id.
+        /// </summary>
+        /// <param name="entityName">
+        /// order iten
+        /// </param>
+        /// <param name="id1">
+        /// produc id
+        /// </param>
+        /// <param name="id2">
+        /// order id
+        /// </param>
+        /// <exception cref="IdNotExistException"></exception>
         internal static void exceptionNotFound(string entityName, int id1, int id2)
         {
             throw new IdNotExistException($"{entityName} with product id: {id1} and order id: {id2} doesn't exsist in data source");
