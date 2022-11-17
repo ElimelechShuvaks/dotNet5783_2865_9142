@@ -201,7 +201,7 @@ void choisesProduct(IDal dal)
                     Console.WriteLine("Prints the id of the new product");
                     Console.WriteLine(intNum);
                 }
-                catch (Exception ex)
+                catch (IdExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }

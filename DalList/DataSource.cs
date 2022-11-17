@@ -69,13 +69,13 @@ internal static class DataSource
 
         for (int i = 0; i < 10; i++)
         {
-            int num = random.Next(4);
+            int num = random.Next(5);
             int tempID = random.Next(100000, 999999);
             if (IDarray.Contains(tempID))
                 continue;
             IDarray[i] = tempID;
             product.ID = tempID;
-            int temprandom = random.Next(11);
+            int temprandom = random.Next(10);
             product.Name = productNane[num][temprandom];
             product.Price = ProductPrice[num, temprandom];
             product.Category = (Categories)num;
@@ -118,6 +118,7 @@ internal static class DataSource
 
         Order order = new Order();
         TimeSpan timeSpan;
+
         for (int i = 0; i < 12; i++) // orders with ship date and delivery date
         {
             order.Id = 0;//garbech, becouse in the Add function it receive a ran number

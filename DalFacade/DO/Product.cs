@@ -1,24 +1,16 @@
-﻿
-namespace DO;
+﻿namespace DO;
 
 /// <summary>
 /// Details of a product
 /// </summary>
 public struct Product
 {
-    private int iD;
-    private string name;
-    private double price;
-    private Categories category;
-    private string image;
-    private int inStock;
-
-    public int ID { get => iD; set => iD = value; }
-    public string Name { get => name; set => name = value; }
-    public double Price { get => price; set => price = value; }
-    public Categories Category { get => category; set => category = value; }
-    public string Image { get => image; set => image = value; }
-    public int InStock { get => inStock; set => inStock = value; }
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public Categories Category { get; set; }
+    public string Image { get; set; }
+    public int InStock { get; set; }
 
     public override string ToString() => $@"Product ID: {ID}
 Name: {Name}
