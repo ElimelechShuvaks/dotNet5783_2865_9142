@@ -8,7 +8,7 @@ public class ProductItem
     public int ID { get; set; }
     public string Name { get; set; }
     public double Price { get; set; }
-    public Categories Category { get; set; }
+    public Enums.Categories Category { get; set; }
     // public string Image { get; set; }
 
     /// <summary>
