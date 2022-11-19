@@ -92,12 +92,9 @@ internal class Product : BlApi.IProduct
         }
         throw new Exception();
     }
-    public void RemoveProduct(int idProduct)
+    public void RemoveProduct(int idProduct)// i meed to understand.
     {
         IEnumerable<DO.Product> products = dal.Product.GetList();
-
-
-
     }
 
     public void Updateproduct(BO.Product newproduct)
