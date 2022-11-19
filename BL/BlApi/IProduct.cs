@@ -24,7 +24,7 @@ public interface IProduct
     /// </summary>
     /// <param name="IdProduct"></param>
     /// <returns></returns>
-    public ProductItem ProductDetailsClient(int idProduct);
+    public ProductItem ProductDetailsClient(Cart cart, int idProduct);
 
     /// <summary>
     /// Add product.
@@ -36,11 +36,13 @@ public interface IProduct
     /// Remove product.
     /// </summary>
     /// <param name="product"></param>
-    public void RemoveProduct(Product product);
+    public void RemoveProduct(int idProduct);
 
     /// <summary>
     ///  Update product.
     /// </summary>
     /// <param name="product"></param>
     public void Updateproduct(Product product);
+
+
 }

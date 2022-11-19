@@ -1,5 +1,4 @@
-﻿
-using DO;
+﻿using DO;
 using DalApi;
 namespace Dal;
 
@@ -59,7 +58,7 @@ internal class DalProduct : IProduct
         OtherFunctions.exceptionNotFound("product", product.ID);
     }
 
-    private int existProduct(int id)
+  private int existProduct(int id)
     {
         return DataSource._products.FindIndex(product => product.ID == id);
     }

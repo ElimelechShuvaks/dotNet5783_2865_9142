@@ -15,7 +15,7 @@ public class ProductItem
     /// Amount of Product Item
     /// </summary>
     public int Amount { get; set; }
-    public int InStock { get; set; }
+    public bool InStock { get; set; }
 
 
     public override string ToString() => $@"Product ID: {ID}
