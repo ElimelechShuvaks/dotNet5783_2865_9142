@@ -198,8 +198,7 @@ void choisesProduct(IDal dal)
                 try
                 {
                     intNum = dal.Product.Add(CinProduct(product));
-                    Console.WriteLine("Prints the id of the new product");
-                    Console.WriteLine(intNum);
+                    Console.WriteLine($"Prints the id :{intNum} of the new product");
                 }
                 catch (IdExistException ex)
                 {
