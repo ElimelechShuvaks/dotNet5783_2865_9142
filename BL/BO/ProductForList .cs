@@ -11,7 +11,7 @@ public class ProductForList
 
     public Enums.Categories Category { get; set; }
 
-    public override string ToString() => $@"Product ID: {ID}
+    public override string ToString() => $@"Product Id: {ID}
 Name: {Name}
 Category: {Category}
 Price: {Price}

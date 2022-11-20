@@ -18,7 +18,7 @@ public class ProductItem
     public bool InStock { get; set; }
 
 
-    public override string ToString() => $@"Product ID: {ID}
+    public override string ToString() => $@"Product Id: {ID}
 Name: {Name}
 Category: {Category}
 Price: {Price}

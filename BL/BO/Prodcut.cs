@@ -1,15 +1,19 @@
 ﻿namespace BO;
 
+/// <summary>
+/// Main logical entity of a product (Product)
+/// - for screens of product details (for management) and operations on a product.
+/// </summary>
 public class Product
 {
-    public int ID { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public double Price { get; set; }
     public Enums.Categories Category { get; set; }
     public string Image { get; set; }
     public int InStock { get; set; }
 
-    public override string ToString() => $@"Product ID: {ID}
+    public override string ToString() => $@"Product Id: {Id}
 Name: {Name}
 Category: {Category}
 Price: {Price}

@@ -1,10 +1,20 @@
 ﻿using BO;
 using DalApi;
 namespace BlImplementation;
+
+/// <summary>
+/// This class implements the functions of a main logical entity of a product.
+/// </summary>
 internal class Product : BlApi.IProduct
 {
     private IDal dal = new Dal.DalList();
     private DO.Product product = new();
+
+    /// <summary>
+    /// This function transfers a list of products from the data layer to a list
+    /// of products for an order request in the logical layer.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<BO.ProductForList> ProductListRequest()
     {
         IEnumerable<DO.Product> products = dal.Product.GetList();
@@ -21,6 +31,12 @@ internal class Product : BlApi.IProduct
         }
         return newProductForList;
     }
+
+    /// <summary>
+    /// Product details request for admin screen.
+    /// </summary>
+    /// <param name="idProduct"></param>
+    /// <returns></returns>
     public BO.Product ProductDetailsManger(int idProduct)
     {
         if (idProduct > 0)
@@ -36,7 +52,7 @@ internal class Product : BlApi.IProduct
             }
         }
         BO.Product newProduct = new();
-        newProduct.ID = product.ID;
+        newProduct.Id = product.ID;
         newProduct.Name = product.Name;
         newProduct.Price = product.Price;
         newProduct.Category = (BO.Enums.Categories)product.Category;
@@ -44,6 +60,13 @@ internal class Product : BlApi.IProduct
 
         return newProduct;
     }
+
+    /// <summary>
+    /// Product details request (for buyer screen - from the catalog).
+    /// </summary>
+    /// <param name="newCart"></param>
+    /// <param name="idProduct"></param>
+    /// <returns></returns>
     public BO.ProductItem ProductDetailsClient(BO.Cart newCart, int idProduct)
     {
         if (idProduct > 0)
@@ -77,31 +100,47 @@ internal class Product : BlApi.IProduct
         }
         return newProductItem;
     }
+
+    /// <summary>
+    /// Adding a product (for admin screen).
+    /// </summary>
+    /// <param name="newproduct"></param>
+    /// <exception cref="Exception"></exception>
     public void Addproduct(BO.Product newproduct)
     {
-        if (newproduct.ID > 0 && newproduct.Price > 0 && newproduct.Name!= string.Empty && newproduct.InStock > 0)
+        if (newproduct.Id > 0 && newproduct.Price > 0 && newproduct.Name != string.Empty && newproduct.InStock > 0)
         {
-            product.ID = newproduct.ID;
+            product.ID = newproduct.Id;
             product.Name = newproduct.Name;
-            product.Price = newproduct.Price;   
+            product.Price = newproduct.Price;
             product.InStock = newproduct.InStock;
-            product.Category=(DO.Categories)newproduct.Category;   
+            product.Category = (DO.Categories)newproduct.Category;
 
             dal.Product.Add(product);
             return;
         }
         throw new Exception();
     }
+
+    /// <summary>
+    /// Product deletion (for admin screen).
+    /// </summary>
+    /// <param name="idProduct"></param>
     public void RemoveProduct(int idProduct)// i meed to understand.
     {
-        IEnumerable<DO.Product> products = dal.Product.GetList();
+       
     }
 
+    /// <summary>
+    /// Update product data (for admin screen).
+    /// </summary>
+    /// <param name="newproduct"></param>
+    /// <exception cref="Exception"></exception>
     public void Updateproduct(BO.Product newproduct)
     {
-        if (newproduct.ID > 0 && newproduct.Price > 0 && newproduct.Name != string.Empty && newproduct.InStock > 0)
+        if (newproduct.Id > 0 && newproduct.Price > 0 && newproduct.Name != string.Empty && newproduct.InStock > 0)
         {
-            product.ID = newproduct.ID;
+            product.ID = newproduct.Id;
             product.Name = newproduct.Name;
             product.Price = newproduct.Price;
             product.InStock = newproduct.InStock;
@@ -112,6 +151,6 @@ internal class Product : BlApi.IProduct
         }
         throw new Exception();
     }
-  
+
 }
 
