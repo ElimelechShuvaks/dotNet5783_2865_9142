@@ -128,7 +128,13 @@ internal class Product : BlApi.IProduct
     /// <param name="idProduct"></param>
     public void RemoveProduct(int idProduct)// i meed to understand.
     {
-       
+        if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.Id == idProduct).Any())
+        {
+            throw new Exception();
+        }
+       dal.Product.Delete(idProduct);
+
+
     }
 
     /// <summary>
