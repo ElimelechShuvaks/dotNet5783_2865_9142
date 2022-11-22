@@ -11,7 +11,7 @@ public interface IOrder
     /// Get OrderForList for manger.
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderForList> OrderListRequest();
+    public IEnumerable<OrderForList> OrderForListRequest();
 
     /// <summary>
     /// Get details order.
