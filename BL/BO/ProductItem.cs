@@ -5,7 +5,7 @@
 /// </summary>
 public class ProductItem
 {
-    public int Id { get; set; }
+    public int ID { get; set; }
 
     public string Name { get; set; }
 
@@ -23,7 +23,7 @@ public class ProductItem
     public bool InStock { get; set; }
 
 
-    public override string ToString() => $@"Product ID: {Id}
+    public override string ToString() => $@"Product ID: {ID}
 Name: {Name}
 Category: {Category}
 Price: {Price}

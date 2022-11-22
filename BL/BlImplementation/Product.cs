@@ -6,17 +6,17 @@ internal class Product : BlApi.IProduct
     private IDal dal = new Dal.DalList();
     private DO.Product product = new();
 
-    public IEnumerable<ProductForList> ProductListRequest()
+    public IEnumerable<BO.ProductForList> ProductListRequest()
     {
         IEnumerable<DO.Product> products = dal.Product.GetList();
-        List<ProductForList> newProductForList = new List<ProductForList>(products.Count());
+        List<BO.ProductForList> newProductForList = new List<BO.ProductForList>(products.Count());
 
         foreach (DO.Product p in products)
         {
-            ProductForList productForList = new ProductForList();
+            BO.ProductForList productForList = new BO.ProductForList();
             productForList.ID = p.ID;
             productForList.Name = p.Name;
-            productForList.Category = (Categories)p.Category;
+            productForList.Category = (BO.Categories)p.Category;
             productForList.Price = p.Price;
 
             newProductForList.Add(productForList);
@@ -40,7 +40,7 @@ internal class Product : BlApi.IProduct
             newProduct.Id = product.ID;
             newProduct.Name = product.Name;
             newProduct.Price = product.Price;
-            newProduct.Category = (Categories)product.Category;
+            newProduct.Category = (BO.Categories)product.Category;
             newProduct.InStock = product.InStock;
 
             return newProduct;
@@ -51,7 +51,7 @@ internal class Product : BlApi.IProduct
         }
 
     }
-    public ProductItem ProductDetailsClient(BO.Cart newCart, int idProduct)
+    public BO.ProductItem ProductDetailsClient(BO.Cart newCart, int idProduct)
     {
         if (idProduct > 0)
         {
@@ -66,17 +66,17 @@ internal class Product : BlApi.IProduct
             }
         }
 
-        ProductItem newProductItem = new();
-        newProductItem.Id = product.ID;
+        BO.ProductItem newProductItem = new();
+        newProductItem.ID = product.ID;
         newProductItem.Name = product.Name;
         newProductItem.Price = product.Price;
-        newProductItem.Category = (Categories)product.Category;
+        newProductItem.Category = (BO.Categories)product.Category;
 
         if (product.InStock > 0)
         {
             newProductItem.InStock = true;
         }
-        OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.Id == idProduct);
+        BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.Id == idProduct);
 
         if (orderItem is not null)
         {
