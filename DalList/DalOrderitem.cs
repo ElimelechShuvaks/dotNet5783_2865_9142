@@ -50,7 +50,7 @@ internal class DalOrderitem : IOrderItem
 
     public IEnumerable<OrderItem> GetList()
     {
-        return DataSource._orderItems.Select(orderItem => orderItem);
+        return NewList();
     }
 
     public IEnumerable<OrderItem> GetListItem(int id)
@@ -68,6 +68,13 @@ internal class DalOrderitem : IOrderItem
         }
 
         OtherFunctions.exceptionNotFound("order item", newOrderItem.Id);
+    }
+
+    public IEnumerable<OrderItem> GetOrderItemsWithPredicate(Predicate<OrderItem> predicate = null)
+    {
+        bool check = predicate == null;
+        return DataSource._orderItems.Where(orderItem => check ? true : predicate(orderItem));
+
     }
 
     private int existOrderItem(int idNum)

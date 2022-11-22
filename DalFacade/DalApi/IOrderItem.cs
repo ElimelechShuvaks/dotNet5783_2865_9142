@@ -3,6 +3,8 @@ namespace DalApi;
 
 public interface IOrderItem : ICrud<OrderItem>
 {
-    public OrderItem GetBuy_2Id(int pId, int oId);
-    public IEnumerable<OrderItem> GetListItem(int id);
+    OrderItem GetBuy_2Id(int pId, int oId);
+    IEnumerable<OrderItem> GetListItem(int id);
+
+    IEnumerable<OrderItem> GetOrderItemsWithPredicate(Predicate<OrderItem> predicate = null);
 }
