@@ -213,7 +213,7 @@ void choisesProduct(IDal dal)
                     Console.WriteLine("cin the id thet you want to Get:");
                     Console.WriteLine(dal.Product.Get(IntTryParse(ref intNum)));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -221,14 +221,8 @@ void choisesProduct(IDal dal)
 
             case Functions.TogetArray:
 
-                try
-                {
-                    PrintList(dal.Product.GetList());
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("it is no hes data in data sourse");
-                }
+                PrintList(dal.Product.GetList());
+
                 break;
 
             case Functions.ToDel:
@@ -238,7 +232,7 @@ void choisesProduct(IDal dal)
                     Console.WriteLine("cin id for product thet you want to Delete:");
                     dal.Product.Delete(IntTryParse(ref intNum));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -250,7 +244,7 @@ void choisesProduct(IDal dal)
                 {
                     dal.Product.Update(CinProduct(product));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -296,7 +290,7 @@ void choises_Order(IDal dal)
                     Console.WriteLine("Prints the id of the new order");
                     Console.WriteLine(intNum);
                 }
-                catch (Exception ex)
+                catch (IdExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -309,7 +303,7 @@ void choises_Order(IDal dal)
                     Console.WriteLine("cin the id order thet you want to Get:");
                     Console.WriteLine(dal.Order.Get(IntTryParse(ref intNum)));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -317,15 +311,9 @@ void choises_Order(IDal dal)
 
             case Functions.TogetArray:
 
-                try
-                {
-                    IEnumerable<Order> newList = dal.Order.GetList();
-                    PrintList<Order>(newList);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("it is no hes data in data sourse");
-                }
+                IEnumerable<Order> newList = dal.Order.GetList();
+                PrintList<Order>(newList);
+
                 break;
 
             case Functions.ToDel:
@@ -335,7 +323,7 @@ void choises_Order(IDal dal)
                     Console.WriteLine("cin id for order thet you want to Delete:");
                     dal.Order.Delete(IntTryParse(ref intNum));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -347,7 +335,7 @@ void choises_Order(IDal dal)
                 {
                     dal.Order.Update(CinOrder(order));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -390,7 +378,7 @@ void choises_Orderitem(IDal dal)
                 {
                     Console.WriteLine(dal.OrderItem.Add(CinOrderItem()));
                 }
-                catch (Exception ex)
+                catch (IdExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -403,7 +391,7 @@ void choises_Orderitem(IDal dal)
                     Console.WriteLine("type an Order Item ID");
                     Console.WriteLine(dal.OrderItem.Get(IntTryParse(ref intNum)));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -414,11 +402,13 @@ void choises_Orderitem(IDal dal)
                 {
                     Console.WriteLine("type an Order ID");
                     intNum = IntTryParse(ref intNum);
+
                     Console.WriteLine("type an product ID");
                     intNum2 = IntTryParse(ref intNum2);
+
                     Console.WriteLine(dal.OrderItem.GetBuy_2Id(oId: intNum, pId: intNum2));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -426,27 +416,15 @@ void choises_Orderitem(IDal dal)
 
             case OrderItemFunctions.GetItemArray:
 
-                try
-                {
-                    Console.WriteLine("type an Order ID");
-                    PrintList(dal.OrderItem.GetListItem(IntTryParse(ref intNum)));
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("it is no hes data in data sourse");
-                }
+                Console.WriteLine("type an Order ID");
+                PrintList(dal.OrderItem.GetListItem(IntTryParse(ref intNum)));
+
                 break;
 
             case OrderItemFunctions.GetArray:
 
-                try
-                {
-                    PrintList(dal.OrderItem.GetList());
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("it is no hes data in data sourse");
-                }
+                PrintList(dal.OrderItem.GetList());
+
                 break;
 
             case OrderItemFunctions.Del:
@@ -455,7 +433,7 @@ void choises_Orderitem(IDal dal)
                     Console.WriteLine("type an Order Item ID to Delete");
                     dal.OrderItem.Delete(IntTryParse(ref intNum));
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -466,7 +444,7 @@ void choises_Orderitem(IDal dal)
                 {
                     dal.OrderItem.Update(CinOrderItem());
                 }
-                catch (Exception ex)
+                catch (IdNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
