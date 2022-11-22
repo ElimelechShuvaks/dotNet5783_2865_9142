@@ -5,7 +5,7 @@ internal class Cart : BlApi.ICart
 {
     public BO.Cart AddCart(BO.Cart cart, int idCart)
     {
-        BO.OrderItem orderItem = cart.Items.FirstOrDefault(cartItem => cartItem.Id == idCart);
+        BO.OrderItem orderItem = cart.Items.FirstOrDefault(cartItem => cartItem.OrderId == idCart);
         //if (orderItem == null)
         //{
 
