@@ -9,7 +9,7 @@ public class OrderItem
     /// <summary>
     /// id of order item
     /// </summary>
-    public int Id { get; set; }
+    public int OrderId { get; set; }
 
     /// <summary>
     /// Name of order item
@@ -38,9 +38,9 @@ public class OrderItem
 
     public override string ToString()
     {
-        return $@"OrderItem Id: {Id}
+        return $@"OrderItem OrderId: {OrderId}
 Name :{Name}
-Product Id: {ProductId}
+Product OrderId: {ProductId}
 Price: {Price}
 Amount: {Amount}
 TotalPrice{TotalPrice}:

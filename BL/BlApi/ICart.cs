@@ -12,7 +12,7 @@ public interface ICart
     /// </summary>
     /// <param name="cart"></param>
     /// <returns></returns>
-    public Cart AddCart(Cart cart, int idCart);
+    public Cart AddCart(Cart cart, int idProduct);
 
     /// <summary>
     /// Product update cart.

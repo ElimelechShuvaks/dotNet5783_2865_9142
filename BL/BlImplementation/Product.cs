@@ -7,7 +7,7 @@ internal class Product : BlApi.IProduct
     private DO.Product product = new();
 
     public IEnumerable<BO.ProductForList> ProductListRequest()
-    {
+    { 
         IEnumerable<DO.Product> products = dal.Product.GetList();
         List<BO.ProductForList> newProductForList = new List<BO.ProductForList>(products.Count());
 
@@ -76,7 +76,7 @@ internal class Product : BlApi.IProduct
         {
             newProductItem.InStock = true;
         }
-        BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.Id == idProduct);
+        BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.OrderId == idProduct);
 
         if (orderItem is not null)
         {
