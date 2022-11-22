@@ -50,7 +50,7 @@ internal class DalOrderitem : IOrderItem
 
     public IEnumerable<OrderItem> GetList()
     {
-        return NewList();
+        return GetOrderItemsWithPredicate();
     }
 
     public IEnumerable<OrderItem> GetListItem(int id)
