@@ -30,7 +30,7 @@ public interface IProduct
     /// Add product.
     /// </summary>
     /// <param name="product"></param>
-    public void Addproduct(Product product);
+    public void AddProduct(Product product);
 
     /// <summary>
     /// Remove product.
@@ -42,7 +42,7 @@ public interface IProduct
     ///  Update product.
     /// </summary>
     /// <param name="product"></param>
-    public void Updateproduct(Product product);
+    public void UpdateProduct(Product product);
 
 
 }

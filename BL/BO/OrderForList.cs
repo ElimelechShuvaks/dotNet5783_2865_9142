@@ -18,7 +18,7 @@ public class OrderForList
     /// <summary>
     /// status of Order For List
     /// </summary>
-    public Enums.OrderStatus Status { get; set; }
+    public OrderStatus Status { get; set; }
 
     /// <summary>
     /// AmountOfItems of Order For List

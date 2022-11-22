@@ -34,7 +34,7 @@ public class Order
     /// <summary>
     /// status of order
     /// </summary>
-    public Enums.OrderStatus Status { get; set; }
+    public OrderStatus Status { get; set; }
 
     /// <summary>
     /// PaymentData of order
