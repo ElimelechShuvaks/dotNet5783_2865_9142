@@ -1,21 +1,19 @@
 ﻿namespace BO;
 
-public class Enums
+
+public enum Categories
 {
-    public enum Categories
-    {
-        Simple,
-        Electric,
-        Suv,
-        Sport,
-        Luxury
-    }
-
-    public enum OrderStatus
-    {
-        ConfirmedOrder,
-        SentedOrder,
-        ArrivedOrder
-    }
-
+    Simple,
+    Electric,
+    Suv,
+    Sport,
+    Luxury
 }
+
+public enum OrderStatus
+{
+    ConfirmedOrder,
+    SentedOrder,
+    ArrivedOrder
+}
+

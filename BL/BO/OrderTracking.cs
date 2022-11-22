@@ -12,12 +12,12 @@ public class OrderTracking
     /// <summary>
     /// status of Order Tracking
     /// </summary>
-    public Enums.OrderStatus Status { get; set; }
+    public OrderStatus Status { get; set; }
 
     /// <summary>
     /// List of DateTime and status.
     /// </summary>
-    public List<Tuple<DateTime,Enums.OrderStatus>> tuplesOfDateAndStatus  { get; set; }
+    public List<Tuple<DateTime,OrderStatus>> tuplesOfDateAndStatus  { get; set; }
 
     public override string ToString()
     {
