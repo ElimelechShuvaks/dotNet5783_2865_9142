@@ -37,11 +37,6 @@ public class Order
     public OrderStatus Status { get; set; }
 
     /// <summary>
-    /// PaymentData of order
-    /// </summary>
-    public DateTime PaymentData { get; set; }
-
-    /// <summary>
     /// ShipDate of order
     /// </summary>
     public DateTime ShipDate { get; set; }
@@ -68,7 +63,6 @@ Customer Name: {CustomerName}
 Customer Email: {CustomerEmail}
 Customer Adress: {CustomerAdress}
 Order Date: {OrderDate}
-Payment Data:{PaymentData}
 Ship Date: {ShipDate.ToShortDateString()}
 Delivery Date: {DeliveryDate}
 TotalPrice:{TotalPrice}

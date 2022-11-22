@@ -76,7 +76,7 @@ internal class Product : BlApi.IProduct
         {
             newProductItem.InStock = true;
         }
-        BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.Id == idProduct);
+        BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.OrderId == idProduct);
 
         if (orderItem is not null)
         {
