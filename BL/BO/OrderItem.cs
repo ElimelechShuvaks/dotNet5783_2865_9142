@@ -5,7 +5,7 @@
 /// data of Order item.
 /// </summary>
 public class OrderItem
-{   
+{
     /// <summary>
     /// id of order item
     /// </summary>

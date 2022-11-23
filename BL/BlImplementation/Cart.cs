@@ -1,20 +1,15 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using DalApi;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
+
 namespace BlImplementation;
 
-/// <summary>
-/// Actions on shopping cart (all for buyer screens only).
-/// </summary>
 internal class Cart : BlApi.ICart
 {
     private IDal dal = new Dal.DalList();
 
-    /// <summary>
-    /// Adding a product to the shopping cart (for catalog screen, product details screen).
-    /// </summary>
-    /// <param name="cart"></param>
-    /// <param name="idProduct"></param>
-    /// <returns></returns>
     public BO.Cart AddCart(BO.Cart cart, int idProduct)
     {
         try
@@ -23,7 +18,7 @@ internal class Cart : BlApi.ICart
             DO.Product product = dal.Product.Get(idProduct);
 
 
-            if (orderItem is null)
+            if (orderItem is null) //Not exsist.
             {
                 if (product.InStock > 0)
                 {
@@ -60,14 +55,7 @@ internal class Cart : BlApi.ICart
         return cart;
     }
 
-    /// <summary>
-    /// Updating the quantity of a product in the shopping cart (for the shopping cart screen)
-    /// </summary>
-    /// <param name="cart"></param>
-    /// <param name="idProduct"></param>
-    /// <param name="newQuantity"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    
     public BO.Cart ProductUpdateCart(BO.Cart cart, int idProduct, int newQuantity)
     {
         BO.OrderItem orderItem = cart.Items.FirstOrDefault(cartItem => cartItem.OrderId == idProduct);
@@ -107,14 +95,19 @@ internal class Cart : BlApi.ICart
         return cart;
     }
 
-    /// <summary>
-    /// Basket confirmation for order \ placing an order (for shopping basket screen or order completion screen).
-    /// </summary>
-    /// <param name="cart"></param>
-    /// <param name="customerName"></param>
-    /// <param name="customerEmail"></param>
-    /// <param name="customerAdress"></param>
-    /// <exception cref="NotImplementedException"></exception>
+    //This function returns true or false if the email address is valid.
+    private bool isValidEmail(string email)
+    {
+        try
+        {
+            MailAddress mailAddress = new MailAddress(email);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
     public void ConfirmationOrderToCart(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
     {
         try
@@ -124,7 +117,7 @@ internal class Cart : BlApi.ICart
                 DO.Product product = dal.Product.Get(orderItem.ProductId);
 
                 if (product.InStock > 0 && orderItem.Amount <= product.InStock &&
-                     cart.CustomerName is not null && cart.CustomerAdress is not null && cart.CustomerEmail is not null)
+                     cart.CustomerName is not null && cart.CustomerAdress is not null && isValidEmail(cart.CustomerEmail) )
                 {
                     DO.Order order = new DO.Order();
 

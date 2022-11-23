@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using OtherFunction;
+
+namespace BO;
 
 /// <summary>
 /// class of Cart.
@@ -36,6 +38,7 @@ public class Cart
         return $@"Customer Name: {CustomerName}
 Customer Email: {CustomerEmail}
 Customer Adress: {CustomerAdress}
+Items: {Items.GetToStrings()}
 TotalPrice:{TotalPrice}
 ";
     }

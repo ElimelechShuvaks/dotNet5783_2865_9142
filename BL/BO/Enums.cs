@@ -1,6 +1,9 @@
 ﻿namespace BO;
 
 
+/// <summary>
+/// This enum for Categories.
+/// </summary>
 public enum Categories
 {
     Simple,
@@ -10,6 +13,9 @@ public enum Categories
     Luxury
 }
 
+/// <summary>
+/// This enum for Order status.
+/// </summary>
 public enum OrderStatus
 {
     ConfirmedOrder,

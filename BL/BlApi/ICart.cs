@@ -3,29 +3,36 @@
 namespace BlApi;
 
 /// <summary>
-/// Interface for cart.
+/// Actions on shopping cart (all for buyer screens only).
 /// </summary>
 public interface ICart
 {
     /// <summary>
-    /// Add cart and check.
+    /// Adding a product to the shopping cart (for catalog screen, product details screen).
     /// </summary>
     /// <param name="cart"></param>
+    /// <param name="idProduct"></param>
     /// <returns></returns>
     public Cart AddCart(Cart cart, int idProduct);
 
     /// <summary>
-    /// Product update cart.
+    /// Updating the quantity of a product in the shopping cart (for the shopping cart screen)
     /// </summary>
     /// <param name="cart"></param>
+    /// <param name="idProduct"></param>
+    /// <param name="newQuantity"></param>
     /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public Cart ProductUpdateCart(Cart cart, int idCart, int newQuantity);
 
     /// <summary>
-    /// Basket confirmation for order / placing an order.
+    /// Basket confirmation for order \ placing an order (for shopping basket screen or order completion screen).
     /// </summary>
-    /// <param name="CustomerName"></param>
-    /// <param name="CustomerEmail"></param>
-    /// <param name="CustomerAdress"></param>
+    /// <param name="cart"></param>
+    /// <param name="customerName"></param>
+    /// <param name="customerEmail"></param>
+    /// <param name="customerAdress"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    /// 
     public void ConfirmationOrderToCart(Cart cart, string customerName, string customerEmail, string customerAdress);
 }

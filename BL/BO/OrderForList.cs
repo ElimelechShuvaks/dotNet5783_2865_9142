@@ -1,4 +1,5 @@
 ﻿namespace BO;
+
 /// <summary>
 /// class for OrderForList.
 /// </summary>

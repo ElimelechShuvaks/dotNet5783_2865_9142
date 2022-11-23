@@ -6,16 +6,34 @@
 /// </summary>
 public class Product
 {
+    /// <summary>
+    /// Product id.
+    /// </summary>
     public int Id { get; set; }
 
+    /// <summary>
+    /// Name of product.
+    /// </summary>
     public string Name { get; set; }
 
+    /// <summary>
+    /// Price of product.
+    /// </summary>
     public double Price { get; set; }
 
+    /// <summary>
+    /// Category of product.
+    /// </summary>
     public Categories Category { get; set; }
 
+    /// <summary>
+    /// Image of product.
+    /// </summary>
     public string Image { get; set; }
 
+    /// <summary>
+    /// InStock in product.
+    /// </summary>
     public int InStock { get; set; }
 
     public override string ToString() => $@"Product ProductId: {Id}

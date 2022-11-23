@@ -1,4 +1,5 @@
-﻿namespace BO;
+﻿using OtherFunction;
+namespace BO;
 
 /// <summary>
 /// class for Orders.
@@ -65,6 +66,7 @@ Customer Adress: {CustomerAdress}
 Order Date: {OrderDate}
 Ship Date: {ShipDate.ToShortDateString()}
 Delivery Date: {DeliveryDate}
+Items: {Items.GetToStrings()}
 TotalPrice:{TotalPrice}
 ";
     }

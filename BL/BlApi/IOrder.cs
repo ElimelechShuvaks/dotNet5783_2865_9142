@@ -7,24 +7,27 @@ namespace BlApi;
 public interface IOrder
 {
     /// <summary>
-    /// Get details order.
+    /// takes an order id, search a Suitable DO order and try to return a BO order.
     /// </summary>
-    /// <param name="IdOrder"></param>
+    /// <param name="idOrder"></param>
     /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     public Order GetDetailsOrder(int idOrder);
 
     /// <summary>
-    /// Order shipping update.
+    /// update the shipDate in DO order and also return a BO order.
     /// </summary>
-    /// <param name="IdOrder"></param>
+    /// <param name="idOrder"></param>
     /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     public Order OrderShippingUpdate(int idOrder);
 
     /// <summary>
-    /// Order delivery update.
+    /// update the delivery Date in DO order and also return a BO order.
     /// </summary>
-    /// <param name="IdOrder"></param>
+    /// <param name="idOrder"></param>
     /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     public Order OrderDeliveryUpdate(int idOrder);
 
     /// <summary>
@@ -35,7 +38,7 @@ public interface IOrder
     public OrderTracking OrderTracking(int idOrder);
 
     /// <summary>
-    /// Get OrderForList for manger.
+    /// try to take a list of DO orders and return a list of OrderForList.
     /// </summary>
     /// <returns></returns>
     public IEnumerable<OrderForList> OrderForListRequest();

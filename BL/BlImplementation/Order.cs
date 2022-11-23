@@ -6,13 +6,6 @@ namespace BlImplementation;
 internal class Order : BlApi.IOrder
 {
     private IDal dal = new DalList();
-
-    /// <summary>
-    /// takes an order id, search a Suitable DO order and try to return a BO order.
-    /// </summary>
-    /// <param name="idOrder"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public BO.Order GetDetailsOrder(int idOrder)
     {
         try
@@ -58,11 +51,6 @@ internal class Order : BlApi.IOrder
             throw;
         }
     }
-
-    /// <summary>
-    /// try to take a list of DO orders and return a list of OrderForList.
-    /// </summary>
-    /// <returns></returns>
     public IEnumerable<BO.OrderForList> OrderForListRequest()
     {
         try
@@ -84,13 +72,6 @@ internal class Order : BlApi.IOrder
             throw;
         }
     }
-
-    /// <summary>
-    /// update the shipDate in DO order and also return a BO order.
-    /// </summary>
-    /// <param name="idOrder"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public BO.Order OrderShippingUpdate(int idOrder)
     {
         try
@@ -114,12 +95,6 @@ internal class Order : BlApi.IOrder
         throw new NotImplementedException();
     }
 
-    /// <summary>
-    /// update the delivery Date in DO order and also return a BO order.
-    /// </summary>
-    /// <param name="idOrder"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
         try
@@ -142,12 +117,6 @@ internal class Order : BlApi.IOrder
         throw new NotImplementedException();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="idOrder"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public BO.OrderTracking OrderTracking(int idOrder)
     {
         try
@@ -189,12 +158,6 @@ internal class Order : BlApi.IOrder
         return BO.OrderStatus.ConfirmedOrder;
     }
 
-    /// <summary>
-    /// option for the maneger to update an order
-    /// </summary>
-    /// <param name="idOrder"></param>
-    /// <param name="newAmount"></param>
-    /// <returns></returns>
     public BO.Order OrderUpdate(BO.Order order, int productId, int newAmount)
     {
         if (order.Status == BO.OrderStatus.ConfirmedOrder)
