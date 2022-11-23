@@ -28,14 +28,14 @@ public class Order
     public string CustomerAdress { get; set; }
 
     /// <summary>
-    /// OrderDate of order
-    /// </summary>
-    public DateTime OrderDate { get; set; }
-
-    /// <summary>
     /// status of order
     /// </summary>
     public OrderStatus Status { get; set; }
+
+    /// <summary>
+    /// OrderDate of order
+    /// </summary>
+    public DateTime OrderDate { get; set; }
 
     /// <summary>
     /// ShipDate of order
@@ -59,15 +59,17 @@ public class Order
 
     public override string ToString()
     {
-        return $@"Order Number: {Id}
+        return $@"
+Order Number: {Id}
 Customer Name: {CustomerName}
 Customer Email: {CustomerEmail}
 Customer Adress: {CustomerAdress}
+Order status: {Status}
 Order Date: {OrderDate}
 Ship Date: {ShipDate.ToShortDateString()}
 Delivery Date: {DeliveryDate}
 Items: {Items.GetToStrings()}
-TotalPrice:{TotalPrice}
+TotalPrice: {TotalPrice}
 ";
     }
 }

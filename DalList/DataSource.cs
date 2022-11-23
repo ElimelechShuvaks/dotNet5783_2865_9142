@@ -116,55 +116,68 @@ internal static class DataSource
             "13191 Kim Drive","6282 Calypso Place","7736 Jenna Center"
         };
 
-        Order order = new Order();
         TimeSpan timeSpan;
+        int tempRandom;
 
         for (int i = 0; i < 12; i++) // orders with ship date and delivery date
         {
-            order.Id = 0;//garbech, becouse in the Add function it receive a ran number
-            int temprandom = random.Next(customer_Name.Length);
-            order.CustomerName = customer_Name[temprandom];
-            order.CustomerEmail = customer_Email[temprandom];
-            order.CustomerAdress = customer_Adress[temprandom];
             timeSpan = new TimeSpan(random.Next(2, 30), random.Next(23), random.Next(59));
-            order.OrderDate = DateTime.Now - timeSpan;
+            tempRandom = random.Next(customer_Name.Length);
+
+            Order order = new Order
+            {
+                Id = Num_runOrder,
+                CustomerName = customer_Name[tempRandom],
+                CustomerEmail = customer_Email[tempRandom],
+                CustomerAdress = customer_Adress[tempRandom],
+                OrderDate = DateTime.Now - timeSpan,
+            };
+
             timeSpan = new TimeSpan(random.Next(2, 60), random.Next(23), random.Next(59));
             order.ShipDate = order.OrderDate + timeSpan;
+
             timeSpan = new TimeSpan(random.Next(5), random.Next(23), random.Next(59));
-            order.DeliveryDate = order.ShipDate - timeSpan;
+            order.DeliveryDate = order.ShipDate + timeSpan;
 
             _orders.Add(order);
         }
 
         for (int i = 0; i < 4; i++) // orders with ship date and without delivery date
         {
-            order.Id = 0;//garbech, becouse in the Add function it receive a ran number
-            int temprandom = random.Next(customer_Name.Length);
-            order.CustomerName = customer_Name[temprandom];
-            order.CustomerEmail = customer_Email[temprandom];
-            order.CustomerAdress = customer_Adress[temprandom];
             timeSpan = new TimeSpan(random.Next(2, 30), random.Next(23), random.Next(59));
-            order.OrderDate = DateTime.Now - timeSpan;
-            timeSpan = new TimeSpan(random.Next(2, 60), random.Next(23), random.Next(59));
-            order.ShipDate = order.OrderDate + timeSpan;
-            order.DeliveryDate = DateTime.MinValue;
+            tempRandom = random.Next(customer_Name.Length);
+
+            Order order = new Order
+            {
+                Id = Num_runOrder,
+                CustomerName = customer_Name[tempRandom],
+                CustomerEmail = customer_Email[tempRandom],
+                CustomerAdress = customer_Adress[tempRandom],
+                OrderDate = DateTime.Now - timeSpan,
+                ShipDate = DateTime.MinValue,
+            };
+
+            timeSpan = new TimeSpan(random.Next(5), random.Next(23), random.Next(59));
+            order.DeliveryDate = order.ShipDate + timeSpan;
 
             _orders.Add(order);
         }
 
         for (int i = 0; i < 4; i++) // orders without ship date and without delivery date
         {
-            order.Id = 0;//garbech, becouse in the Add function it receive a ran number
-            int temprandom = random.Next(customer_Name.Length);
-            order.CustomerName = customer_Name[temprandom];
-            order.CustomerEmail = customer_Email[temprandom];
-            order.CustomerAdress = customer_Adress[temprandom];
-            timeSpan = new TimeSpan(random.Next(2, 30), random.Next(24), random.Next(60));
-            order.OrderDate = DateTime.Now - timeSpan;
-            timeSpan = new TimeSpan(random.Next(2, 60), random.Next(24), random.Next(60));
-            order.ShipDate = order.OrderDate + timeSpan;
-            timeSpan = new TimeSpan(random.Next(5), random.Next(24), random.Next(60));
-            order.DeliveryDate = order.ShipDate - timeSpan;
+            timeSpan = new TimeSpan(random.Next(2, 30), random.Next(23), random.Next(59));
+            tempRandom = random.Next(customer_Name.Length);
+
+            Order order = new Order
+            {
+                Id = Num_runOrder,
+                CustomerName = customer_Name[tempRandom],
+                CustomerEmail = customer_Email[tempRandom],
+                CustomerAdress = customer_Adress[tempRandom],
+                OrderDate = DateTime.Now - timeSpan,
+                ShipDate = DateTime.MinValue,
+                DeliveryDate = DateTime.MinValue,
+            };
 
             _orders.Add(order);
         }
@@ -173,17 +186,20 @@ internal static class DataSource
     public static void s_Initialize_orderitem()
     {
         int indx;
-        OrderItem orderItem = new OrderItem();
         for (int i = 0; i < 20; i++)
         {
             for (int j = 0; j < random.Next(1, 5); j++)
             {
                 indx = random.Next(10);
-                orderItem.ItemId = 0;//garbech, becouse in the Add function it receive a ran number
-                orderItem.OrderId = _orders[i].Id;
-                orderItem.ProductId = _products[indx].ProductId;
-                orderItem.Price = _products[indx].Price;
-                orderItem.Amount = random.Next(10);
+
+                OrderItem orderItem = new OrderItem
+                {
+                    ItemId = Num_runOrderitem,
+                    OrderId = _orders[i].Id,
+                    ProductId = _products[indx].ProductId,
+                    Price = _products[indx].Price,
+                    Amount = random.Next(10)
+                };
 
                 _orderItems.Add(orderItem);
             }

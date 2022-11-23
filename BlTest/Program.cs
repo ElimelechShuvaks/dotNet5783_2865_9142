@@ -7,7 +7,6 @@ internal class Program
 {
     static IBl bl = new Bl();
 
-
     static void Main(string[] args)
     {
         while (true)

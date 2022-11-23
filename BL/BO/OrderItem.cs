@@ -38,12 +38,13 @@ public class OrderItem
 
     public override string ToString()
     {
-        return $@"Order ItemId: {OrderId}
+        return $@"
+Order Id: {OrderId}
+Product Id: {ProductId}
 Name :{Name}
-Product OrderId: {ProductId}
 Price: {Price}
 Amount: {Amount}
-TotalPrice{TotalPrice}:
+TotalPrice: {TotalPrice}:
 ";
     }
 }
