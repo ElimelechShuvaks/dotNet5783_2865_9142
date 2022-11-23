@@ -134,10 +134,10 @@ press 0 to exit.
 
     enum MainMenu
     {
+        exit,
         ProductCheck,
         OrderCheck,
         CartCheck,
-        exit
     }
 
     enum ProductMenu
@@ -147,13 +147,13 @@ press 0 to exit.
 
     enum OrderMenu
     {
+        exit,
         Get,
         ShipingUpdate,
         DeliveryUpdate,
         OrderTracking,
         GetList,
         OrderUpdate,
-        exit
     }
 
     enum CartMenu
