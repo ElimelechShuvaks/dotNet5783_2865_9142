@@ -32,10 +32,11 @@ public class OrderForList
 
     public override string ToString()
     {
-        return $@"OrderItem OrderId: {Id}
-CustomerName :{CustomerName}
-AmountOfItems: {AmountOfItems}
-TotalPrice{TotalPrice}:
+        return $@"Order id: {Id}
+Customer name :{CustomerName}
+Order status: {Status}
+Amount of items: {AmountOfItems}
+Total price{TotalPrice}:
 ";
     }
 }

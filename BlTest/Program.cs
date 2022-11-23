@@ -10,30 +10,36 @@ internal class Program
 
     static void Main(string[] args)
     {
-        Console.WriteLine(@"Please select an entity to check.
+        while (true)
+        {
+            Console.WriteLine(@"Please select an entity to check.
 press 1 to check a product entity,
 press 2 to check an order entity,
 press 3 to check a cart entity.
 press 0 to exit.
 ");
 
-        switch ((MainMenu)IntTryParse())
-        {
-            case MainMenu.ProductCheck:
-                break;
+            switch ((MainMenu)IntTryParse())
+            {
+                case MainMenu.ProductCheck:
+                    break;
 
-            case MainMenu.OrderCheck:
+                case MainMenu.OrderCheck:
 
-                OrderChecking();
+                    OrderChecking();
 
-                break;
+                    break;
 
-            case MainMenu.CartCheck:
-                break;
+                case MainMenu.CartCheck:
+                    break;
 
-            default:
-                Console.WriteLine("invail input, Please try again");
-                break;
+                case MainMenu.exit:
+                    return;
+
+                default:
+                    Console.WriteLine("invail input, Please try again");
+                    break;
+            } 
         }
     } // End the main.
 
@@ -44,7 +50,9 @@ press 0 to exit.
     /// </summary>
     static void OrderChecking()
     {
-        Console.WriteLine(@"
+        while (true)
+        {
+            Console.WriteLine(@"
 Please select a function to check.
 press 1 to get an order by order id.
 press 2 to update the shiping date.
@@ -54,27 +62,59 @@ press 5 to get a list of orders.
 press 6 to update the change the order.
 press 0 to exit.
 ");
-        switch ((OrderMenu)IntTryParse())
-        {
+            try
+            {
+                switch ((OrderMenu)IntTryParse())
+                {
 
-            case OrderMenu.Get:
-                Console.WriteLine("please enter an order id.");
-                Console.WriteLine(bl.Order.GetDetailsOrder(IntTryParse()));
-                break;
-            case OrderMenu.ShipingUpdate:
-                break;
-            case OrderMenu.DeliveryUpdate:
-                break;
-            case OrderMenu.OrderTracking:
-                break;
-            case OrderMenu.GetList:
-                break;
-            case OrderMenu.OrderUpdate:
-                break;
-            case OrderMenu.exit:
-                break;
-            default:
-                break;
+                    case OrderMenu.Get:
+                        Console.WriteLine("please enter an order id.");
+                        Console.WriteLine(bl.Order.GetDetailsOrder(IntTryParse()));
+
+                        break;
+                    
+                    case OrderMenu.ShipingUpdate:
+                        Console.WriteLine("please enter an order id.");
+                        Console.WriteLine(bl.Order.OrderShippingUpdate(IntTryParse()));
+
+                        break;
+                    
+                    case OrderMenu.DeliveryUpdate:
+                        Console.WriteLine("please enter an order id.");
+                        Console.WriteLine(bl.Order.OrderDeliveryUpdate(IntTryParse()));
+                      
+                        break;
+                    
+                    case OrderMenu.OrderTracking:
+                        // צריך להוסיף ב toString של OrderTracking הדפסה של list
+                        break;
+
+                    case OrderMenu.GetList:
+                        foreach (var item in bl.Order.OrderForListRequest())
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        break;
+
+                    case OrderMenu.OrderUpdate:
+                        // צריך לבקש מהמשתמש order ולהפעיל את הפונקציה
+                        break;
+
+                    case OrderMenu.exit:
+                        return;
+
+                    default:
+                        Console.WriteLine("invail input, Please try again");
+
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            } 
         }
     }
 
