@@ -1,5 +1,4 @@
 ﻿using BO;
-
 namespace BlApi;
 
 /// <summary>
@@ -7,12 +6,6 @@ namespace BlApi;
 /// </summary>
 public interface IOrder
 {
-    /// <summary>
-    /// Get OrderForList for manger.
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerable<OrderForList> OrderForListRequest();
-
     /// <summary>
     /// Get details order.
     /// </summary>
@@ -41,6 +34,11 @@ public interface IOrder
     /// <returns></returns>
     public OrderTracking OrderTracking(int idOrder);
 
+    /// <summary>
+    /// Get OrderForList for manger.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<OrderForList> OrderForListRequest();
 
     //the bonus function.
 
