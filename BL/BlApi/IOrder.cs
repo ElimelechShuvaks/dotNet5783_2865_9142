@@ -41,5 +41,14 @@ public interface IOrder
     /// <returns></returns>
     public OrderTracking OrderTracking(int idOrder);
 
-    // Bonus
+
+    //the bonus function.
+
+    /// <summary>
+    /// option for the maneger to update an order
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <param name="newAmount"></param>
+    /// <returns></returns>
+    public BO.Order OrderUpdate(BO.Order order, int productId, int newAmount);
 }

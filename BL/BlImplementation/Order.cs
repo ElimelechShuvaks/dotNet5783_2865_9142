@@ -174,7 +174,7 @@ internal class Order : BlApi.IOrder
     }
 
     /// <summary>
-    /// help function to colculate the order status of a givei DO order.
+    /// help function to colculate the order status of a given DO order.
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
@@ -187,5 +187,54 @@ internal class Order : BlApi.IOrder
             return BO.OrderStatus.SentedOrder;
 
         return BO.OrderStatus.ConfirmedOrder;
+    }
+
+    /// <summary>
+    /// option for the maneger to update an order
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <param name="newAmount"></param>
+    /// <returns></returns>
+    public BO.Order OrderUpdate(BO.Order order, int productId, int newAmount)
+    {
+        if (order.Status == BO.OrderStatus.ConfirmedOrder)
+        {
+            BO.OrderItem orderItem = order.Items.FirstOrDefault(orderItem => orderItem.ProductId == productId);
+            DO.Product product = dal.Product.Get(productId); // request a DO producr to update the amount in stok.
+
+            if (orderItem.Amount > newAmount)
+            {
+                order.TotalPrice -= orderItem.Amount - newAmount * orderItem.Price; // update the total price of order.
+
+                product.InStock += orderItem.Amount - newAmount; // colculate the new amount in stok.
+                dal.Product.Update(product); // updating.
+
+                orderItem.Amount = newAmount; // update the amount in BO order item
+                orderItem.TotalPrice = newAmount * orderItem.Price; // update the total price of order item.
+            }
+            
+            else if (orderItem.Amount < newAmount)
+            {
+                order.TotalPrice += newAmount - orderItem.Amount * orderItem.Price; // update the total price of order.
+
+                product.InStock -= newAmount - orderItem.Amount; // colculate the new amount in stok.
+                dal.Product.Update(product); // updating.
+
+                orderItem.Amount = newAmount; // update the amount in BO order item
+                orderItem.TotalPrice = newAmount * orderItem.Price; // update the total price of order item.
+            }
+
+            else // the new amount is 0, than it's need to rmove this product from the order
+            {
+                order.TotalPrice -= orderItem.TotalPrice;
+
+                product.InStock += orderItem.Amount;
+                dal.Product.Update(product);
+
+                order.Items.Remove(orderItem);
+            }
+        }
+
+        throw new Exception();
     }
 }
