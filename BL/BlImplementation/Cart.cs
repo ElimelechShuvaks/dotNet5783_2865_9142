@@ -2,10 +2,19 @@
 using DalApi;
 namespace BlImplementation;
 
+/// <summary>
+/// Actions on shopping cart (all for buyer screens only).
+/// </summary>
 internal class Cart : BlApi.ICart
 {
     private IDal dal = new Dal.DalList();
 
+    /// <summary>
+    /// Adding a product to the shopping cart (for catalog screen, product details screen).
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="idProduct"></param>
+    /// <returns></returns>
     public BO.Cart AddCart(BO.Cart cart, int idProduct)
     {
         try
@@ -51,6 +60,14 @@ internal class Cart : BlApi.ICart
         return cart;
     }
 
+    /// <summary>
+    /// Updating the quantity of a product in the shopping cart (for the shopping cart screen)
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="idProduct"></param>
+    /// <param name="newQuantity"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public BO.Cart ProductUpdateCart(BO.Cart cart, int idProduct, int newQuantity)
     {
         BO.OrderItem orderItem = cart.Items.FirstOrDefault(cartItem => cartItem.OrderId == idProduct);
@@ -90,35 +107,57 @@ internal class Cart : BlApi.ICart
         return cart;
     }
 
-    //**I'm not done with this function**.
-
+    /// <summary>
+    /// Basket confirmation for order \ placing an order (for shopping basket screen or order completion screen).
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="customerName"></param>
+    /// <param name="customerEmail"></param>
+    /// <param name="customerAdress"></param>
+    /// <exception cref="NotImplementedException"></exception>
     public void ConfirmationOrderToCart(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
     {
-        foreach (OrderItem orderItem in cart.Items)
+        try
         {
-            DO.Product product = dal.Product.Get(orderItem.ProductId);
-
-            if (product.InStock > 0 && orderItem.Amount <= product.InStock &&
-                 cart.CustomerName is not null && cart.CustomerAdress is not null && cart.CustomerEmail is not null)
+            foreach (OrderItem orderItem in cart.Items)
             {
-                //Id?
-                DO.Order order = new DO.Order();
-                order.CustomerName = customerName;
-                order.CustomerAdress = customerAdress;
-                order.CustomerEmail = customerEmail;
-                order.OrderDate = DateTime.Now;
-                order.ShipDate = DateTime.MinValue;
-                order.DeliveryDate = DateTime.MinValue;
-                int orderNumber = dal.Order.Add(order);
+                DO.Product product = dal.Product.Get(orderItem.ProductId);
 
-                DO.OrderItem orderItem1 = new DO.OrderItem();
+                if (product.InStock > 0 && orderItem.Amount <= product.InStock &&
+                     cart.CustomerName is not null && cart.CustomerAdress is not null && cart.CustomerEmail is not null)
+                {
+                    DO.Order order = new DO.Order();
 
+                    order.CustomerName = customerName;
+                    order.CustomerAdress = customerAdress;
+                    order.CustomerEmail = customerEmail;
+                    order.OrderDate = DateTime.Now;
+                    order.ShipDate = DateTime.MinValue;
+                    order.DeliveryDate = DateTime.MinValue;
+                    int orderNumber = dal.Order.Add(order);
 
+                    DO.OrderItem ToAddOrderItem = new DO.OrderItem();
+
+                    ToAddOrderItem.ProductId = orderItem.ProductId;
+                    ToAddOrderItem.OrderId = orderNumber;
+                    ToAddOrderItem.Amount = orderItem.Amount;
+                    ToAddOrderItem.Price = orderItem.Price;
+                    dal.OrderItem.Add(ToAddOrderItem);
+
+                    product.InStock = product.InStock - orderItem.Amount;
+                    dal.Product.Update(product);
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
             }
         }
-        throw new NotImplementedException();
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
-
-
 }
 

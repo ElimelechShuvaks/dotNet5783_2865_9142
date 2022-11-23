@@ -6,11 +6,11 @@ internal class DalOrderitem : IOrderItem
 {
     public int Add(OrderItem newOrderItem)
     {
-        newOrderItem.Id = DataSource.Num_runOrderitem;
+        newOrderItem.ItemId = DataSource.Num_runOrderitem;
         
         DataSource._orderItems.Add(newOrderItem);
  
-        return newOrderItem.Id;
+        return newOrderItem.ItemId;
     }
 
     public void Delete(int idNum)
@@ -60,14 +60,14 @@ internal class DalOrderitem : IOrderItem
 
     public void Update(OrderItem newOrderItem)
     {
-        int index = existOrderItem(newOrderItem.Id);
+        int index = existOrderItem(newOrderItem.ItemId);
 
         if (index != -1)
         {
             DataSource._orderItems[index] = newOrderItem;
         }
 
-        OtherFunctions.exceptionNotFound("order item", newOrderItem.Id);
+        OtherFunctions.exceptionNotFound("order item", newOrderItem.ItemId);
     }
 
     public IEnumerable<OrderItem> GetOrderItemsWithPredicate(Predicate<OrderItem> predicate = null)
@@ -79,6 +79,6 @@ internal class DalOrderitem : IOrderItem
 
     private int existOrderItem(int idNum)
     {
-        return DataSource._orderItems.FindIndex(orderItem => orderItem.Id == idNum);
+        return DataSource._orderItems.FindIndex(orderItem => orderItem.ItemId == idNum);
     }
 }

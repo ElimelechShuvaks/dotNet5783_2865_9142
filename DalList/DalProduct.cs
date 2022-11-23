@@ -6,15 +6,15 @@ internal class DalProduct : IProduct
 {
     public int Add(Product newProduct)
     {
-        int index = existProduct(newProduct.ID);
+        int index = existProduct(newProduct.ProductId);
 
         if (index != -1)
         {
-            OtherFunctions.exceptionFound("product", newProduct.ID);
+            OtherFunctions.exceptionFound("product", newProduct.ProductId);
         }
       
         DataSource._products.Add(newProduct);
-        return newProduct.ID;
+        return newProduct.ProductId;
     }
 
     public Product Get(int idNum)
@@ -48,18 +48,18 @@ internal class DalProduct : IProduct
 
     public void Update(Product product)
     {
-        int index = existProduct(product.ID);
+        int index = existProduct(product.ProductId);
 
         if (index != -1)
         {
             DataSource._products[index] = product;
         }
 
-        OtherFunctions.exceptionNotFound("product", product.ID);
+        OtherFunctions.exceptionNotFound("product", product.ProductId);
     }
 
   private int existProduct(int id)
     {
-        return DataSource._products.FindIndex(product => product.ID == id);
+        return DataSource._products.FindIndex(product => product.ProductId == id);
     }
 }

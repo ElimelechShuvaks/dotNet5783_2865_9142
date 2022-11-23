@@ -14,7 +14,7 @@ internal class Product : BlApi.IProduct
         foreach (DO.Product p in products)
         {
             BO.ProductForList productForList = new BO.ProductForList();
-            productForList.ID = p.ID;
+            productForList.ID = p.ProductId;
             productForList.Name = p.Name;
             productForList.Category = (BO.Categories)p.Category;
             productForList.Price = p.Price;
@@ -37,7 +37,7 @@ internal class Product : BlApi.IProduct
                 Console.WriteLine(ex.Message);
             }
             BO.Product newProduct = new();
-            newProduct.Id = product.ID;
+            newProduct.Id = product.ProductId;
             newProduct.Name = product.Name;
             newProduct.Price = product.Price;
             newProduct.Category = (BO.Categories)product.Category;
@@ -67,7 +67,7 @@ internal class Product : BlApi.IProduct
         }
 
         BO.ProductItem newProductItem = new();
-        newProductItem.ID = product.ID;
+        newProductItem.ID = product.ProductId;
         newProductItem.Name = product.Name;
         newProductItem.Price = product.Price;
         newProductItem.Category = (BO.Categories)product.Category;
@@ -88,7 +88,7 @@ internal class Product : BlApi.IProduct
     {
         if (newProduct.Id > 0 && newProduct.Price > 0 && newProduct.Name!= string.Empty && newProduct.InStock > 0)
         {
-            product.ID = newProduct.Id;
+            product.ProductId = newProduct.Id;
             product.Name = newProduct.Name;
             product.Price = newProduct.Price;   
             product.InStock = newProduct.InStock;
@@ -109,7 +109,7 @@ internal class Product : BlApi.IProduct
     {
         if (newproduct.Id > 0 && newproduct.Price > 0 && newproduct.Name != string.Empty && newproduct.InStock > 0)
         {
-            product.ID = newproduct.Id;
+            product.ProductId = newproduct.Id;
             product.Name = newproduct.Name;
             product.Price = newproduct.Price;
             product.InStock = newproduct.InStock;

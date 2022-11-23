@@ -18,7 +18,7 @@ public class Product
 
     public int InStock { get; set; }
 
-    public override string ToString() => $@"Product ID: {Id}
+    public override string ToString() => $@"Product ProductId: {Id}
 Name: {Name}
 Category: {Category}
 Price: {Price}

@@ -74,7 +74,7 @@ internal static class DataSource
             if (IDarray.Contains(tempID))
                 continue;
             IDarray[i] = tempID;
-            product.ID = tempID;
+            product.ProductId = tempID;
             int temprandom = random.Next(10);
             product.Name = productNane[num][temprandom];
             product.Price = ProductPrice[num, temprandom];
@@ -179,9 +179,9 @@ internal static class DataSource
             for (int j = 0; j < random.Next(1, 5); j++)
             {
                 indx = random.Next(10);
-                orderItem.Id = 0;//garbech, becouse in the Add function it receive a ran number
+                orderItem.ItemId = 0;//garbech, becouse in the Add function it receive a ran number
                 orderItem.OrderId = _orders[i].Id;
-                orderItem.ProductId = _products[indx].ID;
+                orderItem.ProductId = _products[indx].ProductId;
                 orderItem.Price = _products[indx].Price;
                 orderItem.Amount = random.Next(10);
 

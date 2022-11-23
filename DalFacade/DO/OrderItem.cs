@@ -5,7 +5,7 @@
 /// </summary>
 public struct OrderItem
 {
-    public int Id { get; set; }
+    public int ItemId { get; set; }
     public int ProductId { get; set; }
     public int OrderId { get; set; }
     public int Amount { get; set; }
@@ -13,9 +13,9 @@ public struct OrderItem
 
     public override string ToString()
     {
-        return $@"Item ID: {Id}
-Product ID: {ProductId}
-Order ID: {OrderId}
+        return $@"Item ProductId: {ItemId}
+Product ProductId: {ProductId}
+Order ProductId: {OrderId}
 Price: {Price}
 Amount: {Amount}
 ";

@@ -5,12 +5,11 @@ namespace BlTest;
 
 internal class Program
 {
-     IBl bl = new Bl();
+    static IBl bl = new Bl();
 
     static void Main(string[] args)
     {
-        Console.WriteLine(@"
-Please select an entity to check.
+        Console.WriteLine(@"Please select an entity to check.
 press 1 to check a product entity,
 press 2 to check an order entity,
 press 3 to check a cart entity.
@@ -56,7 +55,7 @@ press 0 to exit.
 ");
         switch ((OrderMenu)IntTryParse())
         {
-           
+
             case OrderMenu.Get:
                 Console.WriteLine("please enter an order id.");
                 Console.WriteLine(bl.Order.GetDetailsOrder(IntTryParse()));

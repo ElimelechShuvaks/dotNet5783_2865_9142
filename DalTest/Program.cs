@@ -99,7 +99,7 @@ Product CinProduct(Product product)
     double doubleNum = 0;
 
     Console.WriteLine("cin id:");
-    product.ID = IntTryParse(ref intNum);
+    product.ProductId = IntTryParse(ref intNum);
 
     Console.WriteLine("cin name:");
     product.Name = Console.ReadLine();
@@ -153,13 +153,13 @@ OrderItem CinOrderItem()
     int intNum = 0;
     double doubleNum = 0;
 
-    Console.WriteLine("type an Order ID");
-    ret.Id = IntTryParse(ref intNum);
+    Console.WriteLine("type an Order ProductId");
+    ret.ItemId = IntTryParse(ref intNum);
 
-    Console.WriteLine("type a product ID");
+    Console.WriteLine("type a product ProductId");
     ret.ProductId = IntTryParse(ref intNum);
 
-    Console.WriteLine("type an Order ID");
+    Console.WriteLine("type an Order ProductId");
     ret.OrderId = IntTryParse(ref intNum);
 
     Console.WriteLine("type an amount of the product");
@@ -362,7 +362,7 @@ void choises_Orderitem(IDal dal)
  press 0 to Exsit.
  press 1 to Add an Order Item.
  press 2 to Get a specific Order Item.
- press 3 to Get a specific Order Item by product ID and order ID.
+ press 3 to Get a specific Order Item by product ProductId and order ProductId.
  press 4 to Get an Array of specific Order.
  press 5 to Get an Array of all Order Items.
  press 6 to Delete an Order Item.
@@ -388,7 +388,7 @@ void choises_Orderitem(IDal dal)
 
                 try
                 {
-                    Console.WriteLine("type an Order Item ID");
+                    Console.WriteLine("type an Order Item ProductId");
                     Console.WriteLine(dal.OrderItem.Get(IntTryParse(ref intNum)));
                 }
                 catch (IdNotExistException ex)
@@ -400,10 +400,10 @@ void choises_Orderitem(IDal dal)
             case OrderItemFunctions.GetBy_2Id:
                 try
                 {
-                    Console.WriteLine("type an Order ID");
+                    Console.WriteLine("type an Order ProductId");
                     intNum = IntTryParse(ref intNum);
 
-                    Console.WriteLine("type an product ID");
+                    Console.WriteLine("type an product ProductId");
                     intNum2 = IntTryParse(ref intNum2);
 
                     Console.WriteLine(dal.OrderItem.GetBuy_2Id(oId: intNum, pId: intNum2));
@@ -416,7 +416,7 @@ void choises_Orderitem(IDal dal)
 
             case OrderItemFunctions.GetItemArray:
 
-                Console.WriteLine("type an Order ID");
+                Console.WriteLine("type an Order ProductId");
                 PrintList(dal.OrderItem.GetListItem(IntTryParse(ref intNum)));
 
                 break;
@@ -430,7 +430,7 @@ void choises_Orderitem(IDal dal)
             case OrderItemFunctions.Del:
                 try
                 {
-                    Console.WriteLine("type an Order Item ID to Delete");
+                    Console.WriteLine("type an Order Item ProductId to Delete");
                     dal.OrderItem.Delete(IntTryParse(ref intNum));
                 }
                 catch (IdNotExistException ex)
