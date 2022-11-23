@@ -1,9 +1,6 @@
-﻿using BlApi;
-using BO;
-using DalApi;
+﻿using DalApi;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
-
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
@@ -20,10 +17,9 @@ internal class Cart : BlApi.ICart
 
             if (orderItem is null) //Not exsist.
             {
-                if (product.InStock > 0)
+                if (product.InStock > 0 && product.ProductId > 99999)
                 {
                     orderItem.ProductId = idProduct;
-                    orderItem.Price = product.Price;
                     orderItem.Name = product.Name;
                     orderItem.Amount += 1;
                     orderItem.TotalPrice += orderItem.Price;
@@ -34,11 +30,10 @@ internal class Cart : BlApi.ICart
                     throw new Exception();
                 }
             }
-            else // exsist.
+            else //if exsist.
             {
-                if (product.InStock > 0)
+                if (product.InStock > 0 && product.ProductId > 99999)
                 {
-                    orderItem.Price = product.Price;
                     orderItem.TotalPrice += orderItem.Price;
                     orderItem.Amount += 1;
                 }
@@ -47,15 +42,16 @@ internal class Cart : BlApi.ICart
                     throw new Exception();
                 }
             }
+            cart.TotalPrice += orderItem.Price;
         }
         catch (Exception)
         {
             throw;
         }
+
         return cart;
     }
 
-    
     public BO.Cart ProductUpdateCart(BO.Cart cart, int idProduct, int newQuantity)
     {
         BO.OrderItem orderItem = cart.Items.FirstOrDefault(cartItem => cartItem.OrderId == idProduct);
@@ -112,12 +108,12 @@ internal class Cart : BlApi.ICart
     {
         try
         {
-            foreach (OrderItem orderItem in cart.Items)
+            foreach (BO.OrderItem orderItem in cart.Items)
             {
                 DO.Product product = dal.Product.Get(orderItem.ProductId);
 
                 if (product.InStock > 0 && orderItem.Amount <= product.InStock &&
-                     cart.CustomerName is not null && cart.CustomerAdress is not null && isValidEmail(cart.CustomerEmail) )
+                     cart.CustomerName is not null && cart.CustomerAdress is not null && isValidEmail(cart.CustomerEmail))
                 {
                     DO.Order order = new DO.Order();
 

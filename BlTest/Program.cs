@@ -7,6 +7,7 @@ internal class Program
 {
     static IBl bl = new Bl();
 
+
     static void Main(string[] args)
     {
         Console.WriteLine(@"Please select an entity to check.
