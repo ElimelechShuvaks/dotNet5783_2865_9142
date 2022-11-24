@@ -80,8 +80,7 @@ press 0 to exsit.
 
                     case ProductMenu.GetClient:
                         Console.WriteLine("please enter a product id.");
-                        // צריך להוסיף סל
-                        //Console.WriteLine(bl.Product.ProductDetailsClient( ,IntTryParse()));
+                        Console.WriteLine(bl.Product.ProductDetailsClient(GetCart(), IntTryParse()));
 
                         break;
 
