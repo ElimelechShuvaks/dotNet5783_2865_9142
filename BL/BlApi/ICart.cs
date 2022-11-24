@@ -23,7 +23,7 @@ public interface ICart
     /// <param name="newQuantity"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Cart ProductUpdateCart(Cart cart, int idCart, int newQuantity);
+    public Cart ProductUpdateCart(Cart cart, int idProduct, int newQuantity);
 
     /// <summary>
     /// Basket confirmation for order \ placing an order (for shopping basket screen or order completion screen).
@@ -36,3 +36,5 @@ public interface ICart
     /// 
     public void ConfirmationOrderToCart(Cart cart, string customerName, string customerEmail, string customerAdress);
 }
+
+// הוספת פונקציה לריקון הסל

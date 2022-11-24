@@ -154,11 +154,11 @@ internal static class DataSource
                 CustomerEmail = customer_Email[tempRandom],
                 CustomerAdress = customer_Adress[tempRandom],
                 OrderDate = DateTime.Now - timeSpan,
-                ShipDate = DateTime.MinValue,
+                DeliveryDate = DateTime.MinValue,
             };
 
             timeSpan = new TimeSpan(random.Next(5), random.Next(23), random.Next(59));
-            order.DeliveryDate = order.ShipDate + timeSpan;
+            order.ShipDate = order.OrderDate + timeSpan;
 
             _orders.Add(order);
         }

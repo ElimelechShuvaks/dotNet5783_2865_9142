@@ -19,9 +19,10 @@ internal class Cart : BlApi.ICart
             {
                 if (product.InStock > 0 && product.ProductId > 99999)
                 {
+                    orderItem = new BO.OrderItem();
                     orderItem.ProductId = idProduct;
                     orderItem.Name = product.Name;
-                    orderItem.Amount += 1;
+                    orderItem.Amount = 1;
                     orderItem.TotalPrice += orderItem.Price;
                     cart.Items.Add(orderItem);
                 }
@@ -30,7 +31,7 @@ internal class Cart : BlApi.ICart
                     throw new Exception();
                 }
             }
-            else //if exsist.
+            else //if exsist in cart.
             {
                 if (product.InStock > 0 && product.ProductId > 99999)
                 {
@@ -150,3 +151,4 @@ internal class Cart : BlApi.ICart
     }
 }
 
+ // הוספת פונקציה לריקון הסל

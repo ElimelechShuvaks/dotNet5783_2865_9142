@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using OtherFunction;
+
+namespace BO;
 
 /// <summary>
 /// class of OrderTracking
@@ -21,8 +23,11 @@ public class OrderTracking
 
     public override string ToString()
     {
-        return $@"OrderTracking ItemId: {OrderId}
-Status:{Status}
+        return $@"
+Order OrderId: {OrderId}
+Status: {Status}
+Order Tracking: 
+{tuplesOfDateAndDescription.GetToStrings()}
 ";
     }
 }

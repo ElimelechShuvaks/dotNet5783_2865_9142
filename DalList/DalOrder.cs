@@ -44,6 +44,7 @@ internal class DalOrder : IOrder
         if (index != -1)
         {
             DataSource._orders[index] = order;
+            return;
         }
         OtherFunctions.exceptionNotFound("order", order.Id);
     }

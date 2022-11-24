@@ -58,7 +58,7 @@ internal class Order : BlApi.IOrder
             List<BO.OrderForList> ordersForList = dal.Order.GetList().Select(order =>
              new BO.OrderForList
              {
-                 Id = order.Id,
+                 OrderId = order.Id,
                  CustomerName = order.CustomerName,
                  Status = GetStatus(order),
                  AmountOfItems = dal.OrderItem.GetListItem(order.Id).Count(),
@@ -99,7 +99,7 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (GetDetailsOrder(idOrder).Status == BO.OrderStatus.SentedOrder)
+            if (GetDetailsOrder(idOrder).Status == BO.OrderStatus.Shipied)
             {
                 DO.Order order = dal.Order.Get(idOrder);
                 order.DeliveryDate = DateTime.Now;
@@ -126,13 +126,31 @@ internal class Order : BlApi.IOrder
             {
                 OrderId = order.Id,
                 Status = GetStatus(order),
-                tuplesOfDateAndDescription = new List<Tuple<DateTime, string>>
-                {
-                    Tuple.Create(order.OrderDate, "The order has been created"),
-                    Tuple.Create(order.ShipDate, "The order has been sent"),
-                    Tuple.Create(order.DeliveryDate, "The order is already provided")
-                }
+                tuplesOfDateAndDescription = new List<Tuple<DateTime, string>>()
             };
+
+            switch (orderTracking.Status)
+            {
+                case BO.OrderStatus.Confirmed:
+
+                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created"));
+                    break;
+
+                case BO.OrderStatus.Shipied:
+
+                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created"));
+                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent"));
+                    break;
+
+                case BO.OrderStatus.Deliveried:
+                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created"));
+                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent"));
+                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.DeliveryDate, "The order is deliveried"));
+                    break;
+
+                default:
+                    break;
+            }
 
             return orderTracking;
         }
@@ -150,17 +168,17 @@ internal class Order : BlApi.IOrder
     private BO.OrderStatus GetStatus(DO.Order order)
     {
         if (order.DeliveryDate != DateTime.MinValue)
-            return BO.OrderStatus.ArrivedOrder;
+            return BO.OrderStatus.Deliveried;
 
         if (order.ShipDate != DateTime.MinValue)
-            return BO.OrderStatus.SentedOrder;
+            return BO.OrderStatus.Shipied;
 
-        return BO.OrderStatus.ConfirmedOrder;
+        return BO.OrderStatus.Confirmed;
     }
 
     public BO.Order OrderUpdate(BO.Order order, int productId, int newAmount)
     {
-        if (order.Status == BO.OrderStatus.ConfirmedOrder)
+        if (order.Status == BO.OrderStatus.Confirmed)
         {
             BO.OrderItem orderItem = order.Items.FirstOrDefault(orderItem => orderItem.ProductId == productId);
             DO.Product product = dal.Product.Get(productId); // request a DO producr to update the amount in stok.

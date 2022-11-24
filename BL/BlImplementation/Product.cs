@@ -83,6 +83,7 @@ internal class Product : BlApi.IProduct
         }
         return newProductItem;
     }
+
     public void AddProduct(BO.Product newProduct)
     {
         try

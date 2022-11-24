@@ -4,7 +4,7 @@ public class ProductForList
 {
 
     /// <summary>
-    ///  Id of Product.
+    ///  OrderId of Product.
     /// </summary>
     public int Id { get; set; }
 

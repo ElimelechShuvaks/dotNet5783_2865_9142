@@ -85,7 +85,9 @@ press 0 to exit.
                         break;
                     
                     case OrderMenu.OrderTracking:
-                        // צריך להוסיף ב toString של OrderTracking הדפסה של list
+                        Console.WriteLine("please enter an order id.");
+                        Console.WriteLine(bl.Order.OrderTracking(IntTryParse()));
+
                         break;
 
                     case OrderMenu.GetList:

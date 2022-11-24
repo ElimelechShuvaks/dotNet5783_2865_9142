@@ -18,8 +18,8 @@ public enum Categories
 /// </summary>
 public enum OrderStatus
 {
-    ConfirmedOrder,
-    SentedOrder,
-    ArrivedOrder
+    Confirmed,
+    Shipied,
+    Deliveried
 }
 

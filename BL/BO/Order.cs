@@ -61,15 +61,20 @@ public class Order
     {
         return $@"
 Order Number: {Id}
+
 Customer Name: {CustomerName}
 Customer Email: {CustomerEmail}
 Customer Adress: {CustomerAdress}
+
 Order status: {Status}
+
 Order Date: {OrderDate}
 Ship Date: {ShipDate.ToShortDateString()}
 Delivery Date: {DeliveryDate}
-Items: {Items.GetToStrings()}
-TotalPrice: {TotalPrice}
-";
+
+Items:
+{Items.GetToStrings()}
+
+TotalPrice: {TotalPrice} ";
     }
 }

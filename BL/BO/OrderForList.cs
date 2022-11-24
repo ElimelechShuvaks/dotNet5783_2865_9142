@@ -9,7 +9,7 @@ public class OrderForList
     /// <summary>
     /// id of Order For List
     /// </summary>
-    public int Id { get; set; }
+    public int OrderId { get; set; }
 
     /// <summary>
     /// CustomerName of Order For List
@@ -32,7 +32,7 @@ public class OrderForList
 
     public override string ToString()
     {
-        return $@"Order id: {Id}
+        return $@"Order id: {OrderId}
 Customer name :{CustomerName}
 Order status: {Status}
 Amount of items: {AmountOfItems}
