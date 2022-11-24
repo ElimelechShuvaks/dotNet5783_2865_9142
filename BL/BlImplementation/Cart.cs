@@ -113,7 +113,7 @@ internal class Cart : BlApi.ICart
                 DO.Product product = dal.Product.Get(orderItem.ProductId);
 
                 if (product.InStock > 0 && orderItem.Amount <= product.InStock &&
-                     cart.CustomerName is not null && cart.CustomerAdress is not null && isValidEmail(cart.CustomerEmail))
+                     cart.CustomerName == string.Empty && cart.CustomerAdress == string.Empty && isValidEmail(cart.CustomerEmail))
                 {
                     DO.Order order = new DO.Order();
 
