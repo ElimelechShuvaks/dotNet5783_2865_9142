@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BlImplementation;
+using DO;
 
 namespace BlTest;
 
@@ -21,6 +22,9 @@ press 0 to exit.
             switch ((MainMenu)IntTryParse())
             {
                 case MainMenu.ProductCheck:
+
+                    ProductChecking();
+
                     break;
 
                 case MainMenu.OrderCheck:
@@ -30,6 +34,9 @@ press 0 to exit.
                     break;
 
                 case MainMenu.CartCheck:
+
+                    CartChecking();
+
                     break;
 
                 case MainMenu.exit:
@@ -38,11 +45,86 @@ press 0 to exit.
                 default:
                     Console.WriteLine("invail input, Please try again");
                     break;
-            } 
+            }
         }
     } // End the main.
 
     //------------------------------- entity checking ---------------------------
+
+    /// <summary>
+    /// func to check the product entity functions.
+    /// </summary>
+    static void ProductChecking()
+    {
+        while (true)
+        {
+            Console.WriteLine(@"
+Please select a function to check.
+press 1 to get a product (manager).
+press 2 to get a product item (client).
+press 3 to get a list of products (productForList).
+press 4 to add a product.
+press 5 to remove a product.
+press 6 to update a product.
+press 0 to exsit.
+");
+            try
+            {
+                switch ((ProductMenu)IntTryParse())
+                {
+                    case ProductMenu.GetManager:
+                        Console.WriteLine("please enter a product id.");
+                        Console.WriteLine(bl.Product.ProductDetailsManger(IntTryParse()));
+
+                        break;
+
+                    case ProductMenu.GetClient:
+                        Console.WriteLine("please enter a product id.");
+                        // צריך להוסיף סל
+                        //Console.WriteLine(bl.Product.ProductDetailsClient( ,IntTryParse()));
+
+                        break;
+
+                    case ProductMenu.GetList:
+                        foreach (var product in bl.Product.ProductListRequest())
+                        {
+                            Console.WriteLine(product);
+                        }
+
+                        break;
+
+                    case ProductMenu.Add:
+                        bl.Product.AddProduct(GetProduct());
+
+                        break;
+
+                    case ProductMenu.Remove:
+                        Console.WriteLine("please enter a product id.");
+                        bl.Product.RemoveProduct(IntTryParse());
+
+                        break;
+
+                    case ProductMenu.Update:
+                        bl.Product.UpdateProduct(GetProduct());
+
+                        break;
+
+                    case ProductMenu.Exit:
+                        return;
+
+                    default:
+                        Console.WriteLine("invail input, Please try again");
+
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+    }
 
     /// <summary>
     /// func to check the order entity functions.
@@ -71,19 +153,19 @@ press 0 to exit.
                         Console.WriteLine(bl.Order.GetDetailsOrder(IntTryParse()));
 
                         break;
-                    
+
                     case OrderMenu.ShipingUpdate:
                         Console.WriteLine("please enter an order id.");
                         Console.WriteLine(bl.Order.OrderShippingUpdate(IntTryParse()));
 
                         break;
-                    
+
                     case OrderMenu.DeliveryUpdate:
                         Console.WriteLine("please enter an order id.");
                         Console.WriteLine(bl.Order.OrderDeliveryUpdate(IntTryParse()));
-                      
+
                         break;
-                    
+
                     case OrderMenu.OrderTracking:
                         Console.WriteLine("please enter an order id.");
                         Console.WriteLine(bl.Order.OrderTracking(IntTryParse()));
@@ -99,10 +181,12 @@ press 0 to exit.
                         break;
 
                     case OrderMenu.OrderUpdate:
+                        Console.WriteLine("please enter an order id.");
+
                         // צריך לבקש מהמשתמש order ולהפעיל את הפונקציה
                         break;
 
-                    case OrderMenu.exit:
+                    case OrderMenu.Exit:
                         return;
 
                     default:
@@ -115,7 +199,64 @@ press 0 to exit.
             {
 
                 Console.WriteLine(ex.Message);
-            } 
+            }
+        }
+    }
+
+    /// <summary>
+    /// func to check the cart entity functions.
+    /// </summary>
+    static void CartChecking()
+    {
+        while (true)
+        {
+            Console.WriteLine(@"
+Please select a function to check.
+press 1 to add a product in cart.
+press 2 to do change in cart.
+press 3 to confirm the cart.
+press 0 to exsit.
+");
+            try
+            {
+                switch ((CartMenu)IntTryParse())
+                {
+                    case CartMenu.Add:
+
+                        Console.WriteLine("please enter a product id.");
+                        bl.Cart.AddCart(GetCart(), IntTryParse());
+
+                        break;
+                    
+                    case CartMenu.Update:
+                        
+                        Console.WriteLine("please enter a product id and the amount that you want.");
+                        bl.Cart.ProductUpdateCart(GetCart(), IntTryParse(), IntTryParse());
+
+                        break;
+
+                    case CartMenu.Confirm:
+
+                        Console.WriteLine("please enter a customer name, mail and adress.");
+                        bl.Cart.ConfirmationOrderToCart(GetCart(), Console.ReadLine(), Console.ReadLine(), Console.ReadLine());
+
+                        break;
+                    
+                    case CartMenu.Exsit:
+
+                        return;
+
+                    default:
+                        Console.WriteLine("invail input, Please try again");
+
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 
@@ -172,6 +313,69 @@ press 0 to exit.
         return result;
     }
 
+    /// <summary>
+    /// the func TryParse for categories.
+    /// </summary>
+    /// <returns></returns>
+    static BO.Categories CategoriesTryParse()
+    {
+        Console.WriteLine(@"choose the category
+1 for simple
+2 for electric
+3 for SVU
+4 for sport
+5 for luxury");
+        int result = IntTryParse();
+        while (result > 5 || result < 1)
+        {
+            Console.WriteLine("invail input, Please try again");
+            result = IntTryParse();
+        }
+        return (BO.Categories)result;
+    }
+
+    //-----------------------------------
+
+    /// <summary>
+    /// the function takes data for a product from the user, and return it.
+    /// </summary>
+    /// <returns></returns>
+    static BO.Product GetProduct()
+    {
+        BO.Product product = new BO.Product();
+
+        Console.WriteLine("please enter the product id.");
+        product.Id = IntTryParse();
+
+        Console.WriteLine("please enter the product name");
+        product.Name = Console.ReadLine();
+
+        Console.WriteLine("please enter the product price.");
+        product.Price = DoubleTryParse();
+
+        product.Category = CategoriesTryParse();
+
+        Console.WriteLine("please enter the amount of the product in stock.");
+        product.InStock = IntTryParse();
+
+        return product;
+    }
+
+    /// <summary>
+    /// the function returns a new cart.
+    /// </summary>
+    /// <returns></returns>
+    static BO.Cart GetCart()
+    {
+        BO.Cart cart = new BO.Cart()
+        {
+            Items = new(),
+            TotalPrice = 0
+        };
+        
+        return cart;
+    }
+
     //---------------------- Enums -------------------------------
 
     enum MainMenu
@@ -184,12 +388,18 @@ press 0 to exit.
 
     enum ProductMenu
     {
-
+        Exit,
+        GetManager,
+        GetClient,
+        GetList,
+        Add,
+        Remove,
+        Update
     }
 
     enum OrderMenu
     {
-        exit,
+        Exit,
         Get,
         ShipingUpdate,
         DeliveryUpdate,
@@ -200,6 +410,9 @@ press 0 to exit.
 
     enum CartMenu
     {
-
+        Exsit,
+        Add,
+        Update,
+        Confirm,
     }
 }
