@@ -50,7 +50,7 @@ internal class Order : BlApi.IOrder
         }
         else // unvalide id
         {
-            throw new BO.IdNotValid("not valid id for order");
+            throw new BO.IdNotValidException("not valid id for order");
         }
     }
 

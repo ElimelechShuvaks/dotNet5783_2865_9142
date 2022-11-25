@@ -23,12 +23,12 @@ internal class Product : BlApi.IProduct
         }
         return newProductForList;
     }
+
     public BO.Product ProductDetailsManger(int idProduct)
     {
-
         try
         {
-            if (idProduct > 0)
+            if (idProduct >= 100000 && idProduct < 1000000)
             {
                 product = dal.Product.Get(idProduct);
 
@@ -43,13 +43,16 @@ internal class Product : BlApi.IProduct
             }
             else
             {
-                throw new Exception();
+                throw new BO.IdNotValidException("not valid id for product");
             }
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-
-            throw;
+            throw ex;
+        }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
         }
 
     }
@@ -58,7 +61,7 @@ internal class Product : BlApi.IProduct
         BO.ProductItem newProductItem = new();
         try
         {
-            if (idProduct > 0)
+            if (idProduct >= 100000 && idProduct < 1000000)
             {
                 product = dal.Product.Get(idProduct);
                 newProductItem.Id = product.ProductId;
@@ -74,20 +77,24 @@ internal class Product : BlApi.IProduct
                 BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.ProductId == idProduct);
 
                 if (orderItem is null)
-                    throw new Exception();
+                    throw new BO.IdNotExistException($"order item with prodct id: {idProduct} doesn't exsist in data source");
 
                 newProductItem.Amount = orderItem.Amount;
             }
             else
             {
-                throw new Exception();
+                throw new BO.IdNotValidException("not valid id for product");
             }
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-
-            throw;
+            throw ex;
         }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
+        }
+
         return newProductItem;
     }
 
@@ -95,7 +102,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
+            if (newProduct.Id > 99999 && newProduct.Id < 1000000 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
                 product.ProductId = newProduct.Id;
                 product.Name = newProduct.Name;
@@ -106,12 +113,15 @@ internal class Product : BlApi.IProduct
                 dal.Product.Add(product);
             }
             else
-                throw new Exception();
+                throw new BO.NotValidProductException("Invalid product details");
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-
-            throw;
+            throw ex;
+        }
+        catch (DO.IdExistException ex)
+        {
+            throw new BO.IdExistException(ex.Message);
         }
     }
 
@@ -127,15 +137,18 @@ internal class Product : BlApi.IProduct
                 {
                     dal.Product.Delete(idProduct);
                 }
-                catch (Exception)
+                catch (DO.IdNotExistException ex)
                 {
-
-                    throw new Exception();
+                    throw new BO.IdNotExistException(ex.Message);
                 }
         }
-        catch (Exception ex)
+        catch (BO.BlExceptions ex)
         {
             throw ex;
+        }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
         }
     }
 
@@ -143,9 +156,8 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
+            if (newProduct.Id > 99999 && newProduct.Id < 1000000 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
-             //  DO.Product product = new();
                 product.ProductId = newProduct.Id;
                 product.Name = newProduct.Name;
                 product.Price = newProduct.Price;
@@ -155,11 +167,15 @@ internal class Product : BlApi.IProduct
                 dal.Product.Update(product);
             }
             else
-                throw new Exception();
+                throw new BO.NotValidProductException("Invalid product details");
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-            throw;
+            throw ex;
+        }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
         }
     }
 }
