@@ -121,12 +121,21 @@ internal class Product : BlApi.IProduct
         {
             if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.ProductId == idProduct).Any())
                 throw new Exception();
+
             else
-                dal.Product.Delete(idProduct);
+                try
+                {
+                    dal.Product.Delete(idProduct);
+                }
+                catch (Exception)
+                {
+
+                    throw new Exception();
+                }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            throw ex;
         }
     }
 
@@ -136,6 +145,7 @@ internal class Product : BlApi.IProduct
         {
             if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
+             //  DO.Product product = new();
                 product.ProductId = newProduct.Id;
                 product.Name = newProduct.Name;
                 product.Price = newProduct.Price;

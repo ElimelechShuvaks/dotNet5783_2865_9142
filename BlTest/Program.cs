@@ -117,10 +117,9 @@ press 0 to exsit.
                         break;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Console.WriteLine(ex.Message);
             }
         }
     }
@@ -251,10 +250,10 @@ press 0 to exsit.
                         break;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Console.WriteLine(ex.Message);
             }
         }
     }
