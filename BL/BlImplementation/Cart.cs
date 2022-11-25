@@ -1,6 +1,6 @@
 ﻿using DalApi;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
+
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
@@ -14,9 +14,9 @@ internal class Cart : BlApi.ICart
             BO.OrderItem orderItem = cart.Items.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
             DO.Product product = dal.Product.Get(idProduct);
 
-            if (orderItem is null) //Not exsist.
+            if (orderItem is null) //Not exsist in cart.
             {
-                if (product.InStock > 0 && product.ProductId > 99999)
+                if (product.InStock > 0) // the product exsit in stock.
                 {
                     orderItem = new BO.OrderItem();
                     orderItem.ProductId = idProduct;
@@ -27,26 +27,30 @@ internal class Cart : BlApi.ICart
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new BO.NotExsitInStockException("the product is out of stock");
                 }
             }
             else //if exsist in cart.
             {
-                if (product.InStock > 0 && product.ProductId > 99999)
+                if (product.InStock > 0)
                 {
                     orderItem.TotalPrice += orderItem.Price;
                     orderItem.Amount += 1;
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new BO.NotExsitInStockException("the product is out of stock");
                 }
             }
             cart.TotalPrice += orderItem.Price;
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-            throw;
+            throw ex;
+        }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
         }
 
         return cart;
@@ -57,7 +61,7 @@ internal class Cart : BlApi.ICart
         BO.OrderItem orderItem = cart.Items.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
         try
         {
-            if (orderItem is not null)
+            if (orderItem is not null) // order item exsit in cart
             {
                 int QuantitySummary = newQuantity - orderItem.Amount;   // QuantitySummary Saves the difference between the new and old quantity.
 
@@ -78,16 +82,16 @@ internal class Cart : BlApi.ICart
                     cart.Items.Remove(orderItem);
                 }
             }
-            else
+            else // order item douse not exsit in cart
             {
-                throw new Exception();
+                throw new BO.IdNotExistException("There is no order with this product id");
             }
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-
-            throw new Exception();
+            throw ex;
         }
+
         return cart;
     }
 
@@ -115,8 +119,10 @@ internal class Cart : BlApi.ICart
             {
                 DO.Product product = dal.Product.Get(orderItem.ProductId);
 
-                if (product.InStock > 0 && orderItem.Amount <= product.InStock &&
-                     customerName != string.Empty && customerAdress != string.Empty && isValidEmail(customerEmail))
+                if (product.InStock < 0 || orderItem.Amount > product.InStock)
+                    throw new BO.NotExsitInStockException("the product is out of stock");
+
+                if (customerName != string.Empty && customerAdress != string.Empty && isValidEmail(customerEmail))
                 {
                     DO.Order order = new DO.Order();
 
@@ -139,23 +145,34 @@ internal class Cart : BlApi.ICart
                     product.InStock = product.InStock - orderItem.Amount;
                     dal.Product.Update(product);
                 }
-                else
+                else // the name or mail or address is invalid.
                 {
-                    throw new NotImplementedException();
+                    throw new BO.InvalidPersonDetails("the name or mail or address is invalid.");
                 }
             }
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-
-            throw;
+            throw ex;
+        }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
         }
     }
+
     public void RemoveCart(BO.Cart cart)
     {
-        foreach (BO.OrderItem orderItem in cart.Items)
+        try
         {
-            ProductUpdateCart(cart, orderItem.ProductId, 0);
+            foreach (BO.OrderItem orderItem in cart.Items)
+            {
+                ProductUpdateCart(cart, orderItem.ProductId, 0);
+            }
+        }
+        catch (BO.BlExceptions ex)
+        {
+            throw ex;
         }
     }
 }

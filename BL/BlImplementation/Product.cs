@@ -56,6 +56,7 @@ internal class Product : BlApi.IProduct
         }
 
     }
+
     public BO.ProductItem ProductDetailsClient(BO.Cart newCart, int idProduct)
     {
         BO.ProductItem newProductItem = new();
@@ -130,7 +131,7 @@ internal class Product : BlApi.IProduct
         try
         {
             if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.ProductId == idProduct).Any())
-                throw new BO.CanNotRemoveProduct("can't remove the product becouse he is found in exsist orders.");
+                throw new BO.CanNotRemoveProductException("can't remove the product becouse he is found in exsist orders.");
 
             else
                 dal.Product.Delete(idProduct);

@@ -28,7 +28,17 @@ public class NotValidProductException : BlExceptions
     public NotValidProductException(string message) : base(message) { }
 }
 
-public class CanNotRemoveProduct : BlExceptions
+public class CanNotRemoveProductException : BlExceptions
 {
-    public CanNotRemoveProduct(string message) : base(message) { }
+    public CanNotRemoveProductException(string message) : base(message) { }
+}
+
+public class NotExsitInStockException : BlExceptions
+{
+    public NotExsitInStockException(string message) : base(message) { }
+}
+
+public class InvalidPersonDetails : BlExceptions
+{
+    public InvalidPersonDetails(string message) : base(message) { }
 }
