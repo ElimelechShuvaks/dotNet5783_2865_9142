@@ -25,29 +25,31 @@ internal class Product : BlApi.IProduct
     }
     public BO.Product ProductDetailsManger(int idProduct)
     {
-        if (idProduct > 0)
+
+        try
         {
-            try
+            if (idProduct > 0)
             {
                 product = dal.Product.Get(idProduct);
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            BO.Product newProduct = new();
-            newProduct.Id = product.ProductId;
-            newProduct.Name = product.Name;
-            newProduct.Price = product.Price;
-            newProduct.Category = (BO.Categories)product.Category;
-            newProduct.InStock = product.InStock;
+                BO.Product newProduct = new();
+                newProduct.Id = product.ProductId;
+                newProduct.Name = product.Name;
+                newProduct.Price = product.Price;
+                newProduct.Category = (BO.Categories)product.Category;
+                newProduct.InStock = product.InStock;
 
-            return newProduct;
+                return newProduct;
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
-        else
+        catch (Exception)
         {
-            throw new Exception();
+
+            throw;
         }
 
     }
@@ -65,15 +67,20 @@ internal class Product : BlApi.IProduct
                 newProductItem.Category = (BO.Categories)product.Category;
 
                 if (product.InStock > 0)
-                {
                     newProductItem.InStock = true;
-                }
-                BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.OrderId == idProduct);
+                else
+                    newProductItem.InStock = false;
 
-                if (orderItem is not null)
-                {
-                    newProductItem.Amount = orderItem.Amount;
-                }
+                BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.ProductId == idProduct);
+
+                if (orderItem is null)
+                    throw new Exception();
+
+                newProductItem.Amount = orderItem.Amount;
+            }
+            else
+            {
+                throw new Exception();
             }
         }
         catch (Exception)
@@ -88,7 +95,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 0 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
+            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
                 product.ProductId = newProduct.Id;
                 product.Name = newProduct.Name;
@@ -97,9 +104,9 @@ internal class Product : BlApi.IProduct
                 product.Category = (DO.Categories)newProduct.Category;
 
                 dal.Product.Add(product);
-                return;
             }
-            throw new Exception();
+            else
+                throw new Exception();
         }
         catch (Exception)
         {
@@ -113,39 +120,35 @@ internal class Product : BlApi.IProduct
         try
         {
             if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.ProductId == idProduct).Any())
-            {
                 throw new Exception();
-            }
-            dal.Product.Delete(idProduct);
+            else
+                dal.Product.Delete(idProduct);
         }
         catch (Exception)
         {
-
             throw;
         }
-
     }
 
-    public void UpdateProduct(BO.Product newproduct)
+    public void UpdateProduct(BO.Product newProduct)
     {
         try
         {
-            if (newproduct.Id > 0 && newproduct.Price > 0 && newproduct.Name != string.Empty && newproduct.InStock > 0)
+            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
-                product.ProductId = newproduct.Id;
-                product.Name = newproduct.Name;
-                product.Price = newproduct.Price;
-                product.InStock = newproduct.InStock;
-                product.Category = (DO.Categories)newproduct.Category;
+                product.ProductId = newProduct.Id;
+                product.Name = newProduct.Name;
+                product.Price = newProduct.Price;
+                product.InStock = newProduct.InStock;
+                product.Category = (DO.Categories)newProduct.Category;
 
                 dal.Product.Update(product);
-                return;
             }
-            throw new Exception();
+            else
+                throw new Exception();
         }
         catch (Exception)
         {
-
             throw;
         }
     }
