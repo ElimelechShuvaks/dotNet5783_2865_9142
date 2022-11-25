@@ -38,7 +38,7 @@ press 0 to exit.
 
                     break;
 
-                case MainMenu.exit:
+                case MainMenu.Exit:
                     return;
 
                 default:

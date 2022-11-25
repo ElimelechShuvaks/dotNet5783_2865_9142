@@ -121,7 +121,6 @@ internal class Product : BlApi.IProduct
         {
             if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.ProductId == idProduct).Any())
                 throw new Exception();
-
             else
                 try
                 {
