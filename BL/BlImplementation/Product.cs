@@ -130,17 +130,11 @@ internal class Product : BlApi.IProduct
         try
         {
             if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.ProductId == idProduct).Any())
-                throw new Exception();
+                throw new BO.CanNotRemoveProduct("can't remove the product becouse he is found in exsist orders.");
 
             else
-                try
-                {
-                    dal.Product.Delete(idProduct);
-                }
-                catch (DO.IdNotExistException ex)
-                {
-                    throw new BO.IdNotExistException(ex.Message);
-                }
+                dal.Product.Delete(idProduct);
+
         }
         catch (BO.BlExceptions ex)
         {

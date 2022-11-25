@@ -1,9 +1,11 @@
 ﻿
 namespace BO;
 
+// i make a class that all BL exceptions inherit from him, and ve inherit from the basic exception class
+// it makes easier the code in the try/catch.
 public class BlExceptions : Exception
 {
-    public BlExceptions(string? message) : base(message) { }
+    public BlExceptions(string message) : base(message) { }
 }
 
 public class IdNotExistException : BlExceptions
@@ -24,4 +26,9 @@ public class IdNotValidException : BlExceptions
 public class NotValidProductException : BlExceptions
 {
     public NotValidProductException(string message) : base(message) { }
+}
+
+public class CanNotRemoveProduct : BlExceptions
+{
+    public CanNotRemoveProduct(string message) : base(message) { }
 }
