@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BlImplementation;
-using DO;
 
 namespace BlTest;
 
@@ -117,10 +116,9 @@ press 0 to exsit.
                         break;
                 }
             }
-            catch (Exception)
+            catch (BO.BlExceptions ex)
             {
-
-                throw;
+                Console.WriteLine(ex.Message);
             }
         }
     }
@@ -194,9 +192,8 @@ press 0 to exit.
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (BO.BlExceptions ex)
             {
-
                 Console.WriteLine(ex.Message);
             }
         }
@@ -251,10 +248,9 @@ press 0 to exsit.
                         break;
                 }
             }
-            catch (Exception)
+            catch (BO.BlExceptions ex)
             {
-
-                throw;
+                Console.WriteLine(ex.Message);
             }
         }
     }
