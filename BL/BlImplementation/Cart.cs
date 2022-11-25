@@ -11,9 +11,8 @@ internal class Cart : BlApi.ICart
     {
         try
         {
-            BO.OrderItem orderItem = cart.Items.FirstOrDefault(cartItem => cartItem.OrderId == idProduct);
+            BO.OrderItem orderItem = cart.Items.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
             DO.Product product = dal.Product.Get(idProduct);
-
 
             if (orderItem is null) //Not exsist.
             {
@@ -23,7 +22,7 @@ internal class Cart : BlApi.ICart
                     orderItem.ProductId = idProduct;
                     orderItem.Name = product.Name;
                     orderItem.Amount = 1;
-                    orderItem.TotalPrice += orderItem.Price;
+                    orderItem.TotalPrice = orderItem.Price;
                     cart.Items.Add(orderItem);
                 }
                 else
@@ -55,19 +54,19 @@ internal class Cart : BlApi.ICart
 
     public BO.Cart ProductUpdateCart(BO.Cart cart, int idProduct, int newQuantity)
     {
-        BO.OrderItem orderItem = cart.Items.FirstOrDefault(cartItem => cartItem.OrderId == idProduct);
+        BO.OrderItem orderItem = cart.Items.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
         try
         {
             if (orderItem is not null)
             {
                 int QuantitySummary = newQuantity - orderItem.Amount;   // QuantitySummary Saves the difference between the new and old quantity.
 
-                if (QuantitySummary > 0)
+                if (QuantitySummary > 0 && newQuantity != 0)
                 {
                     for (int i = 0; i < QuantitySummary; i++)
                         AddCart(cart, idProduct);
                 }
-                if (QuantitySummary < 0)
+                if (QuantitySummary < 0 && newQuantity != 0)
                 {
                     orderItem.Amount = newQuantity;
                     orderItem.TotalPrice = newQuantity * orderItem.Price;
@@ -105,6 +104,9 @@ internal class Cart : BlApi.ICart
             return false;
         }
     }
+
+    /*We have removed the name, address, and email fields in the shopping cart, 
+    because there are duplicates here, and therefore we do accept data about the person as parameters*/
     public void ConfirmationOrderToCart(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
     {
         try
@@ -114,7 +116,7 @@ internal class Cart : BlApi.ICart
                 DO.Product product = dal.Product.Get(orderItem.ProductId);
 
                 if (product.InStock > 0 && orderItem.Amount <= product.InStock &&
-                     cart.CustomerName == string.Empty && cart.CustomerAdress == string.Empty && isValidEmail(cart.CustomerEmail))
+                     customerName != string.Empty && customerAdress != string.Empty && isValidEmail(customerEmail))
                 {
                     DO.Order order = new DO.Order();
 
@@ -149,6 +151,12 @@ internal class Cart : BlApi.ICart
             throw;
         }
     }
+    public void RemoveCart(BO.Cart cart)
+    {
+        foreach (BO.OrderItem orderItem in cart.Items)
+        {
+            ProductUpdateCart(cart, orderItem.ProductId, 0);
+        }
+    }
 }
 
- // הוספת פונקציה לריקון הסל

@@ -7,21 +7,8 @@ namespace BO;
 /// </summary>
 public class Cart
 {
-
-    /// <summary>
-    /// CustomerName of Cart
-    /// </summary>
-    public string CustomerName { get; set; }
-
-    /// <summary>
-    /// CustomerEmail of Cart
-    /// </summary>
-    public string CustomerEmail { get; set; }
-
-    /// <summary>
-    /// CustomerAdress of Cart
-    /// </summary>
-    public string CustomerAdress { get; set; }
+    /*We have removed the name, address, and email fields in the shopping cart, 
+    because there are duplicates here, and therefore we do accept data about the person as parameters*/
 
     /// <summary>
     /// Items of Cart
@@ -35,10 +22,7 @@ public class Cart
 
     public override string ToString()
     {
-        return $@"Customer Name: {CustomerName}
-Customer Email: {CustomerEmail}
-Customer Adress: {CustomerAdress}
-Items: {Items.GetToStrings()}
+        return $@"Items: {Items.GetToStrings()}
 TotalPrice:{TotalPrice}
 ";
     }
