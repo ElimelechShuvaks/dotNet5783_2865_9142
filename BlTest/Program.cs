@@ -137,7 +137,7 @@ press 2 to update the shiping date.
 press 3 to update the delivery date.
 press 4 to check the order tracking.
 press 5 to get a list of orders.
-press 6 to update the change the order.
+press 6 to change the order.
 press 0 to exit.
 ");
             try

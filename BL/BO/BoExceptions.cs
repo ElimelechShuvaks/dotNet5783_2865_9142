@@ -16,7 +16,12 @@ public class IdExistException : BlExceptions
     public IdExistException(string message) : base(message) { }
 }
 
-public class IdNotValid : BlExceptions
+public class IdNotValidException : BlExceptions
 {
-    public IdNotValid(string message) : base(message) { }
+    public IdNotValidException(string message) : base(message) { }
+}
+
+public class NotValidProductException : BlExceptions
+{
+    public NotValidProductException(string message) : base(message) { }
 }
