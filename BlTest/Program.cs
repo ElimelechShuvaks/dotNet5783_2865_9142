@@ -375,7 +375,7 @@ press 0 to exsit.
 
     enum MainMenu
     {
-        exit,
+        Exit,
         ProductCheck,
         OrderCheck,
         CartCheck,
