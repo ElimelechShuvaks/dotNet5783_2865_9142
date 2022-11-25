@@ -1,56 +1,59 @@
 ﻿using Dal;
 using DalApi;
+using System.Security.AccessControl;
 
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
     private IDal dal = new DalList();
+
     public BO.Order GetDetailsOrder(int idOrder)
     {
-        try
+        if (idOrder > 0) // vaild id.
         {
-            if (idOrder <= 0) // not invaild id.
-                throw new NotImplementedException();
-
-            DO.Order order = dal.Order.Get(idOrder); // asking for a DO order with this order id.
-
-            //if (!checkValidDateTime(order)) // chek the valid of dates in order.
-            //    throw new NotImplementedException();
-
-            BO.Order retOrdrt = new BO.Order
+            try
             {
-                Id = order.Id,
-                CustomerName = order.CustomerName,
-                CustomerEmail = order.CustomerEmail,
-                CustomerAdress = order.CustomerAdress,
-                OrderDate = order.OrderDate,
-                Status = GetStatus(order),
-                ShipDate = order.ShipDate,
-                DeliveryDate = order.DeliveryDate,
+                DO.Order order = dal.Order.Get(idOrder); // asking for a DO order with this order id.
 
-                Items = dal.OrderItem.GetListItem(idOrder).Select(orderItem =>
-                new BO.OrderItem
+                BO.Order retOrdrt = new BO.Order
                 {
-                    OrderId = orderItem.OrderId,
-                    ProductId = orderItem.ProductId,
-                    Name = dal.Product.Get(orderItem.ProductId).Name,
-                    Price = orderItem.Price,
-                    Amount = orderItem.Amount,
-                    TotalPrice = orderItem.Price * orderItem.Amount
-                }).ToList()
-            };
+                    Id = order.Id,
+                    CustomerName = order.CustomerName,
+                    CustomerEmail = order.CustomerEmail,
+                    CustomerAdress = order.CustomerAdress,
+                    OrderDate = order.OrderDate,
+                    Status = GetStatus(order),
+                    ShipDate = order.ShipDate,
+                    DeliveryDate = order.DeliveryDate,
 
-            retOrdrt.TotalPrice = retOrdrt.Items.Sum(orderItem => orderItem.TotalPrice);
+                    Items = dal.OrderItem.GetListItem(idOrder).Select(orderItem =>
+                    new BO.OrderItem
+                    {
+                        OrderId = orderItem.OrderId,
+                        ProductId = orderItem.ProductId,
+                        Name = dal.Product.Get(orderItem.ProductId).Name,
+                        Price = orderItem.Price,
+                        Amount = orderItem.Amount,
+                        TotalPrice = orderItem.Price * orderItem.Amount
+                    }).ToList()
+                };
 
-            return retOrdrt;
+                retOrdrt.TotalPrice = retOrdrt.Items.Sum(orderItem => orderItem.TotalPrice);
+
+                return retOrdrt;
+            }
+            catch (DO.IdNotExistException)
+            {
+                throw new BO.IdNotExistException($"Order with id: {idOrder} doesn't exsist in data source");
+            }
         }
-        catch (Exception)
+        else // unvalide id
         {
-
-            throw;
+            throw new BO.IdNotValid("not valid id for order");
         }
     }
+
     public IEnumerable<BO.OrderForList> OrderForListRequest()
     {
         try
@@ -67,9 +70,9 @@ internal class Order : BlApi.IOrder
 
             return ordersForList;
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-            throw;
+            throw ex;
         }
     }
     public BO.Order OrderShippingUpdate(int idOrder)
@@ -86,13 +89,16 @@ internal class Order : BlApi.IOrder
                 return retOrder;
             }
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-
-            throw;
+            throw ex;
+        }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
         }
 
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // the code will never come to this line, i write this becouse a compilation error
     }
 
     public BO.Order OrderDeliveryUpdate(int idOrder)
@@ -108,13 +114,16 @@ internal class Order : BlApi.IOrder
                 return GetDetailsOrder(idOrder);
             }
         }
-        catch (Exception)
+        catch (BO.BlExceptions ex)
         {
-
-            throw;
+            throw ex;
+        }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
         }
 
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // the code will never come to this line, i write this becouse a compilation error
     }
 
     public BO.OrderTracking OrderTracking(int idOrder)
@@ -154,9 +163,9 @@ internal class Order : BlApi.IOrder
 
             return orderTracking;
         }
-        catch (Exception)
+        catch (DO.IdNotExistException ex)
         {
-            throw;
+            throw new BO.IdNotExistException(ex.Message);
         }
     }
 
@@ -178,43 +187,45 @@ internal class Order : BlApi.IOrder
 
     public BO.Order OrderUpdate(BO.Order order, int productId, int newAmount)
     {
-        if (order.Status == BO.OrderStatus.Confirmed)
-        {
-            BO.OrderItem orderItem = order.Items.FirstOrDefault(orderItem => orderItem.ProductId == productId);
-            DO.Product product = dal.Product.Get(productId); // request a DO producr to update the amount in stok.
+        //DO.OrderItem orderItem = dal.OrderItem.GetList().ToList().FirstOrDefault(item => item.OrderId == orderId && item.ProductId == productId);
 
-            if (orderItem.Amount > newAmount)
-            {
-                order.TotalPrice -= orderItem.Amount - newAmount * orderItem.Price; // update the total price of order.
+        //if (order.Status == BO.OrderStatus.Confirmed)
+        //{
+        //    BO.OrderItem orderItem = order.Items.FirstOrDefault(orderItem => orderItem.ProductId == productId);
+        //    DO.Product product = dal.Product.Get(productId); // request a DO producr to update the amount in stok.
 
-                product.InStock += orderItem.Amount - newAmount; // colculate the new amount in stok.
-                dal.Product.Update(product); // updating.
+        //    if (orderItem.Amount > newAmount)
+        //    {
+        //        order.TotalPrice -= orderItem.Amount - newAmount * orderItem.Price; // update the total price of order.
 
-                orderItem.Amount = newAmount; // update the amount in BO order item
-                orderItem.TotalPrice = newAmount * orderItem.Price; // update the total price of order item.
-            }
-            
-            else if (orderItem.Amount < newAmount)
-            {
-                order.TotalPrice += newAmount - orderItem.Amount * orderItem.Price; // update the total price of order.
+        //        product.InStock += orderItem.Amount - newAmount; // colculate the new amount in stok.
+        //        dal.Product.Update(product); // updating.
 
-                product.InStock -= newAmount - orderItem.Amount; // colculate the new amount in stok.
-                dal.Product.Update(product); // updating.
+        //        orderItem.Amount = newAmount; // update the amount in BO order item
+        //        orderItem.TotalPrice = newAmount * orderItem.Price; // update the total price of order item.
+        //    }
 
-                orderItem.Amount = newAmount; // update the amount in BO order item
-                orderItem.TotalPrice = newAmount * orderItem.Price; // update the total price of order item.
-            }
+        //    else if (orderItem.Amount < newAmount)
+        //    {
+        //        order.TotalPrice += newAmount - orderItem.Amount * orderItem.Price; // update the total price of order.
 
-            else // the new amount is 0, than it's need to rmove this product from the order
-            {
-                order.TotalPrice -= orderItem.TotalPrice;
+        //        product.InStock -= newAmount - orderItem.Amount; // colculate the new amount in stok.
+        //        dal.Product.Update(product); // updating.
 
-                product.InStock += orderItem.Amount;
-                dal.Product.Update(product);
+        //        orderItem.Amount = newAmount; // update the amount in BO order item
+        //        orderItem.TotalPrice = newAmount * orderItem.Price; // update the total price of order item.
+        //    }
 
-                order.Items.Remove(orderItem);
-            }
-        }
+        //    else // the new amount is 0, than it's need to rmove this product from the order
+        //    {
+        //        order.TotalPrice -= orderItem.TotalPrice;
+
+        //        product.InStock += orderItem.Amount;
+        //        dal.Product.Update(product);
+
+        //        order.Items.Remove(orderItem);
+        //    }
+        //}
 
         throw new Exception();
     }
