@@ -12,7 +12,7 @@ internal class DalProduct : IProduct
         {
             OtherFunctions.exceptionFound("product", newProduct.ProductId);
         }
-      
+
         DataSource._products.Add(newProduct);
         return newProduct.ProductId;
     }
@@ -26,7 +26,7 @@ internal class DalProduct : IProduct
             OtherFunctions.exceptionNotFound("product", idNum);
         }
 
-        return DataSource._products[index];     
+        return DataSource._products[index];
     }
 
     public IEnumerable<Product> GetList()
@@ -53,12 +53,13 @@ internal class DalProduct : IProduct
         if (index != -1)
         {
             DataSource._products[index] = product;
+            return;
         }
 
         OtherFunctions.exceptionNotFound("product", product.ProductId);
     }
 
-  private int existProduct(int id)
+    private int existProduct(int id)
     {
         return DataSource._products.FindIndex(product => product.ProductId == id);
     }
