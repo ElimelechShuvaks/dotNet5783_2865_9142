@@ -42,3 +42,8 @@ public class InvalidPersonDetails : BlExceptions
 {
     public InvalidPersonDetails(string message) : base(message) { }
 }
+
+public class StatusErrorException : BlExceptions
+{
+    public StatusErrorException(string message) : base(message) { }
+}

@@ -97,21 +97,25 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.IdNotExistException(ex.Message);
         }
-
-        throw new NotImplementedException(); // the code will never come to this line, i write this becouse a compilation error
     }
 
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
         try
         {
-            if (GetDetailsOrder(idOrder).Status == BO.OrderStatus.Shipied)
+            BO.Order boOrder = GetDetailsOrder(idOrder);
+
+            if (boOrder.Status == BO.OrderStatus.Shipied)
             {
                 DO.Order order = dal.Order.Get(idOrder);
                 order.DeliveryDate = DateTime.Now;
 
                 dal.Order.Update(order);
                 return GetDetailsOrder(idOrder);
+            }
+            else
+            {
+                throw new BO.StatusErrorException($"can't deliveried becouse the status is {boOrder.Status}");
             }
         }
         catch (BO.BlExceptions ex)
@@ -122,8 +126,6 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.IdNotExistException(ex.Message);
         }
-
-        throw new NotImplementedException(); // the code will never come to this line, i write this becouse a compilation error
     }
 
     public BO.OrderTracking OrderTracking(int idOrder)
@@ -185,48 +187,24 @@ internal class Order : BlApi.IOrder
         return BO.OrderStatus.Confirmed;
     }
 
-    public BO.Order OrderUpdate(BO.Order order, int productId, int newAmount)
+    public BO.Order OrderUpdate(int orderId, int productId, int newAmount)
     {
-        //DO.OrderItem orderItem = dal.OrderItem.GetList().ToList().FirstOrDefault(item => item.OrderId == orderId && item.ProductId == productId);
+        if (dal.Order.GetList().ToList().Any(order => order.Id == orderId))
+        {
+            DO.OrderItem orderItem = dal.OrderItem.GetList().ToList().FirstOrDefault(item => item.OrderId == orderId && item.ProductId == productId);
 
-        //if (order.Status == BO.OrderStatus.Confirmed)
-        //{
-        //    BO.OrderItem orderItem = order.Items.FirstOrDefault(orderItem => orderItem.ProductId == productId);
-        //    DO.Product product = dal.Product.Get(productId); // request a DO producr to update the amount in stok.
+            if (orderItem.Equals(default(DO.OrderItem))) // there is'n a order item with these ids, than add a new order item with this produc
+            {
 
-        //    if (orderItem.Amount > newAmount)
-        //    {
-        //        order.TotalPrice -= orderItem.Amount - newAmount * orderItem.Price; // update the total price of order.
+            }
+            else // the product alredy exist in the order, than 
+            {
 
-        //        product.InStock += orderItem.Amount - newAmount; // colculate the new amount in stok.
-        //        dal.Product.Update(product); // updating.
-
-        //        orderItem.Amount = newAmount; // update the amount in BO order item
-        //        orderItem.TotalPrice = newAmount * orderItem.Price; // update the total price of order item.
-        //    }
-
-        //    else if (orderItem.Amount < newAmount)
-        //    {
-        //        order.TotalPrice += newAmount - orderItem.Amount * orderItem.Price; // update the total price of order.
-
-        //        product.InStock -= newAmount - orderItem.Amount; // colculate the new amount in stok.
-        //        dal.Product.Update(product); // updating.
-
-        //        orderItem.Amount = newAmount; // update the amount in BO order item
-        //        orderItem.TotalPrice = newAmount * orderItem.Price; // update the total price of order item.
-        //    }
-
-        //    else // the new amount is 0, than it's need to rmove this product from the order
-        //    {
-        //        order.TotalPrice -= orderItem.TotalPrice;
-
-        //        product.InStock += orderItem.Amount;
-        //        dal.Product.Update(product);
-
-        //        order.Items.Remove(orderItem);
-        //    }
-        //}
-
-        throw new Exception();
+            }
+        }
+        else
+        {
+            throw new BO.IdNotExistException($"There is no order with such id: {orderId}");
+        }
     }
 }

@@ -78,11 +78,15 @@ internal class Product : BlApi.IProduct
                 BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.ProductId == idProduct);
 
                 if (orderItem is null)
-                    throw new BO.IdNotExistException($"order item with prodct id: {idProduct} doesn't exsist in data source");
-
-                newProductItem.Amount = orderItem.Amount;
+                {
+                    newProductItem.Amount = 0;
+                }
+                else
+                {
+                    newProductItem.Amount = orderItem.Amount;
+                }
             }
-            else
+            else // product id is invalid.
             {
                 throw new BO.IdNotValidException("not valid id for product");
             }
