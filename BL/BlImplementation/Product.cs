@@ -78,11 +78,15 @@ internal class Product : BlApi.IProduct
                 BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.ProductId == idProduct);
 
                 if (orderItem is null)
-                    throw new BO.IdNotExistException($"order item with product id: {idProduct} doesn't exsist in data source");
-
-                newProductItem.Amount = orderItem.Amount;
+                {
+                    newProductItem.Amount = 0;
+                }
+                else
+                {
+                    newProductItem.Amount = orderItem.Amount;
+                }
             }
-            else
+            else // product id is invalid.
             {
                 throw new BO.IdNotValidException("not valid id for product");
             }
@@ -131,7 +135,7 @@ internal class Product : BlApi.IProduct
         try
         {
             if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.ProductId == idProduct).Any())
-                throw new BO.CanNotRemoveProductException("can't remove the product becouse he is found in exsist ordes.");
+                throw new BO.CanNotRemoveProductException("can't remove the product becouse he is found in exsist orders.");
 
             else
                 dal.Product.Delete(idProduct);

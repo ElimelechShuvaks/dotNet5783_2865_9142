@@ -40,6 +40,6 @@ public interface ICart
     /// The func remove all the cart.
     /// </summary>
     /// <param name="cart"></param>
-    public void RemoveCart(BO.Cart cart);
+    public void ResetCart(BO.Cart cart);
 }
 

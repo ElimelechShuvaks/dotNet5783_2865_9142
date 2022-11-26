@@ -7,6 +7,12 @@ internal class Program
 {
     static IBl bl = new Bl();
 
+    static BO.Cart cart = new BO.Cart
+    {
+        Items = new List<BO.OrderItem>(),
+        TotalPrice = 0
+    }; // creat an empty cart to ran of him the all program.
+
     static void Main(string[] args)
     {
         while (true)
@@ -79,7 +85,7 @@ press 0 to exsit.
 
                     case ProductMenu.GetClient:
                         Console.WriteLine("please enter a product id.");
-                        Console.WriteLine(bl.Product.ProductDetailsClient(GetCart(), IntTryParse()));
+                        Console.WriteLine(bl.Product.ProductDetailsClient(cart, IntTryParse()));
 
                         break;
 
@@ -220,24 +226,24 @@ press 0 to exsit.
                     case CartMenu.Add:
 
                         Console.WriteLine("please enter a product id.");
-                        bl.Cart.AddCart(GetCart(), IntTryParse());
+                        bl.Cart.AddCart(cart, IntTryParse());
 
                         break;
-                    
+
                     case CartMenu.Update:
-                        
+
                         Console.WriteLine("please enter a product id and the amount that you want.");
-                        bl.Cart.ProductUpdateCart(GetCart(), IntTryParse(), IntTryParse());
+                        bl.Cart.ProductUpdateCart(cart, IntTryParse(), IntTryParse());
 
                         break;
 
                     case CartMenu.Confirm:
 
                         Console.WriteLine("please enter a customer name, mail and adress.");
-                        bl.Cart.ConfirmationOrderToCart(GetCart(), Console.ReadLine(), Console.ReadLine(), Console.ReadLine());
+                        bl.Cart.ConfirmationOrderToCart(cart, Console.ReadLine(), Console.ReadLine(), Console.ReadLine());
 
                         break;
-                    
+
                     case CartMenu.Exsit:
 
                         return;
@@ -315,11 +321,11 @@ press 0 to exsit.
     static BO.Categories CategoriesTryParse()
     {
         Console.WriteLine(@"choose the category
-1 for simple
-2 for electric
-3 for SVU
-4 for sport
-5 for luxury");
+0 for simple
+1 for electric
+2 for SVU
+3 for sport
+4 for luxury");
         int result = IntTryParse();
         while (result > 5 || result < 1)
         {
@@ -354,21 +360,6 @@ press 0 to exsit.
         product.InStock = IntTryParse();
 
         return product;
-    }
-
-    /// <summary>
-    /// the function returns a new cart.
-    /// </summary>
-    /// <returns></returns>
-    static BO.Cart GetCart()
-    {
-        BO.Cart cart = new BO.Cart()
-        {
-            Items = new(),
-            TotalPrice = 0
-        };
-        
-        return cart;
     }
 
     //---------------------- Enums -------------------------------

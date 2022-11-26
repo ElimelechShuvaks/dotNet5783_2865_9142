@@ -6,7 +6,7 @@
 /// </summary>
 public enum Categories
 {
-    Simple = 1,
+    Simple,
     Electric,
     Suv,
     Sport,
