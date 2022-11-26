@@ -62,7 +62,7 @@ internal class Product : BlApi.IProduct
         BO.ProductItem newProductItem = new();
         try
         {
-            if (idProduct >= 100000 && idProduct < 1000000)
+            if (idProduct >= 100000)
             {
                 product = dal.Product.Get(idProduct);
                 newProductItem.Id = product.ProductId;
@@ -107,7 +107,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 99999 && newProduct.Id < 1000000 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
+            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
                 product.ProductId = newProduct.Id;
                 product.Name = newProduct.Name;
@@ -139,7 +139,6 @@ internal class Product : BlApi.IProduct
 
             else
                 dal.Product.Delete(idProduct);
-
         }
         catch (BO.BlExceptions ex)
         {
@@ -155,7 +154,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 99999 && newProduct.Id < 1000000 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
+            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
                 product.ProductId = newProduct.Id;
                 product.Name = newProduct.Name;
