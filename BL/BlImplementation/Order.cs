@@ -79,14 +79,19 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            DO.Order order = dal.Order.Get(idOrder);
-            if (order.ShipDate == DateTime.MinValue)
-            {
-                order.ShipDate = DateTime.Now; // change the shipDate to DateTime.Now
-                dal.Order.Update(order); // for update the order in data sourse
+            BO.Order boOrder = GetDetailsOrder(idOrder);
 
-                BO.Order retOrder = GetDetailsOrder(idOrder);
-                return retOrder;
+            if (boOrder.Status == BO.OrderStatus.Confirmed)
+            {
+                DO.Order order = dal.Order.Get(idOrder);
+                order.ShipDate = DateTime.Now;
+
+                dal.Order.Update(order);
+                return GetDetailsOrder(idOrder);
+            }
+            else
+            {
+                throw new BO.StatusErrorException($"can't change the status to shiped becouse the status is {boOrder.Status}");
             }
         }
         catch (BO.BlExceptions ex)
@@ -115,7 +120,7 @@ internal class Order : BlApi.IOrder
             }
             else
             {
-                throw new BO.StatusErrorException($"can't deliveried becouse the status is {boOrder.Status}");
+                throw new BO.StatusErrorException($"can't change the status to deliveried becouse the status is {boOrder.Status}");
             }
         }
         catch (BO.BlExceptions ex)
@@ -187,24 +192,44 @@ internal class Order : BlApi.IOrder
         return BO.OrderStatus.Confirmed;
     }
 
-    public BO.Order OrderUpdate(int orderId, int productId, int newAmount)
+    public void OrderUpdate(int orderId, int productId, int newAmount)
     {
-        if (dal.Order.GetList().ToList().Any(order => order.Id == orderId))
+        try
         {
-            DO.OrderItem orderItem = dal.OrderItem.GetList().ToList().FirstOrDefault(item => item.OrderId == orderId && item.ProductId == productId);
-
-            if (orderItem.Equals(default(DO.OrderItem))) // there is'n a order item with these ids, than add a new order item with this produc
+            if (dal.Order.GetList().ToList().Any(order => order.Id == orderId))
             {
+                DO.OrderItem orderItem = dal.OrderItem.GetList().ToList().FirstOrDefault(item => item.OrderId == orderId && item.ProductId == productId);
 
+                DO.Product product = dal.Product.Get(productId);
+
+                if (orderItem.Equals(default(DO.OrderItem))) // there is'n a order item with these ids, than add a new order item with this produc
+                {
+
+                    orderItem.OrderId = orderId;
+                    orderItem.ProductId = product.ProductId;
+                    orderItem.Amount = newAmount;
+                    orderItem.Price = product.Price * newAmount;
+
+                    dal.OrderItem.Add(orderItem);
+                }
+                else // the product alredy exist in the order, than 
+                {
+                    orderItem.Amount = newAmount;
+                    orderItem.Price = newAmount * product.Price;
+                }
             }
-            else // the product alredy exist in the order, than 
+            else
             {
-
+                throw new BO.IdNotExistException($"There is no order with such id: {orderId}");
             }
         }
-        else
+        catch (BO.BlExceptions ex)
         {
-            throw new BO.IdNotExistException($"There is no order with such id: {orderId}");
+            throw ex;
+        }
+        catch (DO.IdNotExistException ex)
+        {
+            throw new BO.IdNotExistException(ex.Message);
         }
     }
 }

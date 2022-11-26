@@ -51,5 +51,5 @@ public interface IOrder
     /// <param name="idOrder"></param>
     /// <param name="newAmount"></param>
     /// <returns></returns>
-    public BO.Order OrderUpdate(int orderId, int productId, int newAmount);
+    public void OrderUpdate(int orderId, int productId, int newAmount);
 }

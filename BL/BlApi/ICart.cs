@@ -35,11 +35,5 @@ public interface ICart
     /// <exception cref="NotImplementedException"></exception>
     /// 
     public void ConfirmationOrderToCart(Cart cart, string customerName, string customerEmail, string customerAdress);
-
-    /// <summary>
-    /// The func remove all the cart.
-    /// </summary>
-    /// <param name="cart"></param>
-    public void ResetCart(BO.Cart cart);
 }
 

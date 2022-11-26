@@ -22,7 +22,7 @@ internal class Cart : BlApi.ICart
                     orderItem.ProductId = idProduct;
                     orderItem.Name = product.Name;
                     orderItem.Amount = 1;
-                    orderItem.Price = product.Price;    
+                    orderItem.Price = product.Price;
                     orderItem.TotalPrice = orderItem.Price;
                     cart.Items.Add(orderItem);
                 }
@@ -146,7 +146,6 @@ internal class Cart : BlApi.ICart
                     product.InStock = product.InStock - orderItem.Amount;
                     dal.Product.Update(product);
 
-                    ResetCart(cart);
                 }
                 else // the name or mail or address is invalid.
                 {
@@ -161,21 +160,6 @@ internal class Cart : BlApi.ICart
         catch (DO.IdNotExistException ex)
         {
             throw new BO.IdNotExistException(ex.Message);
-        }
-    }
-
-    public void ResetCart(BO.Cart cart)
-    {
-        try
-        {
-            foreach (BO.OrderItem orderItem in cart.Items)
-            {
-                ProductUpdateCart(cart, orderItem.ProductId, 0);
-            }
-        }
-        catch (BO.BlExceptions ex)
-        {
-            throw ex;
         }
     }
 }
