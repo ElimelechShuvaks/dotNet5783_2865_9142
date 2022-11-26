@@ -62,7 +62,7 @@ internal class Product : BlApi.IProduct
         BO.ProductItem newProductItem = new();
         try
         {
-            if (idProduct >= 100000 && idProduct < 1000000)
+            if (idProduct >= 100000)
             {
                 product = dal.Product.Get(idProduct);
                 newProductItem.Id = product.ProductId;
@@ -78,7 +78,7 @@ internal class Product : BlApi.IProduct
                 BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.ProductId == idProduct);
 
                 if (orderItem is null)
-                    throw new BO.IdNotExistException($"order item with prodct id: {idProduct} doesn't exsist in data source");
+                    throw new BO.IdNotExistException($"order item with product id: {idProduct} doesn't exsist in data source");
 
                 newProductItem.Amount = orderItem.Amount;
             }
@@ -103,7 +103,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 99999 && newProduct.Id < 1000000 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
+            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
                 product.ProductId = newProduct.Id;
                 product.Name = newProduct.Name;
@@ -131,11 +131,10 @@ internal class Product : BlApi.IProduct
         try
         {
             if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.ProductId == idProduct).Any())
-                throw new BO.CanNotRemoveProductException("can't remove the product becouse he is found in exsist orders.");
+                throw new BO.CanNotRemoveProductException("can't remove the product becouse he is found in exsist ordes.");
 
             else
                 dal.Product.Delete(idProduct);
-
         }
         catch (BO.BlExceptions ex)
         {
@@ -151,7 +150,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 99999 && newProduct.Id < 1000000 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
+            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
             {
                 product.ProductId = newProduct.Id;
                 product.Name = newProduct.Name;
