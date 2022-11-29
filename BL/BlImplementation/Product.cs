@@ -13,11 +13,13 @@ internal class Product : BlApi.IProduct
 
         foreach (DO.Product p in products)
         {
-            BO.ProductForList productForList = new BO.ProductForList();
-            productForList.Id = p.ProductId;
-            productForList.Name = p.Name;
-            productForList.Category = (BO.Categories)p.Category;
-            productForList.Price = p.Price;
+            BO.ProductForList productForList = new BO.ProductForList
+            {
+                Id = p.ProductId,
+                Name = p.Name,
+                Category = (BO.Categories)p.Category,
+                Price = p.Price,
+            };
 
             newProductForList.Add(productForList);
         }
@@ -32,12 +34,14 @@ internal class Product : BlApi.IProduct
             {
                 product = dal.Product.Get(idProduct);
 
-                BO.Product newProduct = new();
-                newProduct.Id = product.ProductId;
-                newProduct.Name = product.Name;
-                newProduct.Price = product.Price;
-                newProduct.Category = (BO.Categories)product.Category;
-                newProduct.InStock = product.InStock;
+                BO.Product newProduct = new BO.Product
+                {
+                    Id = product.ProductId,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Category = (BO.Categories)product.Category,
+                    InStock = product.InStock,
+                };
 
                 return newProduct;
             }

@@ -226,14 +226,14 @@ press 0 to exsit.
                     case CartMenu.Add:
 
                         Console.WriteLine("please enter a product id.");
-                        bl.Cart.AddCart(cart, IntTryParse());
+                        Console.WriteLine( bl.Cart.AddCart(cart, IntTryParse()));
 
                         break;
 
                     case CartMenu.Update:
 
                         Console.WriteLine("please enter a product id and the amount that you want.");
-                        bl.Cart.ProductUpdateCart(cart, IntTryParse(), IntTryParse());
+                        Console.WriteLine(bl.Cart.ProductUpdateCart(cart, IntTryParse(), IntTryParse()));
 
                         break;
 

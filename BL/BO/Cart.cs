@@ -22,8 +22,10 @@ public class Cart
 
     public override string ToString()
     {
-        return $@"Items: {Items.GetToStrings()}
-TotalPrice:{TotalPrice}
+        return $@"
+Items: {Items.GetToStrings()}
+
+Total price of cart:{TotalPrice}
 ";
     }
 }
