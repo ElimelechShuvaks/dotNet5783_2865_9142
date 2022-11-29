@@ -1,6 +1,5 @@
 ﻿using Dal;
 using DalApi;
-using System.Security.AccessControl;
 
 namespace BlImplementation;
 
@@ -43,9 +42,9 @@ internal class Order : BlApi.IOrder
 
                 return retOrdrt;
             }
-            catch (DO.IdNotExistException)
+            catch (DO.IdNotExistException ex)
             {
-                throw new BO.IdNotExistException($"Order with id: {idOrder} doesn't exsist in data source");
+                throw new BO.IdNotExistException($"Order with id: {idOrder} doesn't exsist in data source", ex);
             }
         }
         else // unvalide id
@@ -75,6 +74,7 @@ internal class Order : BlApi.IOrder
             throw ex;
         }
     }
+
     public BO.Order OrderShippingUpdate(int idOrder)
     {
         try
@@ -100,7 +100,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.IdNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message);
+            throw new BO.IdNotExistException(ex.Message, ex);
         }
     }
 
@@ -129,7 +129,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.IdNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message);
+            throw new BO.IdNotExistException(ex.Message, ex);
         }
     }
 
@@ -172,7 +172,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.IdNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message);
+            throw new BO.IdNotExistException(ex.Message, ex);
         }
     }
 
@@ -229,7 +229,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.IdNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message);
+            throw new BO.IdNotExistException(ex.Message, ex);
         }
     }
 }

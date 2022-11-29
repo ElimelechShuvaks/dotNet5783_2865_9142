@@ -51,7 +51,7 @@ internal class Cart : BlApi.ICart
         }
         catch (DO.IdNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message);
+            throw new BO.IdNotExistException(ex.Message, ex);
         }
 
         return cart;
@@ -145,13 +145,16 @@ internal class Cart : BlApi.ICart
 
                     product.InStock = product.InStock - orderItem.Amount;
                     dal.Product.Update(product);
-
                 }
                 else // the name or mail or address is invalid.
                 {
                     throw new BO.InvalidPersonDetails("the name or mail or address is invalid.");
                 }
             }
+
+            // reset the cart
+            cart.Items.Clear();
+            cart.TotalPrice = 0;
         }
         catch (BO.BlExceptions ex)
         {
@@ -159,7 +162,7 @@ internal class Cart : BlApi.ICart
         }
         catch (DO.IdNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message);
+            throw new BO.IdNotExistException(ex.Message, ex);
         }
     }
 }
