@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using System.Diagnostics;
 using System.Net.Mail;
 
 namespace BlImplementation;
@@ -18,12 +19,15 @@ internal class Cart : BlApi.ICart
             {
                 if (product.InStock > 0) // the product exsit in stock.
                 {
-                    orderItem = new BO.OrderItem();
-                    orderItem.ProductId = idProduct;
-                    orderItem.Name = product.Name;
-                    orderItem.Amount = 1;
-                    orderItem.Price = product.Price;
-                    orderItem.TotalPrice = orderItem.Price;
+                    orderItem = new BO.OrderItem
+                    {
+                        ProductId = idProduct,
+                        Name = product.Name,
+                        Amount = 1,
+                        Price = product.Price,
+                        TotalPrice = product.Price,
+                    };
+     
                     cart.Items.Add(orderItem);
                 }
                 else
@@ -125,22 +129,26 @@ internal class Cart : BlApi.ICart
 
                 if (customerName != string.Empty && customerAdress != string.Empty && isValidEmail(customerEmail))
                 {
-                    DO.Order order = new DO.Order();
+                    DO.Order order = new DO.Order
+                    {
+                        CustomerName = customerName,
+                        CustomerAdress = customerAdress,
+                        CustomerEmail = customerEmail,
+                        OrderDate = DateTime.Now,
+                        ShipDate = DateTime.MinValue,
+                        DeliveryDate = DateTime.MinValue,
+                    };
 
-                    order.CustomerName = customerName;
-                    order.CustomerAdress = customerAdress;
-                    order.CustomerEmail = customerEmail;
-                    order.OrderDate = DateTime.Now;
-                    order.ShipDate = DateTime.MinValue;
-                    order.DeliveryDate = DateTime.MinValue;
                     int orderNumber = dal.Order.Add(order);
 
-                    DO.OrderItem ToAddOrderItem = new DO.OrderItem();
+                    DO.OrderItem ToAddOrderItem = new DO.OrderItem
+                    {
+                        ProductId = orderItem.ProductId,
+                        OrderId = orderNumber,
+                        Amount = orderItem.Amount,
+                        Price = orderItem.Price,
+                    };
 
-                    ToAddOrderItem.ProductId = orderItem.ProductId;
-                    ToAddOrderItem.OrderId = orderNumber;
-                    ToAddOrderItem.Amount = orderItem.Amount;
-                    ToAddOrderItem.Price = orderItem.Price;
                     dal.OrderItem.Add(ToAddOrderItem);
 
                     product.InStock = product.InStock - orderItem.Amount;
