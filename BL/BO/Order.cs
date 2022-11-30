@@ -75,6 +75,6 @@ Delivery Date: {DeliveryDate}
 Items:
 {Items.GetToStrings()}
 
-TotalPrice: {TotalPrice} ";
+Total price of order: {TotalPrice} ";
     }
 }

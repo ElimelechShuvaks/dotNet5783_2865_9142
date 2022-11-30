@@ -143,7 +143,7 @@ press 2 to update the shiping date.
 press 3 to update the delivery date.
 press 4 to check the order tracking.
 press 5 to get a list of orders.
-press 6 to change the order.
+press 6 to change the order (only manager).
 press 0 to exit.
 ");
             try
@@ -184,9 +184,9 @@ press 0 to exit.
                         break;
 
                     case OrderMenu.OrderUpdate:
-                        Console.WriteLine("please enter an order id.");
+                        Console.WriteLine("please enter an order id, product id and the new amount.");
+                        bl.Order.OrderUpdate(IntTryParse(), IntTryParse(), IntTryParse());
 
-                        // צריך לבקש מהמשתמש order ולהפעיל את הפונקציה
                         break;
 
                     case OrderMenu.Exit:
@@ -217,6 +217,7 @@ Please select a function to check.
 press 1 to add a product in cart.
 press 2 to do change in cart.
 press 3 to confirm the cart.
+press 4 to reset the cart.
 press 0 to exsit.
 ");
             try
@@ -226,7 +227,7 @@ press 0 to exsit.
                     case CartMenu.Add:
 
                         Console.WriteLine("please enter a product id.");
-                        Console.WriteLine( bl.Cart.AddCart(cart, IntTryParse()));
+                        Console.WriteLine( bl.Cart.AddToCart(cart, IntTryParse()));
 
                         break;
 
@@ -241,6 +242,12 @@ press 0 to exsit.
 
                         Console.WriteLine("please enter a customer name, mail and adress.");
                         bl.Cart.ConfirmationOrderToCart(cart, Console.ReadLine(), Console.ReadLine(), Console.ReadLine());
+
+                        break;
+
+                    case CartMenu.Reset:
+
+                        bl.Cart.ResetCart(cart);
 
                         break;
 
@@ -327,7 +334,7 @@ press 0 to exsit.
 3 for sport
 4 for luxury");
         int result = IntTryParse();
-        while (result > 5 || result < 1)
+        while (result > 4 || result < 0)
         {
             Console.WriteLine("invail input, Please try again");
             result = IntTryParse();
@@ -400,6 +407,7 @@ press 0 to exsit.
         Add,
         Update,
         Confirm,
+        Reset
     }
 
 }

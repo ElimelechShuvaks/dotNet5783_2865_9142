@@ -7,36 +7,37 @@ public class OrderForList
 {
 
     /// <summary>
-    /// id of Order For List
+    /// id of Order
     /// </summary>
     public int OrderId { get; set; }
 
     /// <summary>
-    /// CustomerName of Order For List
+    /// CustomerName of Order
     /// </summary>
     public string CustomerName { get; set; }
 
     /// <summary>
-    /// status of Order For List
+    /// status of Order
     /// </summary>
     public OrderStatus Status { get; set; }
 
     /// <summary>
-    /// AmountOfItems of Order For List
+    /// Amount of items in Order
     /// </summary>
     public int AmountOfItems { get; set; }
     /// <summary>
-    /// TotalPrice of Order For List
+    /// Total price of Order
     /// </summary>
     public double TotalPrice { get; set; }
 
     public override string ToString()
     {
-        return $@"Order id: {OrderId}
-Customer name :{CustomerName}
+        return $@"
+Order id: {OrderId}
+Customer name: {CustomerName}
 Order status: {Status}
 Amount of items: {AmountOfItems}
-Total price{TotalPrice}:
+Total price: {TotalPrice}:
 ";
     }
 }

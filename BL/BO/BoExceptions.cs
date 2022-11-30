@@ -30,9 +30,9 @@ public class IdNotValidException : BlExceptions
 }
 
 
-public class NotValidProductException : BlExceptions
+public class NotValidDetailsException : BlExceptions
 {
-    public NotValidProductException(string message) : base(message) { }
+    public NotValidDetailsException(string message) : base(message) { }
 }
 
 
@@ -41,19 +41,17 @@ public class CanNotRemoveProductException : BlExceptions
     public CanNotRemoveProductException(string message) : base(message) { }
 }
 
-
 public class NotExsitInStockException : BlExceptions
 {
     public NotExsitInStockException(string message) : base(message) { }
 }
 
-
-public class InvalidPersonDetails : BlExceptions
-{
-    public InvalidPersonDetails(string message) : base(message) { }
-}
-
 public class StatusErrorException : BlExceptions
 {
     public StatusErrorException(string message) : base(message) { }
+}
+
+public class EmptyCartException : BlExceptions
+{
+    public EmptyCartException(string message) : base(message) { }
 }

@@ -121,7 +121,7 @@ internal class Product : BlApi.IProduct
                 dal.Product.Add(product);
             }
             else
-                throw new BO.NotValidProductException("Invalid product details");
+                throw new BO.NotValidDetailsException("Invalid product details");
         }
         catch (BO.BlExceptions ex)
         {
@@ -168,7 +168,7 @@ internal class Product : BlApi.IProduct
                 dal.Product.Update(product);
             }
             else
-                throw new BO.NotValidProductException("Invalid product details");
+                throw new BO.NotValidDetailsException("Invalid product details");
         }
         catch (BO.BlExceptions ex)
         {

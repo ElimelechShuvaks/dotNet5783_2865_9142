@@ -196,14 +196,19 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (dal.Order.GetList().ToList().Any(order => order.Id == orderId))
+            if (GetStatus(dal.Order.Get(orderId)) != BO.OrderStatus.Confirmed) // check if the order is'n sent.
+                throw new BO.StatusErrorException("cnn't updating the order becouse it's alredy sent.");
+
+            if (dal.Order.GetList().ToList().Any(order => order.Id == orderId)) // check if it exsit an order with this id.
             {
                 DO.OrderItem orderItem = dal.OrderItem.GetList().ToList().FirstOrDefault(item => item.OrderId == orderId && item.ProductId == productId);
 
                 DO.Product product = dal.Product.Get(productId);
 
-                if (orderItem.Equals(default(DO.OrderItem))) // there is'n a order item with these ids, than add a new order item with this produc
+                if (orderItem.Equals(default(DO.OrderItem))) // there is'n an order item with these ids, than add a new order item with this produc
                 {
+                    if (product.InStock < newAmount) // check if there is enough in stock
+                        throw new BO.NotExsitInStockException("the product is out of stock");
 
                     orderItem.OrderId = orderId;
                     orderItem.ProductId = product.ProductId;
@@ -214,8 +219,12 @@ internal class Order : BlApi.IOrder
                 }
                 else // the product alredy exist in the order, than 
                 {
+                    if (product.InStock < newAmount) // check if there is enough in stock
+                        throw new BO.NotExsitInStockException("the product is out of stock");
+
                     orderItem.Amount = newAmount;
-                    orderItem.Price = newAmount * product.Price;
+
+                    dal.OrderItem.Update(orderItem);
                 }
             }
             else

@@ -36,7 +36,8 @@ public class Product
     /// </summary>
     public int InStock { get; set; }
 
-    public override string ToString() => $@"Product ProductId: {Id}
+    public override string ToString() => $@"
+Product id: {Id}
 Name: {Name}
 Category: {Category}
 Price: {Price}

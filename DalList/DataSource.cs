@@ -121,7 +121,7 @@ internal static class DataSource
 
         for (int i = 0; i < 12; i++) // orders with ship date and delivery date
         {
-            timeSpan = new TimeSpan(random.Next(2, 30), random.Next(23), random.Next(59));
+            timeSpan = new TimeSpan(random.Next(30, 90), random.Next(24), random.Next(60));
             tempRandom = random.Next(customer_Name.Length);
 
             Order order = new Order
@@ -130,13 +130,13 @@ internal static class DataSource
                 CustomerName = customer_Name[tempRandom],
                 CustomerEmail = customer_Email[tempRandom],
                 CustomerAdress = customer_Adress[tempRandom],
-                OrderDate = DateTime.Now - timeSpan,
+                OrderDate = DateTime.Now.AddDays(random.Next(-30, -5)) - timeSpan,
             };
 
-            timeSpan = new TimeSpan(random.Next(2, 60), random.Next(23), random.Next(59));
+            timeSpan = new TimeSpan(random.Next(60), random.Next(24), random.Next(60));
             order.ShipDate = order.OrderDate + timeSpan;
 
-            timeSpan = new TimeSpan(random.Next(5), random.Next(23), random.Next(59));
+            timeSpan = new TimeSpan(random.Next(30, 280), random.Next(24), random.Next(60));
             order.DeliveryDate = order.ShipDate + timeSpan;
 
             _orders.Add(order);
@@ -144,7 +144,7 @@ internal static class DataSource
 
         for (int i = 0; i < 4; i++) // orders with ship date and without delivery date
         {
-            timeSpan = new TimeSpan(random.Next(2, 30), random.Next(23), random.Next(59));
+            timeSpan = new TimeSpan(random.Next(30, 90), random.Next(24), random.Next(60));
             tempRandom = random.Next(customer_Name.Length);
 
             Order order = new Order
@@ -153,11 +153,11 @@ internal static class DataSource
                 CustomerName = customer_Name[tempRandom],
                 CustomerEmail = customer_Email[tempRandom],
                 CustomerAdress = customer_Adress[tempRandom],
-                OrderDate = DateTime.Now - timeSpan,
+                OrderDate = DateTime.Now.AddDays(random.Next(-30, -5)) - timeSpan,
                 DeliveryDate = DateTime.MinValue,
             };
 
-            timeSpan = new TimeSpan(random.Next(5), random.Next(23), random.Next(59));
+            timeSpan = new TimeSpan(random.Next(60), random.Next(24), random.Next(60));
             order.ShipDate = order.OrderDate + timeSpan;
 
             _orders.Add(order);
@@ -165,7 +165,7 @@ internal static class DataSource
 
         for (int i = 0; i < 4; i++) // orders without ship date and without delivery date
         {
-            timeSpan = new TimeSpan(random.Next(2, 30), random.Next(23), random.Next(59));
+            timeSpan = new TimeSpan(random.Next(30, 90), random.Next(24), random.Next(60));
             tempRandom = random.Next(customer_Name.Length);
 
             Order order = new Order
@@ -174,7 +174,7 @@ internal static class DataSource
                 CustomerName = customer_Name[tempRandom],
                 CustomerEmail = customer_Email[tempRandom],
                 CustomerAdress = customer_Adress[tempRandom],
-                OrderDate = DateTime.Now - timeSpan,
+                OrderDate = DateTime.Now.AddDays(random.Next(-30, -5)) - timeSpan,
                 ShipDate = DateTime.MinValue,
                 DeliveryDate = DateTime.MinValue,
             };

@@ -23,7 +23,8 @@ public class ProductForList
     /// </summary>
     public Categories Category { get; set; }
 
-    public override string ToString() => $@"Product OrderId: {Id}
+    public override string ToString() => $@"
+Product id: {Id}
 Name: {Name}
 Category: {Category}
 Price: {Price}

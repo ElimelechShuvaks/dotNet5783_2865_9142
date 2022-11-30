@@ -44,6 +44,6 @@ Product Id: {ProductId}
 Name :{Name}
 Price: {Price}
 Amount: {Amount}
-TotalPrice: {TotalPrice} ";
+Total price: {TotalPrice} ";
     }
 }

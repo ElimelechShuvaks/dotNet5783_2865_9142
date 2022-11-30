@@ -41,11 +41,12 @@ public class ProductItem
     public bool InStock { get; set; }
 
 
-    public override string ToString() => $@"Product ProductId: {Id}
+    public override string ToString() => $@"
+Product id: {Id}
 Name: {Name}
 Category: {Category}
 Price: {Price}
-Amount:{Amount}
-Amount in stock: {InStock}
+Amount in cart:{Amount}
+Is in stock: {InStock}
 ";
 }

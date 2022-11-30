@@ -8,7 +8,7 @@ internal class Cart : BlApi.ICart
 {
     private IDal dal = new Dal.DalList();
 
-    public BO.Cart AddCart(BO.Cart cart, int idProduct)
+    public BO.Cart AddToCart(BO.Cart cart, int idProduct)
     {
         try
         {
@@ -27,7 +27,7 @@ internal class Cart : BlApi.ICart
                         Price = product.Price,
                         TotalPrice = product.Price,
                     };
-     
+
                     cart.Items.Add(orderItem);
                 }
                 else
@@ -73,7 +73,7 @@ internal class Cart : BlApi.ICart
                 if (QuantitySummary > 0 && newQuantity != 0)
                 {
                     for (int i = 0; i < QuantitySummary; i++)
-                        AddCart(cart, idProduct);
+                        AddToCart(cart, idProduct);
                 }
                 if (QuantitySummary < 0 && newQuantity != 0)
                 {
@@ -100,7 +100,11 @@ internal class Cart : BlApi.ICart
         return cart;
     }
 
-    //This function returns true or false if the email address is valid.
+    /// <summary>
+    /// This function returns true or false if the email address is valid.
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
     private bool isValidEmail(string email)
     {
         try
@@ -120,6 +124,9 @@ internal class Cart : BlApi.ICart
     {
         try
         {
+            if (cart.Items.Count == 0)
+                throw new BO.EmptyCartException("cn't confirm an empty cart.");
+
             foreach (BO.OrderItem orderItem in cart.Items)
             {
                 DO.Product product = dal.Product.Get(orderItem.ProductId);
@@ -156,13 +163,11 @@ internal class Cart : BlApi.ICart
                 }
                 else // the name or mail or address is invalid.
                 {
-                    throw new BO.InvalidPersonDetails("the name or mail or address is invalid.");
+                    throw new BO.NotValidDetailsException("the name or mail or address is invalid.");
                 }
             }
 
-            // reset the cart
-            cart.Items.Clear();
-            cart.TotalPrice = 0;
+            ResetCart(cart); // reset the cart.
         }
         catch (BO.BlExceptions ex)
         {
@@ -173,5 +178,11 @@ internal class Cart : BlApi.ICart
             throw new BO.IdNotExistException(ex.Message, ex);
         }
     }
-}
 
+    public void ResetCart(BO.Cart cart)
+    {
+        // reset the cart
+        cart.Items.Clear();
+        cart.TotalPrice = 0;
+    }
+}

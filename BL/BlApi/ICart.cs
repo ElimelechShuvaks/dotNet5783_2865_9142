@@ -13,7 +13,7 @@ public interface ICart
     /// <param name="cart"></param>
     /// <param name="idProduct"></param>
     /// <returns></returns>
-    public Cart AddCart(Cart cart, int idProduct);
+    public Cart AddToCart(Cart cart, int idProduct);
 
     /// <summary>
     /// Updating the quantity of a product in the shopping cart (for the shopping cart screen)
@@ -33,7 +33,12 @@ public interface ICart
     /// <param name="customerEmail"></param>
     /// <param name="customerAdress"></param>
     /// <exception cref="NotImplementedException"></exception>
-    /// 
     public void ConfirmationOrderToCart(Cart cart, string customerName, string customerEmail, string customerAdress);
+
+    /// <summary>
+    /// reset the cart to be empty
+    /// </summary>
+    /// <param name="cart"></param>
+    public void ResetCart(Cart cart);
 }
 

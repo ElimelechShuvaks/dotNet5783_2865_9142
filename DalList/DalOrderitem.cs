@@ -65,6 +65,7 @@ internal class DalOrderitem : IOrderItem
         if (index != -1)
         {
             DataSource._orderItems[index] = newOrderItem;
+            return;
         }
 
         OtherFunctions.exceptionNotFound("order item", newOrderItem.ItemId);
