@@ -13,7 +13,7 @@ public class Cart
     /// <summary>
     /// Items of Cart
     /// </summary>
-    public List<OrderItem> Items { get; set; }
+    public List<OrderItem>? Items { get; set; }
 
     /// <summary>
     /// TotalPrice of order item
@@ -23,7 +23,7 @@ public class Cart
     public override string ToString()
     {
         return $@"
-Items: {Items.GetToStrings()}
+Items: {Items?.GetToStrings()}
 
 Total price of cart:{TotalPrice}
 ";

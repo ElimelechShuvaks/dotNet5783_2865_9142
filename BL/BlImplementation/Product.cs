@@ -8,21 +8,21 @@ internal class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> ProductListRequest()
     {
-        IEnumerable<DO.Product> products = dal.Product.GetList();
+        IEnumerable<DO.Product?> products = dal.Product.GetList();
+
         List<BO.ProductForList> newProductForList = new List<BO.ProductForList>(products.Count());
 
         foreach (DO.Product p in products)
         {
-            BO.ProductForList productForList = new BO.ProductForList
+            newProductForList.Add(new BO.ProductForList
             {
                 Id = p.ProductId,
                 Name = p.Name,
-                Category = (BO.Categories)p.Category,
+                Category = (BO.Categories)p.Category!,
                 Price = p.Price,
-            };
-
-            newProductForList.Add(productForList);
+            });
         }
+
         return newProductForList;
     }
 
@@ -39,7 +39,7 @@ internal class Product : BlApi.IProduct
                     Id = product.ProductId,
                     Name = product.Name,
                     Price = product.Price,
-                    Category = (BO.Categories)product.Category,
+                    Category = (BO.Categories)product.Category!,
                     InStock = product.InStock,
                 };
 
@@ -71,14 +71,14 @@ internal class Product : BlApi.IProduct
                 newProductItem.Id = product.ProductId;
                 newProductItem.Name = product.Name;
                 newProductItem.Price = product.Price;
-                newProductItem.Category = (BO.Categories)product.Category;
+                newProductItem.Category = (BO.Categories)product.Category!;
 
                 if (product.InStock > 0)
                     newProductItem.InStock = true;
                 else
                     newProductItem.InStock = false;
 
-                BO.OrderItem orderItem = newCart.Items.FirstOrDefault(ProductItem => ProductItem.ProductId == idProduct);
+                BO.OrderItem orderItem = newCart.Items!.FirstOrDefault(ProductItem => ProductItem.ProductId == idProduct)!;
 
                 if (orderItem is null)
                 {
@@ -116,7 +116,7 @@ internal class Product : BlApi.IProduct
                 product.Name = newProduct.Name;
                 product.Price = newProduct.Price;
                 product.InStock = newProduct.InStock;
-                product.Category = (DO.Categories)newProduct.Category;
+                product.Category = (DO.Categories)newProduct.Category!;
 
                 dal.Product.Add(product);
             }
@@ -137,7 +137,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (dal.OrderItem.GetOrderItemsWithPredicate(orderItem => orderItem.ProductId == idProduct).Any())
+            if (dal.OrderItem.GetList(orderItem => orderItem?.ProductId == idProduct).Any())
                 throw new BO.CanNotRemoveProductException("can't remove the product becouse he is found in exsist orders.");
 
             else
@@ -163,7 +163,7 @@ internal class Product : BlApi.IProduct
                 product.Name = newProduct.Name;
                 product.Price = newProduct.Price;
                 product.InStock = newProduct.InStock;
-                product.Category = (DO.Categories)newProduct.Category;
+                product.Category = (DO.Categories)newProduct.Category!;
 
                 dal.Product.Update(product);
             }

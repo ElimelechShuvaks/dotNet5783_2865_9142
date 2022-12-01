@@ -15,42 +15,42 @@ public class Order
     /// <summary>
     /// CustomerName of order
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
 
     /// <summary>
     /// CustomerEmail of order
     /// </summary>
-    public string CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; }
 
     /// <summary>
     /// CustomerAdress of order
     /// </summary>
-    public string CustomerAdress { get; set; }
+    public string? CustomerAdress { get; set; }
 
     /// <summary>
     /// status of order
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// OrderDate of order
     /// </summary>
-    public DateTime OrderDate { get; set; }
+    public DateTime? OrderDate { get; set; }
 
     /// <summary>
     /// ShipDate of order
     /// </summary>
-    public DateTime ShipDate { get; set; }
+    public DateTime? ShipDate { get; set; }
 
     /// <summary>
     /// DeliveryDate of order
     /// </summary>
-    public DateTime DeliveryDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
 
     /// <summary>
     /// Items of order
     /// </summary>
-    public List<OrderItem> Items { get; set; }
+    public List<OrderItem>? Items { get; set; }
 
     /// <summary>
     /// TotalPrice of order
@@ -69,11 +69,11 @@ Customer Adress: {CustomerAdress}
 Order status: {Status}
 
 Order Date: {OrderDate}
-Ship Date: {ShipDate.ToShortDateString()}
+Ship Date: {ShipDate?.ToShortDateString()}
 Delivery Date: {DeliveryDate}
 
 Items:
-{Items.GetToStrings()}
+{Items?.GetToStrings()}
 
 Total price of order: {TotalPrice} ";
     }

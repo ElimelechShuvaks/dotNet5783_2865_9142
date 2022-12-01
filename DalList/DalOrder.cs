@@ -1,5 +1,6 @@
-﻿using DO;
-using DalApi;
+﻿using DalApi;
+using DO;
+
 namespace Dal;
 
 internal class DalOrder : IOrder
@@ -14,30 +15,20 @@ internal class DalOrder : IOrder
     public Order Get(int idNum)
     {
         int index = existOrder(idNum);
-        if(index == -1)
-        { 
-            OtherFunctions.exceptionNotFound("order",idNum);
-        }
-       return DataSource._orders[index];
-    }
 
-    public IEnumerable<Order> GetList()
-    {
-        return DataSource._orders.Select(order => order);
+        if (index == -1)
+        {
+            OtherFunctions.exceptionNotFound("order", idNum);
+        }
+
+        return DataSource._orders[index]!.Value;
     }
 
     public void Delete(int idNum)
     {
-        
-        Order? order=Get(idNum);
-
-        if(order != null)
-        {
-            DataSource._orders.Remove(order.Value);
-            return;
-        }
-        OtherFunctions.exceptionNotFound("order",idNum);
+        DataSource._orders.Remove(Get(idNum));
     }
+
     public void Update(Order order)
     {
         int index = existOrder(order.Id);
@@ -51,7 +42,23 @@ internal class DalOrder : IOrder
 
     private int existOrder(int id)
     {
-        return DataSource._orders.FindIndex(order => order.Id == id);
+        int index = DataSource._orders.FindIndex(order => order?.Id == id);
+        return index;
+    }
+
+    public Order Get(Func<Order?, bool>? func)
+    {
+        if (DataSource._orders.FirstOrDefault(func!) is Order order)
+        {
+            return order;
+        }
+        throw new Exception();
+    }
+
+    public IEnumerable<Order?> GetList(Func<Order?, bool>? func = null)
+    {
+        bool check = func is null;
+        return check ? DataSource._orders.Select(order => order) : DataSource._orders.Where(func!);
     }
 }
 

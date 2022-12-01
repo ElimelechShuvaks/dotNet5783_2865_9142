@@ -1,7 +1,7 @@
 ﻿
 namespace DalApi;
 
-public interface ICrud<T>
+public interface ICrud<T> where T : struct
 {
     int Add(T t);
 
@@ -11,5 +11,6 @@ public interface ICrud<T>
 
     void Update(T t);
 
-    IEnumerable<T> GetList();
+    T Get(Func<T?, bool>? func);
+    IEnumerable<T?> GetList(Func<T?, bool>? func = null);
 }

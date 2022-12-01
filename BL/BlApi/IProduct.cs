@@ -10,7 +10,7 @@ public interface IProduct
     /// Get list of "ProductForList" for manger and client.
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductForList> ProductListRequest();
+    public IEnumerable<ProductForList?> ProductListRequest();
 
     /// <summary>
     /// Get list of ProductForList for manger.

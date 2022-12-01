@@ -14,6 +14,7 @@ internal class Order : BlApi.IOrder
             try
             {
                 DO.Order order = dal.Order.Get(idOrder); // asking for a DO order with this order id.
+                var (items, sum) = getOrders(order.Id);
 
                 BO.Order retOrdrt = new BO.Order
                 {
@@ -26,19 +27,24 @@ internal class Order : BlApi.IOrder
                     ShipDate = order.ShipDate,
                     DeliveryDate = order.DeliveryDate,
 
-                    Items = dal.OrderItem.GetListItem(idOrder).Select(orderItem =>
-                    new BO.OrderItem
+                    Items = items.Select(_orderItem =>
                     {
-                        OrderId = orderItem.OrderId,
-                        ProductId = orderItem.ProductId,
-                        Name = dal.Product.Get(orderItem.ProductId).Name,
-                        Price = orderItem.Price,
-                        Amount = orderItem.Amount,
-                        TotalPrice = orderItem.Price * orderItem.Amount
-                    }).ToList()
-                };
+                        DO.OrderItem orderItem = _orderItem!.Value;
 
-                retOrdrt.TotalPrice = retOrdrt.Items.Sum(orderItem => orderItem.TotalPrice);
+                        return new BO.OrderItem
+                        {
+                            OrderId = orderItem.OrderId,
+                            ProductId = orderItem.ProductId,
+                            Name = dal.Product.Get(orderItem.ProductId).Name,
+                            Price = orderItem.Price,
+                            Amount = orderItem.Amount,
+                            TotalPrice = orderItem.Price * orderItem.Amount
+                        };
+
+                    }).ToList(),
+
+                    TotalPrice = sum,
+                };
 
                 return retOrdrt;
             }
@@ -53,21 +59,31 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    private (IEnumerable<DO.OrderItem?>, double) getOrders(int orderId)
+    {
+        var orderItems = dal.OrderItem.GetList(orderItem => orderItem!.Value.OrderId == orderId);
+        return (orderItems, orderItems.Sum(orderItem => orderItem!.Value.Amount * orderItem.Value.Price));
+    }
+
     public IEnumerable<BO.OrderForList> OrderForListRequest()
     {
         try
         {
-            List<BO.OrderForList> ordersForList = dal.Order.GetList().Select(order =>
-             new BO.OrderForList
-             {
-                 OrderId = order.Id,
-                 CustomerName = order.CustomerName,
-                 Status = GetStatus(order),
-                 AmountOfItems = dal.OrderItem.GetListItem(order.Id).Count(),
-                 TotalPrice = GetDetailsOrder(order.Id).TotalPrice,
-             }).ToList();
+            return dal.Order.GetList().Select(order =>
+            {
+                DO.Order _order = order!.Value;
+                var (items, sum) = getOrders(_order.Id);
 
-            return ordersForList;
+                return new BO.OrderForList
+                {
+                    OrderId = _order.Id,
+                    CustomerName = _order.CustomerName,
+                    Status = GetStatus(_order),
+                    AmountOfItems = items.Count(),
+                    TotalPrice = sum,
+                };
+
+            }).ToList();
         }
         catch (BO.BlExceptions ex)
         {
@@ -81,13 +97,15 @@ internal class Order : BlApi.IOrder
         {
             BO.Order boOrder = GetDetailsOrder(idOrder);
 
-            if (boOrder.Status == BO.OrderStatus.Confirmed)
+            if (boOrder.Status is BO.OrderStatus.Confirmed)
             {
                 DO.Order order = dal.Order.Get(idOrder);
                 order.ShipDate = DateTime.Now;
 
                 dal.Order.Update(order);
-                return GetDetailsOrder(idOrder);
+
+                boOrder.ShipDate = DateTime.Now;
+                return boOrder;
             }
             else
             {
@@ -113,10 +131,13 @@ internal class Order : BlApi.IOrder
             if (boOrder.Status == BO.OrderStatus.Shipied)
             {
                 DO.Order order = dal.Order.Get(idOrder);
-                order.DeliveryDate = DateTime.Now;
 
+                order.DeliveryDate = DateTime.Now;
                 dal.Order.Update(order);
-                return GetDetailsOrder(idOrder);
+
+                boOrder.DeliveryDate = DateTime.Now;
+
+                return boOrder;
             }
             else
             {
@@ -142,26 +163,26 @@ internal class Order : BlApi.IOrder
             {
                 OrderId = order.Id,
                 Status = GetStatus(order),
-                tuplesOfDateAndDescription = new List<Tuple<DateTime, string>>()
+                tuplesOfDateAndDescription = new List<(DateTime?, string?)> ()
             };
 
             switch (orderTracking.Status)
             {
                 case BO.OrderStatus.Confirmed:
 
-                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created"));
+                    orderTracking.tuplesOfDateAndDescription.Add((order.OrderDate, "The order has been created"));
                     break;
 
                 case BO.OrderStatus.Shipied:
 
-                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created"));
-                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent"));
+                    orderTracking.tuplesOfDateAndDescription.Add((order.OrderDate, "The order has been created"));
+                    orderTracking.tuplesOfDateAndDescription.Add((order.ShipDate, "The order has been sent"));
                     break;
 
                 case BO.OrderStatus.Deliveried:
-                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created"));
-                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent"));
-                    orderTracking.tuplesOfDateAndDescription.Add(Tuple.Create(order.DeliveryDate, "The order is deliveried"));
+                    orderTracking.tuplesOfDateAndDescription.Add((order.OrderDate, "The order has been created"));
+                    orderTracking.tuplesOfDateAndDescription.Add((order.ShipDate, "The order has been sent"));
+                    orderTracking.tuplesOfDateAndDescription.Add((order.DeliveryDate, "The order is deliveried"));
                     break;
 
                 default:
@@ -183,10 +204,10 @@ internal class Order : BlApi.IOrder
     /// <returns></returns>
     private BO.OrderStatus GetStatus(DO.Order order)
     {
-        if (order.DeliveryDate != DateTime.MinValue)
+        if (order.DeliveryDate != null)
             return BO.OrderStatus.Deliveried;
 
-        if (order.ShipDate != DateTime.MinValue)
+        if (order.ShipDate != null)
             return BO.OrderStatus.Shipied;
 
         return BO.OrderStatus.Confirmed;
@@ -199,9 +220,10 @@ internal class Order : BlApi.IOrder
             if (GetStatus(dal.Order.Get(orderId)) != BO.OrderStatus.Confirmed) // check if the order is'n sent.
                 throw new BO.StatusErrorException("cnn't updating the order becouse it's alredy sent.");
 
-            if (dal.Order.GetList().ToList().Any(order => order.Id == orderId)) // check if it exsit an order with this id.
+            if (dal.Order.GetList().ToList().Any(order => order?.Id == orderId)) // check if it exsit an order with this id.
             {
-                DO.OrderItem orderItem = dal.OrderItem.GetList().ToList().FirstOrDefault(item => item.OrderId == orderId && item.ProductId == productId);
+                DO.OrderItem orderItem = dal.OrderItem.Get(item => item?.OrderId == orderId &&
+                item?.ProductId == productId);
 
                 DO.Product product = dal.Product.Get(productId);
 

@@ -19,17 +19,17 @@ internal static class DataSource
     /// <summary>
     /// _products array in Data source.
     /// </summary>
-    internal static List<Product> _products = new List<Product>(50);
+    internal static List<Product?> _products = new List<Product?>(50);
 
     /// <summary>
     /// _orders array in Data source.
     /// </summary>
-    internal static List<Order> _orders = new List<Order>(100);
+    internal static List<Order?> _orders = new List<Order?>(100);
 
     /// <summary>
     /// Order Items array in Data source.
     /// </summary>
-    internal static List<OrderItem> _orderItems = new List<OrderItem>(100);
+    internal static List<OrderItem?> _orderItems = new List<OrderItem?>(100);
 
     //Counter for amount in number run.
     private static int num_runOrder = 0;
@@ -154,7 +154,7 @@ internal static class DataSource
                 CustomerEmail = customer_Email[tempRandom],
                 CustomerAdress = customer_Adress[tempRandom],
                 OrderDate = DateTime.Now.AddDays(random.Next(-30, -5)) - timeSpan,
-                DeliveryDate = DateTime.MinValue,
+                DeliveryDate = null,
             };
 
             timeSpan = new TimeSpan(random.Next(60), random.Next(24), random.Next(60));
@@ -175,8 +175,8 @@ internal static class DataSource
                 CustomerEmail = customer_Email[tempRandom],
                 CustomerAdress = customer_Adress[tempRandom],
                 OrderDate = DateTime.Now.AddDays(random.Next(-30, -5)) - timeSpan,
-                ShipDate = DateTime.MinValue,
-                DeliveryDate = DateTime.MinValue,
+                ShipDate = null,
+                DeliveryDate = null,
             };
 
             _orders.Add(order);
@@ -191,17 +191,17 @@ internal static class DataSource
             for (int j = 0; j < random.Next(1, 5); j++)
             {
                 indx = random.Next(10);
-
-                OrderItem orderItem = new OrderItem
+                if (_products[indx] is Product product && _orders[i] is Order order)
                 {
-                    ItemId = Num_runOrderitem,
-                    OrderId = _orders[i].Id,
-                    ProductId = _products[indx].ProductId,
-                    Price = _products[indx].Price,
-                    Amount = random.Next(10)
-                };
-
-                _orderItems.Add(orderItem);
+                    _orderItems.Add(new OrderItem
+                    {
+                        ItemId = Num_runOrderitem,
+                        OrderId = order.Id,
+                        ProductId = product.ProductId,
+                        Price = product.Price,
+                        Amount = random.Next(10)
+                    });
+                }
             }
         }
     }

@@ -3,7 +3,7 @@ namespace Dal;
 
 internal class OtherFunctions
 {
-    internal static void exceptionNotFound(string entityName, int id)
+    internal static void exceptionNotFound(string entityName, int id = 0)
     {
         throw new IdNotExistException($"{entityName} with id: {id} doesn't exsist in data source");
     }

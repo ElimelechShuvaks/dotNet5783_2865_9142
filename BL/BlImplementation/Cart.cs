@@ -1,6 +1,5 @@
 ﻿using DalApi;
-using System.Diagnostics;
-using System.Net.Mail;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlImplementation;
 
@@ -12,7 +11,8 @@ internal class Cart : BlApi.ICart
     {
         try
         {
-            BO.OrderItem orderItem = cart.Items.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
+            BO.OrderItem? orderItem = cart.Items!.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
+
             DO.Product product = dal.Product.Get(idProduct);
 
             if (orderItem is null) //Not exsist in cart.
@@ -28,7 +28,7 @@ internal class Cart : BlApi.ICart
                         TotalPrice = product.Price,
                     };
 
-                    cart.Items.Add(orderItem);
+                    cart.Items!.Add(orderItem);
                 }
                 else
                 {
@@ -63,7 +63,10 @@ internal class Cart : BlApi.ICart
 
     public BO.Cart ProductUpdateCart(BO.Cart cart, int idProduct, int newQuantity)
     {
-        BO.OrderItem orderItem = cart.Items.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
+        var items = cart.Items!;
+
+        BO.OrderItem? orderItem = items.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
+
         try
         {
             if (orderItem is not null) // order item exsit in cart
@@ -84,7 +87,7 @@ internal class Cart : BlApi.ICart
                 if (newQuantity == 0)
                 {
                     cart.TotalPrice -= orderItem.Amount * orderItem.Price;
-                    cart.Items.Remove(orderItem);
+                    items.Remove(orderItem);
                 }
             }
             else // order item douse not exsit in cart
@@ -105,18 +108,8 @@ internal class Cart : BlApi.ICart
     /// </summary>
     /// <param name="email"></param>
     /// <returns></returns>
-    private bool isValidEmail(string email)
-    {
-        try
-        {
-            MailAddress mailAddress = new MailAddress(email);
-            return true;
-        }
-        catch (Exception ex)
-        {
-            return false;
-        }
-    }
+    private bool isValidEmail(string email) => new EmailAddressAttribute().IsValid(email);
+
 
     /*We have removed the name, address, and email fields in the shopping cart, 
     because there are duplicates here, and therefore we do accept data about the person as parameters*/
@@ -124,51 +117,61 @@ internal class Cart : BlApi.ICart
     {
         try
         {
-            if (cart.Items.Count == 0)
+            var items = cart.Items!;
+
+            if (items.Count() == 0)
                 throw new BO.EmptyCartException("cn't confirm an empty cart.");
 
-            foreach (BO.OrderItem orderItem in cart.Items)
+            if (customerName != string.Empty && customerAdress != string.Empty && isValidEmail(customerEmail))
             {
-                DO.Product product = dal.Product.Get(orderItem.ProductId);
+                List<DO.Product> products = null;
 
-                if (product.InStock < 0 || orderItem.Amount > product.InStock)
-                    throw new BO.NotExsitInStockException("the product is out of stock");
-
-                if (customerName != string.Empty && customerAdress != string.Empty && isValidEmail(customerEmail))
+                foreach (BO.OrderItem orderItem in cart.Items!)
                 {
-                    DO.Order order = new DO.Order
-                    {
-                        CustomerName = customerName,
-                        CustomerAdress = customerAdress,
-                        CustomerEmail = customerEmail,
-                        OrderDate = DateTime.Now,
-                        ShipDate = DateTime.MinValue,
-                        DeliveryDate = DateTime.MinValue,
-                    };
+                    DO.Product product = dal.Product.Get(orderItem.ProductId);
 
-                    int orderNumber = dal.Order.Add(order);
+                    if (product.InStock < 0 || orderItem.Amount > product.InStock)
+                        throw new BO.NotExsitInStockException("the product is out of stock");
 
-                    DO.OrderItem ToAddOrderItem = new DO.OrderItem
+                    (products ??= new List<DO.Product>()).Add(product);
+                }
+
+                DO.Order order = new DO.Order
+                {
+                    CustomerName = customerName,
+                    CustomerAdress = customerAdress,
+                    CustomerEmail = customerEmail,
+                    OrderDate = DateTime.Now,
+                    ShipDate = null,
+                    DeliveryDate = null,
+                };
+
+                int orderNumber = dal.Order.Add(order);
+
+                var orderItemAndProducts = items.Zip(products!).ToList();
+
+                orderItemAndProducts.ForEach(orderItemAndProduct =>
+                {
+                    var orderItem = orderItemAndProduct.First;
+                    var product = orderItemAndProduct.Second;
+
+                    dal.OrderItem.Add(new DO.OrderItem
                     {
-                        ProductId = orderItem.ProductId,
                         OrderId = orderNumber,
+                        ProductId = orderItem.ProductId,
                         Amount = orderItem.Amount,
                         Price = orderItem.Price,
-                    };
+                    });
 
-                    dal.OrderItem.Add(ToAddOrderItem);
+                    product.InStock -= orderItem.Amount;
 
-                    product.InStock = product.InStock - orderItem.Amount;
                     dal.Product.Update(product);
-                }
-                else // the name or mail or address is invalid.
-                {
-                    throw new BO.NotValidDetailsException("the name or mail or address is invalid.");
-                }
-            }
+                });
 
-            ResetCart(cart); // reset the cart.
+                ResetCart(cart); // reset the cart.
+            }
         }
+
         catch (BO.BlExceptions ex)
         {
             throw ex;
@@ -182,7 +185,7 @@ internal class Cart : BlApi.ICart
     public void ResetCart(BO.Cart cart)
     {
         // reset the cart
-        cart.Items.Clear();
+        cart.Items!.Clear();
         cart.TotalPrice = 0;
     }
 }

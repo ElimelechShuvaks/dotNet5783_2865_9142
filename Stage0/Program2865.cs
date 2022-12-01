@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Targil0
+﻿namespace Targil0
 {
-  partial class Program
+    partial class Program
     {
         static void Main(string[] args)
         {

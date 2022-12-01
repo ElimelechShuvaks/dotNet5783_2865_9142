@@ -14,17 +14,18 @@ public class OrderForList
     /// <summary>
     /// CustomerName of Order
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
 
     /// <summary>
     /// status of Order
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// Amount of items in Order
     /// </summary>
     public int AmountOfItems { get; set; }
+
     /// <summary>
     /// Total price of Order
     /// </summary>

@@ -1,5 +1,6 @@
-﻿using DO;
-using DalApi;
+﻿using DalApi;
+using DO;
+
 namespace Dal;
 
 internal class DalProduct : IProduct
@@ -26,24 +27,12 @@ internal class DalProduct : IProduct
             OtherFunctions.exceptionNotFound("product", idNum);
         }
 
-        return DataSource._products[index];
-    }
-
-    public IEnumerable<Product> GetList()
-    {
-        return DataSource._products.Select(product => product);
+        return DataSource._products[index]!.Value;
     }
 
     public void Delete(int idNum)
     {
-        Product? product = Get(idNum);
-
-        if (product != null)
-        {
-            DataSource._products.Remove(product.Value);
-            return;
-        }
-        OtherFunctions.exceptionNotFound("product", idNum);
+        DataSource._products.Remove(Get(idNum));
     }
 
     public void Update(Product product)
@@ -61,6 +50,22 @@ internal class DalProduct : IProduct
 
     private int existProduct(int id)
     {
-        return DataSource._products.FindIndex(product => product.ProductId == id);
+        return DataSource._products.FindIndex(product => product?.ProductId == id);
     }
+
+    public Product Get(Func<Product?, bool>? func)
+    {
+        if (DataSource._products.FirstOrDefault(func!) is Product product)
+        {
+            return product;
+        }
+        throw new Exception();
+    }
+
+    public IEnumerable<Product?> GetList(Func<Product?, bool>? func = null)
+    {
+        bool check = func is null;
+        return check ? DataSource._products.Select(product => product) : DataSource._products.Where(func!);
+    }
+
 }

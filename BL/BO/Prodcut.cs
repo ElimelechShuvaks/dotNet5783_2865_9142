@@ -14,7 +14,7 @@ public class Product
     /// <summary>
     /// Name of product.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Price of product.
@@ -24,12 +24,12 @@ public class Product
     /// <summary>
     /// Category of product.
     /// </summary>
-    public Categories Category { get; set; }
+    public Categories? Category { get; set; }
 
     /// <summary>
     /// Image of product.
     /// </summary>
-    public string Image { get; set; }
+    public string? Image { get; set; }
 
     /// <summary>
     /// InStock in product.

@@ -14,12 +14,12 @@ public class OrderTracking
     /// <summary>
     /// status of Order Tracking
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// List of DateTime and Description.
     /// </summary>
-    public List<Tuple<DateTime, string>> tuplesOfDateAndDescription { get; set; }
+    public List<(DateTime?, string?)>? tuplesOfDateAndDescription { get; set; }
 
     public override string ToString()
     {
@@ -27,7 +27,7 @@ public class OrderTracking
 Order id: {OrderId}
 Status: {Status}
 Order Tracking: 
-{tuplesOfDateAndDescription.GetToStrings()}
+{tuplesOfDateAndDescription?.GetToStrings()}
 ";
     }
 }

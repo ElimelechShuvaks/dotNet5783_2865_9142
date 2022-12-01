@@ -227,7 +227,7 @@ press 0 to exsit.
                     case CartMenu.Add:
 
                         Console.WriteLine("please enter a product id.");
-                        Console.WriteLine( bl.Cart.AddToCart(cart, IntTryParse()));
+                        Console.WriteLine(bl.Cart.AddToCart(cart, IntTryParse()));
 
                         break;
 

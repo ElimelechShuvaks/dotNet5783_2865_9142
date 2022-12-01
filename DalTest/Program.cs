@@ -1,6 +1,6 @@
-﻿using DO;
-using Dal;
+﻿using Dal;
 using DalApi;
+using DO;
 
 //--------------main------------------------------------------------
 
@@ -44,7 +44,7 @@ while (true)
 
 
 //the func PrintList,Product and Order and orderItem.
-void PrintList<T>(IEnumerable<T> items)
+void PrintList<T>(IEnumerable<T?> items)
 {
     foreach (var item in items)
     {
@@ -311,8 +311,8 @@ void choises_Order(IDal dal)
 
             case Functions.TogetArray:
 
-                IEnumerable<Order> newList = dal.Order.GetList();
-                PrintList<Order>(newList);
+                IEnumerable<Order?> newList = dal.Order.GetList();
+                PrintList(newList);
 
                 break;
 
@@ -406,7 +406,7 @@ void choises_Orderitem(IDal dal)
                     Console.WriteLine("type an product ProductId");
                     intNum2 = IntTryParse(ref intNum2);
 
-                    Console.WriteLine(dal.OrderItem.GetBuy_2Id(oId: intNum, pId: intNum2));
+                    Console.WriteLine(dal.OrderItem.Get(o => o.Value.ProductId == intNum2 && o.Value.OrderId == intNum));
                 }
                 catch (IdNotExistException ex)
                 {
@@ -417,7 +417,7 @@ void choises_Orderitem(IDal dal)
             case OrderItemFunctions.GetItemArray:
 
                 Console.WriteLine("type an Order ProductId");
-                PrintList(dal.OrderItem.GetListItem(IntTryParse(ref intNum)));
+                PrintList(dal.OrderItem.GetList(o => o.Value.OrderId == IntTryParse(ref intNum)));
 
                 break;
 

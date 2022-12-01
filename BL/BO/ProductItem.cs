@@ -13,7 +13,7 @@ public class ProductItem
     /// <summary>
     /// Name of product.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Price of product.
@@ -23,12 +23,12 @@ public class ProductItem
     /// <summary>
     /// Category of product.
     /// </summary>
-    public Categories Category { get; set; }
+    public Categories? Category { get; set; }
 
     /// <summary>
     /// Image of product.
     /// </summary>
-    public string Image { get; set; }
+    public string? Image { get; set; }
 
     /// <summary>
     /// Amount of Product Item
@@ -39,7 +39,6 @@ public class ProductItem
     /// Checks whether there is enough in stock or not.
     /// </summary>
     public bool InStock { get; set; }
-
 
     public override string ToString() => $@"
 Product id: {Id}

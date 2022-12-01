@@ -41,7 +41,7 @@ public interface IOrder
     /// try to take a list of DO orders and return a list of OrderForList.
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderForList> OrderForListRequest();
+    public IEnumerable<OrderForList?> OrderForListRequest();
 
     //the bonus function.
 

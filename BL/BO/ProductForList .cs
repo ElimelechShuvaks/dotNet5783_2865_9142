@@ -11,7 +11,7 @@ public class ProductForList
     /// <summary>
     ///  Name of Product.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     ///  Price of Product.
@@ -21,7 +21,7 @@ public class ProductForList
     /// <summary>
     ///  Category of Product.
     /// </summary>
-    public Categories Category { get; set; }
+    public Categories? Category { get; set; }
 
     public override string ToString() => $@"
 Product id: {Id}
