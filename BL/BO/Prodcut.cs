@@ -1,4 +1,7 @@
-﻿namespace BO;
+﻿
+//using Windows.UI.Xaml.Media;
+
+namespace BO;
 
 /// <summary>
 /// Main logical entity of a product (Product)
@@ -35,6 +38,8 @@ public class Product
     /// InStock in product.
     /// </summary>
     public int InStock { get; set; }
+
+   // public ImageSource ImageSource { get; set; }
 
     public override string ToString() => $@"
 Product id: {Id}

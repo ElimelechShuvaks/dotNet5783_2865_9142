@@ -1,4 +1,6 @@
 ﻿using DO;
+using static System.Net.Mime.MediaTypeNames;
+
 namespace Dal;
 
 /// <summary>
@@ -19,17 +21,17 @@ internal static class DataSource
     /// <summary>
     /// _products array in Data source.
     /// </summary>
-    internal static List<Product?> _products = new List<Product?>(50);
+    internal static List<Product?> _products { set; get; } = new List<Product?>(50);
 
     /// <summary>
     /// _orders array in Data source.
     /// </summary>
-    internal static List<Order?> _orders = new List<Order?>(100);
+    internal static List<Order?> _orders { set; get; } = new List<Order?>(100);
 
     /// <summary>
     /// Order Items array in Data source.
     /// </summary>
-    internal static List<OrderItem?> _orderItems = new List<OrderItem?>(100);
+    internal static List<OrderItem?> _orderItems { set; get; } = new List<OrderItem?>(100);
 
     //Counter for amount in number run.
     private static int num_runOrder = 0;
@@ -45,18 +47,51 @@ internal static class DataSource
         s_Initialize_orderitem();
     }
 
-    public static void s_Initialize_product()
+    private static HashSet<string> loadImages()
     {
-        Product product = new Product();
-        int[] IDarray = new int[10];
+        DirectoryInfo directoryInfo = new DirectoryInfo(@"Images/ProductImages");
+        return directoryInfo.GetFiles().Select(file => file.Name).ToHashSet();
+    }
 
-        string[][] productNane = new string[5][] {
+    private static void renameFileNames()
+    {
+        DirectoryInfo directoryInfo = new DirectoryInfo(@"Images\ProductImages\");
+       IEnumerable<string> fileNames = directoryInfo.GetFiles().Select(file => file.Name);
+
+        string[][] productName = new string[5][] {
             new string[] { "Toyota Corolla","Toyota Yaris","Hyundai i40" ,"Hyundai Ioniq","Mazda 3","SEAT Ibiza","SEAT Leon","Skoda Rapid","Skoda Octavia","Ford Focus"},
             new string[] { "Geely Geometric","MG ZS EV", "Hyundai buys","Tesla Model 3" ,"Tesla Model y","Tesla Model s","Tesla Model x","Aiways U5","Kia Niro Plus","Hyundai Ioniq 5"},
             new string[] { "Toyota Rav 4","Toyota Highlander","Mercedes GLB Class","Jeep Compass","Jeep Wrangler" ,"Cadillac Escalade","Volvo XC90","Volvo XC60","Porsche Macan","Porsche Cayenne"},
             new string[] { "Chevrolet Camaro", "Ford Mustang", "Audi A3" ,"Audi TT","Volkswagen - Polo","Nissan GT-R","Alfa Romeo Giulia","mini cooper","Cupra Leon","Maserati MC20"},
             new string[] { "Audi A8", "Volvo S90", "Genesis G80", "BMW 5 Series", "Bentley Flying Spur", "Cadillac CT5", "BYD here", "BMW 7 Series", "Mercedes S", "Audi A7" }
         };
+
+        var productNamesAndOldNames = fileNames.Zip(productName.SelectMany(name => name));
+
+        foreach (var item in productNamesAndOldNames)
+        {
+            File.Delete(item.Second);
+            File.Move(@"Images\ProductImages\" + item.First, @"C:\Users\1\source\repos\ElimelechShuvaks\dotNet5783_2865_9142\bin\Images\ProductImages\" + item.Second + ".png");
+        }
+    }
+
+    public static void s_Initialize_product()
+    {
+        Product product = new Product();
+        int[] IDarray = new int[10];
+
+        renameFileNames();
+        HashSet<string> images = loadImages();
+
+        string[][] productNames = new string[5][] {
+            new string[] { "Toyota Corolla","Toyota Yaris","Hyundai i40" ,"Hyundai Ioniq","Mazda 3","SEAT Ibiza","SEAT Leon","Skoda Rapid","Skoda Octavia","Ford Focus"},
+            new string[] { "Geely Geometric","MG ZS EV", "Hyundai buys","Tesla Model 3" ,"Tesla Model y","Tesla Model s","Tesla Model x","Aiways U5","Kia Niro Plus","Hyundai Ioniq 5"},
+            new string[] { "Toyota Rav 4","Toyota Highlander","Mercedes GLB Class","Jeep Compass","Jeep Wrangler" ,"Cadillac Escalade","Volvo XC90","Volvo XC60","Porsche Macan","Porsche Cayenne"},
+            new string[] { "Chevrolet Camaro", "Ford Mustang", "Audi A3" ,"Audi TT","Volkswagen - Polo","Nissan GT-R","Alfa Romeo Giulia","mini cooper","Cupra Leon","Maserati MC20"},
+            new string[] { "Audi A8", "Volvo S90", "Genesis G80", "BMW 5 Series", "Bentley Flying Spur", "Cadillac CT5", "BYD here", "BMW 7 Series", "Mercedes S", "Audi A7" }
+        };
+
+        int numberOfCategories = productNames.Count();
 
         int[,] ProductPrice = new int[5, 10]{
         { 155138,114527, 150000, 162800, 148500, 103900, 134900, 110000, 178990,144900 },
@@ -67,22 +102,31 @@ internal static class DataSource
         };
         int[] productInStock = { 0, 0, 0, 125, 9, 178, 150, 209, 248, 39, 88, 63, 91, 63, 49, 76, 18 };
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < numberOfCategories; i++)
         {
-            int num = random.Next(5);
-            int tempID = random.Next(100000, 999999);
-            if (IDarray.Contains(tempID))
-                continue;
-            IDarray[i] = tempID;
-            product.ProductId = tempID;
-            int temprandom = random.Next(10);
-            product.Name = productNane[num][temprandom];
-            product.Price = ProductPrice[num, temprandom];
-            product.Category = (Categories)num;
-            product.Image = ".png";
-            product.InStock = productInStock[random.Next(productInStock.Length)];
+            product.Category = (Categories)i;
+            foreach (var productName in productNames[i])
+            {
+                int num = random.Next(5);
+                int tempID = random.Next(100000, 999999);
+                if (IDarray.Contains(tempID))
+                    continue;
+                IDarray[i] = tempID;
+                product.ProductId = tempID;
+                int temprandom = random.Next(10);
+                product.Name = productName;
+                product.Price = ProductPrice[num, temprandom];
 
-            _products.Add(product);
+                var imageFileName = product.Name + ".png";
+
+                if (images.Contains(imageFileName))
+                {
+                    product.Image = imageFileName;
+                }
+                product.InStock = productInStock[random.Next(productInStock.Length)];
+
+                _products.Add(product);
+            }
         }
     }
 

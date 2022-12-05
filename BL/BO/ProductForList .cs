@@ -1,4 +1,7 @@
-﻿namespace BO;
+﻿
+//using Windows.UI.Xaml.Media;
+
+namespace BO;
 
 public class ProductForList
 {
@@ -22,6 +25,15 @@ public class ProductForList
     ///  Category of Product.
     /// </summary>
     public Categories? Category { get; set; }
+
+    /// <summary>
+    /// Image of product.
+    /// </summary>
+    public string? Image { get; set; }
+
+    public Uri Uri { set; get; }
+
+    //public ImageSource ImageSource { get; set; }
 
     public override string ToString() => $@"
 Product id: {Id}
