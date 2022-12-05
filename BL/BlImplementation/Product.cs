@@ -1,4 +1,8 @@
 ﻿using DalApi;
+using System.Drawing;
+//using Windows.UI.Xaml.Media.Imaging;
+//using Xamarin.Forms.Internals;
+
 namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
@@ -6,9 +10,9 @@ internal class Product : BlApi.IProduct
     private IDal dal = new Dal.DalList();
     private DO.Product product = new();
 
-    public IEnumerable<BO.ProductForList> ProductListRequest()
+    public IEnumerable<BO.ProductForList> ProductListRequest(Func<BO.ProductForList?, bool>? func = null)
     {
-        IEnumerable<DO.Product?> products = dal.Product.GetList();
+       IEnumerable<DO.Product?> products = dal.Product.GetList();
 
         List<BO.ProductForList> newProductForList = new List<BO.ProductForList>(products.Count());
 
@@ -20,7 +24,15 @@ internal class Product : BlApi.IProduct
                 Name = p.Name,
                 Category = (BO.Categories)p.Category!,
                 Price = p.Price,
+                Image = p.Image,
+                Uri = new Uri(Directory.GetCurrentDirectory() + $@"\Images\ProductImages\{p.Image}"),
+              //  ImageSource = new BitmapImage(new Uri($@"Images\ProductImages\{p.Image}")),
             });
+        }
+        if(func != null)
+        {
+
+            return newProductForList.Where(func);
         }
 
         return newProductForList;

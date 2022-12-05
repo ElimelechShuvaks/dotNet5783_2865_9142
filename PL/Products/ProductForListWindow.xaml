@@ -6,27 +6,102 @@
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
         Title="ProductForListWindow" Height="640" Width="800">
+
+    <Window.Resources>
+
+        <Style x:Key="GridViewColumnHeaderStyle" TargetType="GridViewColumnHeader">
+            <Setter Property="Width" Value="100"></Setter>
+            <Setter Property="Background" >
+                <Setter.Value>
+                    <LinearGradientBrush>
+                        <GradientStop Color="White" Offset="0.7"></GradientStop>
+                        <GradientStop Color="Green" Offset="1"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TbStyle" TargetType="TextBlock">
+            <Setter Property="Width" Value="100"></Setter>
+        </Style>
+    </Window.Resources>
+    
+    
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Grid.Row="0"
+VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
 
-            <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"/>
+            <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged" SelectedItem ="CategoryChanged"/>
             <Label Content="Category:" Grid.Column="0"/>
         </Grid>
-        <ListView  x:Name="ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        
+        <ListView  x:Name="ProductListView" Grid.Row="1" >
+         
+            
+            <ListView.ItemContainerStyle>
+
+                <Style TargetType="ListViewItem">
+           
+                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                   
+                </Style>
+            </ListView.ItemContainerStyle>
+            
             <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
+                <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" >
+                    
+                    <GridViewColumn Header="Id" >
+                        <GridViewColumn.CellTemplate > 
+                            <DataTemplate >
+                                <TextBlock Text="{Binding ProductForListBo.Id}" ></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Name" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ProductForListBo.Name}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Category">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ProductForListBo.Category}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+
+                    <GridViewColumn Header="Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ProductForListBo.Price}"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Image">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImageSource}" Width="20"></Image>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>
