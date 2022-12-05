@@ -19,17 +19,17 @@ internal static class DataSource
     /// <summary>
     /// _products array in Data source.
     /// </summary>
-    internal static List<Product?> _products = new List<Product?>(50);
+    internal static List<Product?> _products = new List<Product?>();
 
     /// <summary>
     /// _orders array in Data source.
     /// </summary>
-    internal static List<Order?> _orders = new List<Order?>(100);
+    internal static List<Order?> _orders = new List<Order?>();
 
     /// <summary>
     /// Order Items array in Data source.
     /// </summary>
-    internal static List<OrderItem?> _orderItems = new List<OrderItem?>(100);
+    internal static List<OrderItem?> _orderItems = new List<OrderItem?>();
 
     //Counter for amount in number run.
     private static int num_runOrder = 0;
@@ -65,6 +65,7 @@ internal static class DataSource
         { 430000, 320000, 368000, 602900,189000, 880000, 699900, 195900, 239000,1880000 },
         { 925000, 469900, 349000,588000, 1745000,359900,299000, 895000, 1450000, 634400 }
         };
+
         int[] productInStock = { 0, 0, 0, 125, 9, 178, 150, 209, 248, 39, 88, 63, 91, 63, 49, 76, 18 };
 
         for (int i = 0; i < 10; i++)
@@ -75,9 +76,9 @@ internal static class DataSource
                 continue;
             IDarray[i] = tempID;
             product.ProductId = tempID;
-            int temprandom = random.Next(10);
-            product.Name = productNane[num][temprandom];
-            product.Price = ProductPrice[num, temprandom];
+            int tempRandom = random.Next(10);
+            product.Name = productNane[num][tempRandom];
+            product.Price = ProductPrice[num, tempRandom];
             product.Category = (Categories)num;
             product.Image = ".png";
             product.InStock = productInStock[random.Next(productInStock.Length)];

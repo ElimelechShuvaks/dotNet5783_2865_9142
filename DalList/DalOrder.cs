@@ -32,6 +32,7 @@ internal class DalOrder : IOrder
     public void Update(Order order)
     {
         int index = existOrder(order.Id);
+
         if (index != -1)
         {
             DataSource._orders[index] = order;
