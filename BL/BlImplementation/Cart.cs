@@ -13,7 +13,7 @@ internal class Cart : BlApi.ICart
         {
             BO.OrderItem? orderItem = cart.Items!.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
 
-            DO.Product product = dal.Product.Get(idProduct);
+            DO.Product product = dal.Product.Get(productFunc => productFunc?.ProductId == idProduct);
 
             if (orderItem is null) //Not exsist in cart.
             {
@@ -128,7 +128,7 @@ internal class Cart : BlApi.ICart
 
                 foreach (BO.OrderItem orderItem in cart.Items!)
                 {
-                    DO.Product product = dal.Product.Get(orderItem.ProductId);
+                    DO.Product product = dal.Product.Get(productFunc => productFunc?.ProductId == orderItem.ProductId);
 
                     if (product.InStock < 0 || orderItem.Amount > product.InStock)
                         throw new BO.NotExsitInStockException("the product is out of stock");

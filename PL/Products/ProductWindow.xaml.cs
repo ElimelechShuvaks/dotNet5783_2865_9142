@@ -35,6 +35,22 @@ namespace PL.Products
             else
                 productWindowButton.Content = "Update";
         }
+        public ProductWindow(IBl bl, ActionCase actionCase, int ProductId)
+        {
+            localBl = bl;
+            InitializeComponent();
+
+            categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
+            productWindowButton.Content = "Update";
+            BO.Product product = localBl.Product.ProductDetailsManger(ProductId);
+
+            idTextBox.Text = product.Id.ToString();
+            categoryComboBox.Text = product.Category.ToString();
+            NameTextBox.Text = product.Name!.ToString();
+            PriceTextBox.Text = product.Price.ToString();
+            AmountTextBox.Text = product.InStock.ToString();
+
+        }
 
         private void productWindowButton_Click(object sender, RoutedEventArgs e)
         {

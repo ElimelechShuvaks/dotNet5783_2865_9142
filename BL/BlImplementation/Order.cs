@@ -13,7 +13,7 @@ internal class Order : BlApi.IOrder
         {
             try
             {
-                DO.Order order = dal.Order.Get(idOrder); // asking for a DO order with this order id.
+                DO.Order order = dal.Order.Get(orderFunc=> orderFunc?.Id ==  idOrder); // asking for a DO order with this order id.
                 var (items, sum) = getOrders(order.Id);
 
                 BO.Order retOrdrt = new BO.Order
@@ -35,7 +35,7 @@ internal class Order : BlApi.IOrder
                         {
                             OrderId = orderItem.OrderId,
                             ProductId = orderItem.ProductId,
-                            Name = dal.Product.Get(orderItem.ProductId).Name,
+                            Name = dal.Product.Get(orderItemFunc => orderItemFunc?.ProductId == orderItem.ProductId).Name,
                             Price = orderItem.Price,
                             Amount = orderItem.Amount,
                             TotalPrice = orderItem.Price * orderItem.Amount
@@ -99,7 +99,7 @@ internal class Order : BlApi.IOrder
 
             if (boOrder.Status is BO.OrderStatus.Confirmed)
             {
-                DO.Order order = dal.Order.Get(idOrder);
+                DO.Order order = dal.Order.Get(orderFunc => orderFunc?.Id == idOrder);
                 order.ShipDate = DateTime.Now;
 
                 dal.Order.Update(order);
@@ -130,7 +130,7 @@ internal class Order : BlApi.IOrder
 
             if (boOrder.Status == BO.OrderStatus.Shipied)
             {
-                DO.Order order = dal.Order.Get(idOrder);
+                DO.Order order = dal.Order.Get(orderFunc => orderFunc?.Id == idOrder);
 
                 order.DeliveryDate = DateTime.Now;
                 dal.Order.Update(order);
@@ -158,7 +158,7 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            DO.Order order = dal.Order.Get(idOrder);
+            DO.Order order = dal.Order.Get(orderFunc => orderFunc?.Id == idOrder);
             BO.OrderTracking orderTracking = new BO.OrderTracking
             {
                 OrderId = order.Id,
@@ -217,7 +217,7 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (GetStatus(dal.Order.Get(orderId)) != BO.OrderStatus.Confirmed) // check if the order is'n sent.
+            if (GetStatus(dal.Order.Get(orderFunc => orderFunc?.Id == orderId)) != BO.OrderStatus.Confirmed) // check if the order is'n sent.
                 throw new BO.StatusErrorException("cnn't updating the order becouse it's alredy sent.");
 
             if (dal.Order.GetList().ToList().Any(order => order?.Id == orderId)) // check if it exsit an order with this id.
@@ -225,7 +225,7 @@ internal class Order : BlApi.IOrder
                 DO.OrderItem orderItem = dal.OrderItem.Get(item => item?.OrderId == orderId &&
                 item?.ProductId == productId);
 
-                DO.Product product = dal.Product.Get(productId);
+                DO.Product product = dal.Product.Get(productFunc=> productFunc?.ProductId== productId);
 
                 if (orderItem.Equals(default(DO.OrderItem))) // there is'n an order item with these ids, than add a new order item with this produc
                 {

@@ -53,9 +53,12 @@ public partial class ProductForListWindow : Window
 
     private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        new ProductWindow(bl, ActionCase.Update).Show();
-        //BO.ProductForList productForList = (BO.ProductForList)sender;
-        //ProductListView.ItemsSource = (System.Collections.IEnumerable)bl.Product.ProductDetailsManger(productForList.Id);
+        if (ProductListView.SelectedItem is BO.ProductForList p)
+        {
+            new ProductWindow(bl, ActionCase.Update, p.Id).Show();
+        }
+        
+
     }
 }
 
