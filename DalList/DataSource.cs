@@ -47,41 +47,41 @@ internal static class DataSource
         s_Initialize_orderitem();
     }
 
-    private static HashSet<string> loadImages()
-    {
-        DirectoryInfo directoryInfo = new DirectoryInfo(@"Images/ProductImages");
-        return directoryInfo.GetFiles().Select(file => file.Name).ToHashSet();
-    }
+    //private static HashSet<string> loadImages()
+    //{
+    //    DirectoryInfo directoryInfo = new DirectoryInfo(@"Images/ProductImages");
+    //    return directoryInfo.GetFiles().Select(file => file.Name).ToHashSet();
+    //}
 
-    private static void renameFileNames()
-    {
-        DirectoryInfo directoryInfo = new DirectoryInfo(@"Images\ProductImages\");
-       IEnumerable<string> fileNames = directoryInfo.GetFiles().Select(file => file.Name);
+    //private static void renameFileNames()
+    //{
+    //    DirectoryInfo directoryInfo = new DirectoryInfo(@"Images\ProductImages\");
+    //    IEnumerable<string> fileNames = directoryInfo.GetFiles().Select(file => file.Name);
 
-        string[][] productName = new string[5][] {
-            new string[] { "Toyota Corolla","Toyota Yaris","Hyundai i40" ,"Hyundai Ioniq","Mazda 3","SEAT Ibiza","SEAT Leon","Skoda Rapid","Skoda Octavia","Ford Focus"},
-            new string[] { "Geely Geometric","MG ZS EV", "Hyundai buys","Tesla Model 3" ,"Tesla Model y","Tesla Model s","Tesla Model x","Aiways U5","Kia Niro Plus","Hyundai Ioniq 5"},
-            new string[] { "Toyota Rav 4","Toyota Highlander","Mercedes GLB Class","Jeep Compass","Jeep Wrangler" ,"Cadillac Escalade","Volvo XC90","Volvo XC60","Porsche Macan","Porsche Cayenne"},
-            new string[] { "Chevrolet Camaro", "Ford Mustang", "Audi A3" ,"Audi TT","Volkswagen - Polo","Nissan GT-R","Alfa Romeo Giulia","mini cooper","Cupra Leon","Maserati MC20"},
-            new string[] { "Audi A8", "Volvo S90", "Genesis G80", "BMW 5 Series", "Bentley Flying Spur", "Cadillac CT5", "BYD here", "BMW 7 Series", "Mercedes S", "Audi A7" }
-        };
+    //    string[][] productName = new string[5][] {
+    //        new string[] { "Toyota Corolla","Toyota Yaris","Hyundai i40" ,"Hyundai Ioniq","Mazda 3","SEAT Ibiza","SEAT Leon","Skoda Rapid","Skoda Octavia","Ford Focus"},
+    //        new string[] { "Geely Geometric","MG ZS EV", "Hyundai buys","Tesla Model 3" ,"Tesla Model y","Tesla Model s","Tesla Model x","Aiways U5","Kia Niro Plus","Hyundai Ioniq 5"},
+    //        new string[] { "Toyota Rav 4","Toyota Highlander","Mercedes GLB Class","Jeep Compass","Jeep Wrangler" ,"Cadillac Escalade","Volvo XC90","Volvo XC60","Porsche Macan","Porsche Cayenne"},
+    //        new string[] { "Chevrolet Camaro", "Ford Mustang", "Audi A3" ,"Audi TT","Volkswagen - Polo","Nissan GT-R","Alfa Romeo Giulia","mini cooper","Cupra Leon","Maserati MC20"},
+    //        new string[] { "Audi A8", "Volvo S90", "Genesis G80", "BMW 5 Series", "Bentley Flying Spur", "Cadillac CT5", "BYD here", "BMW 7 Series", "Mercedes S", "Audi A7" }
+    //    };
 
-        var productNamesAndOldNames = fileNames.Zip(productName.SelectMany(name => name));
+    //    var productNamesAndOldNames = fileNames.Zip(productName.SelectMany(name => name));
 
-        foreach (var item in productNamesAndOldNames)
-        {
-            File.Delete(item.Second);
-            File.Move(@"Images\ProductImages\" + item.First, @"C:\Users\1\source\repos\ElimelechShuvaks\dotNet5783_2865_9142\bin\Images\ProductImages\" + item.Second + ".png");
-        }
-    }
+    //    foreach (var item in productNamesAndOldNames)
+    //    {
+    //        File.Delete(item.Second);
+    //        File.Move(@"Images\ProductImages\" + item.First, @"C:\Users\1\source\repos\ElimelechShuvaks\dotNet5783_2865_9142\bin\Images\ProductImages\" + item.Second + ".png");
+    //    }
+    //}
 
     public static void s_Initialize_product()
     {
         Product product = new Product();
         int[] IDarray = new int[10];
 
-        renameFileNames();
-        HashSet<string> images = loadImages();
+        //renameFileNames();
+        //HashSet<string> images = loadImages();
 
         string[][] productNames = new string[5][] {
             new string[] { "Toyota Corolla","Toyota Yaris","Hyundai i40" ,"Hyundai Ioniq","Mazda 3","SEAT Ibiza","SEAT Leon","Skoda Rapid","Skoda Octavia","Ford Focus"},
@@ -118,12 +118,12 @@ internal static class DataSource
                 product.Name = productName;
                 product.Price = ProductPrice[num, temprandom];
 
-                var imageFileName = product.Name + ".png";
+                //var imageFileName = product.Name + ".png";
 
-                if (images.Contains(imageFileName))
-                {
-                    product.Image = imageFileName;
-                }
+                //if (images.Contains(imageFileName))
+                //{
+                //    product.Image = imageFileName;
+                //}
                 product.InStock = productInStock[random.Next(productInStock.Length)];
 
                 _products.Add(product);

@@ -29,9 +29,9 @@ public class ProductForList
     /// <summary>
     /// Image of product.
     /// </summary>
-    public string? Image { get; set; }
+    //public string? Image { get; set; }
 
-    public Uri Uri { set; get; }
+    //public Uri Uri { set; get; }
 
     //public ImageSource ImageSource { get; set; }
 

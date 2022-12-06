@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ProductForListWindow" Height="640" Width="800">
 
-    <Window.Resources>
+    <!--<Window.Resources>
 
         <Style x:Key="GridViewColumnHeaderStyle" TargetType="GridViewColumnHeader">
             <Setter Property="Width" Value="100"></Setter>
@@ -24,7 +24,7 @@
         <Style x:Key="TbStyle" TargetType="TextBlock">
             <Setter Property="Width" Value="100"></Setter>
         </Style>
-    </Window.Resources>
+    </Window.Resources>-->
     
     
     <Grid Name="MainGrid">
@@ -34,21 +34,20 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Grid.Row="0"
-VerticalAlignment="Stretch">
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
 
-            <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged" SelectedItem ="CategoryChanged"/>
+            <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
             <Label Content="Category:" Grid.Column="0"/>
         </Grid>
         
-        <ListView  x:Name="ProductListView" Grid.Row="1" >
+        <ListView x:Name="ProductListView" Grid.Row="1" >
          
-            
-            <ListView.ItemContainerStyle>
+            <!--<ListView.ItemContainerStyle>
 
                 <Style TargetType="ListViewItem">
            
@@ -94,17 +93,18 @@ VerticalAlignment="Stretch">
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Image">
+                    --><!--<GridViewColumn Header="Image">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding ImageSource}" Width="20"></Image>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    </GridViewColumn>--><!--
 
                 </GridView>
-            </ListView.View>
+            </ListView.View>-->
         </ListView>
 
+        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="addProduct"/>
     </Grid>
 </Window>

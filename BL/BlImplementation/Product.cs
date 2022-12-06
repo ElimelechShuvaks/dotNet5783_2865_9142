@@ -24,8 +24,8 @@ internal class Product : BlApi.IProduct
                 Name = p.Name,
                 Category = (BO.Categories)p.Category!,
                 Price = p.Price,
-                Image = p.Image,
-                Uri = new Uri(Directory.GetCurrentDirectory() + $@"\Images\ProductImages\{p.Image}"),
+                //Image = p.Image,
+                //Uri = new Uri(Directory.GetCurrentDirectory() + $@"\Images\ProductImages\{p.Image}"),
               //  ImageSource = new BitmapImage(new Uri($@"Images\ProductImages\{p.Image}")),
             });
         }
