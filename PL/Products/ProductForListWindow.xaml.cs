@@ -2,6 +2,7 @@
 using BlImplementation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,12 +24,16 @@ public partial class ProductForListWindow : Window
 {
     IBl bl = new Bl();
     //IEnumerable<ProductForList> productForLists;
-    
+
     public ProductForListWindow()
     {
         InitializeComponent();
 
-        categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Categories));
+        for (int i = 0; i < 5; i++) // include the 5 categories into the comboBox
+        {
+            categorySelector.Items.Add((BO.Categories)i);
+        }
+        categorySelector.Items.Add("All products"); // add a basic condition.
 
         ProductListView.ItemsSource = bl.Product.ProductListRequest();
 
@@ -42,12 +47,17 @@ public partial class ProductForListWindow : Window
 
     private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductListView.ItemsSource = bl.Product.ProductListRequest(productForLists => productForLists!.Category == (BO.Categories) categorySelector.SelectedItem);
+        if (categorySelector.SelectedItem.ToString() == "All products")
+            ProductListView.ItemsSource = bl.Product.ProductListRequest();
+        else
+            ProductListView.ItemsSource = bl.Product.ProductListRequest(productForLists => productForLists!.Category == (BO.Categories)categorySelector.SelectedItem);
     }
 
     private void addProduct(object sender, RoutedEventArgs e)
     {
-        new ProductWindow(bl, ActionCase.Add).Show();
+        new ProductWindow(bl, ActionCase.Add).ShowDialog();
+
+        ProductListView.ItemsSource = bl.Product.ProductListRequest();
     }
 }
 

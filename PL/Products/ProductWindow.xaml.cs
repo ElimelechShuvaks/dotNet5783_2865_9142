@@ -1,17 +1,10 @@
 ﻿using BlApi;
+using BO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.Metrics;
+using System.Numerics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace PL.Products
 {
@@ -38,14 +31,27 @@ namespace PL.Products
 
         private void productWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            if (productWindowButton.Content == "Add")
-                localBl.Product.AddProduct(new BO.Product
+            if (productWindowButton.Content.ToString() == "Add")
+            {
+                Product product = new Product()
                 {
-                    //Id = idTextBox.Text
-                    Category = (BO.Categories)int.Parse(categoryComboBox.Text),
-                    Name = 
+                    Category = OtherFunctions.CategoryParse(categoryComboBox),
+                    Name = nameTextBox.Text.ToString(),
+                    Id = int.Parse(idTextBox.Text),
+                    Price = int.Parse(priceTextBox.Text),
+                    InStock = int.Parse(inStockTextBox.Text)
+                };
 
-                });
+                try
+                {
+                    localBl.Product.AddProduct(product);
+                    Close();
+                }
+                catch (BlExceptions ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
