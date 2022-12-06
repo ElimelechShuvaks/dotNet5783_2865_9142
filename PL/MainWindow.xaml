@@ -23,6 +23,6 @@
     </Window.Resources>
 
         <Grid>
-        <Button Content="Catalog" Click="ShowCatalogButton_Click" Style="{StaticResource Button style}"/>
+        <Button Content="Catalog"  Click="ShowCatalogButton_Click" Style="{StaticResource Button style}"/>
     </Grid>
 </Window>
