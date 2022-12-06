@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BlImplementation;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ public partial class ProductForListWindow : Window
 {
     IBl bl = new Bl();
     //IEnumerable<ProductForList> productForLists;
-    
+
     public ProductForListWindow()
     {
         InitializeComponent();
@@ -42,12 +43,19 @@ public partial class ProductForListWindow : Window
 
     private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductListView.ItemsSource = bl.Product.ProductListRequest(productForLists => productForLists!.Category == (BO.Categories) categorySelector.SelectedItem);
+        ProductListView.ItemsSource = bl.Product.ProductListRequest(productForLists => productForLists!.Category == (BO.Categories)categorySelector.SelectedItem);
     }
 
     private void addProduct(object sender, RoutedEventArgs e)
     {
         new ProductWindow(bl, ActionCase.Add).Show();
+    }
+
+    private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        new ProductWindow(bl, ActionCase.Update).Show();
+        //BO.ProductForList productForList = (BO.ProductForList)sender;
+        //ProductListView.ItemsSource = (System.Collections.IEnumerable)bl.Product.ProductDetailsManger(productForList.Id);
     }
 }
 

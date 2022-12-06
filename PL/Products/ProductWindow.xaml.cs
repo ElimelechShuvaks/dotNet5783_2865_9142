@@ -38,14 +38,14 @@ namespace PL.Products
 
         private void productWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            if (productWindowButton.Content == "Add")
-                localBl.Product.AddProduct(new BO.Product
-                {
-                    //Id = idTextBox.Text
-                    Category = (BO.Categories)int.Parse(categoryComboBox.Text),
-                    Name = 
+            //if (productWindowButton.Content == "Add")
+            //    localBl.Product.AddProduct(new BO.Product
+            //    {
+            //        //Id = idTextBox.Text
+            //        Category = (BO.Categories)int.Parse(categoryComboBox.Text),
+            //        Name = 
 
-                });
+            //    });
         }
     }
 }

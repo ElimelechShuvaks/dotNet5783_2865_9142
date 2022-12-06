@@ -45,7 +45,7 @@ VerticalAlignment="Stretch" Width="auto">
             <Label Content="Category:" Grid.Column="0"/>
         </Grid>
         
-        <ListView x:Name="ProductListView" Grid.Row="1" >
+        <ListView x:Name="ProductListView" Grid.Row="1" MouseDoubleClick="ProductListView_MouseDoubleClick" >
          
             <!--<ListView.ItemContainerStyle>
 
