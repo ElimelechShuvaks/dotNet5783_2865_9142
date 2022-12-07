@@ -44,7 +44,7 @@ internal class Product : BlApi.IProduct
         {
             if (idProduct >= 100000 && idProduct < 1000000)
             {
-                product = dal.Product.Get(idProduct);
+                product = dal.Product.Get(productFunc => productFunc?.ProductId == idProduct);
 
                 BO.Product newProduct = new BO.Product
                 {
@@ -79,7 +79,7 @@ internal class Product : BlApi.IProduct
         {
             if (idProduct >= 100000)
             {
-                product = dal.Product.Get(idProduct);
+                product = dal.Product.Get(productFunc => productFunc?.ProductId == idProduct);
                 newProductItem.Id = product.ProductId;
                 newProductItem.Name = product.Name;
                 newProductItem.Price = product.Price;

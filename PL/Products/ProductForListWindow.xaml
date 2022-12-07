@@ -11,6 +11,7 @@
 
         <Style x:Key="GridViewColumnHeaderStyle" TargetType="GridViewColumnHeader">
             <Setter Property="Width" Value="100"></Setter>
+            
             <Setter Property="Background" >
                 <Setter.Value>
                     <LinearGradientBrush>
@@ -19,31 +20,14 @@
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
+            
         </Style>
-
         <Style x:Key="TbStyle" TargetType="TextBlock">
             <Setter Property="Width" Value="100"></Setter>
         </Style>
     </Window.Resources>-->
-
-    <Window.Resources>
-        <DataTemplate DataType="BO.ProductForList">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Column="0" Text="{Binding Path=Id}"/>
-                <TextBlock Grid.Column="1" Text="{Binding Path=Name}"/>
-                <TextBlock Grid.Column="2" Text="{Binding Path=Category}"/>
-                <TextBlock Grid.Column="3" Text="{Binding Path=Price}"/>
-            </Grid>
-        </DataTemplate>
-    </Window.Resources>
-
+    
+    
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -61,9 +45,9 @@ VerticalAlignment="Stretch" Width="auto">
             <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
             <Label Content="Category:" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100"/>
         </Grid>
-
-        <ListView x:Name="ProductListView" Grid.Row="1">
-
+        
+        <ListView x:Name="ProductListView" Grid.Row="1" MouseDoubleClick="ProductListView_MouseDoubleClick" >
+         
             <!--<ListView.ItemContainerStyle>
 
                 <Style TargetType="ListViewItem">
@@ -72,9 +56,9 @@ VerticalAlignment="Stretch" Width="auto">
                     <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
                    
                 </Style>
-            </ListView.ItemContainerStyle>
+            </ListView.ItemContainerStyle>-->
             
-            <ListView.View>
+            <!--<ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" >
                     
                     <GridViewColumn Header="Id" >
@@ -110,15 +94,13 @@ VerticalAlignment="Stretch" Width="auto">
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    -->
-            <!--<GridViewColumn Header="Image">
+                    <GridViewColumn Header="Image">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding ImageSource}" Width="20"></Image>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
-            <!--
+                    </GridViewColumn>
 
                 </GridView>
             </ListView.View>-->

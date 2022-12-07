@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BlImplementation;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -58,6 +59,16 @@ public partial class ProductForListWindow : Window
         new ProductWindow(bl).ShowDialog();
 
         ProductListView.ItemsSource = bl.Product.ProductListRequest();
+    }
+
+    private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (ProductListView.SelectedItem is BO.ProductForList p)
+        {
+            new ProductWindow(bl, ActionCase.Update, p.Id).Show();
+        }
+        
+
     }
 }
 

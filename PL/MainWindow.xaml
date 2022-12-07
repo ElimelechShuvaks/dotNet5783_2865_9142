@@ -6,7 +6,23 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Catalog" HorizontalAlignment="Left" Margin="350,200,0,0" VerticalAlignment="Top" Click="ShowCatalogButton_Click" Height="100" Width="100" FontFamily="Stencil"/>
+
+    <Window.Resources>
+        <Style x:Key="Button style" TargetType="Button">
+            <Setter Property="Foreground" Value="Bisque"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Black" Offset="0.2"/>
+                        <GradientStop  Color="Blue" Offset="0.5"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+        <Grid>
+        <Button Content="Catalog"  Click="ShowCatalogButton_Click" Style="{StaticResource Button style}"/>
     </Grid>
 </Window>
