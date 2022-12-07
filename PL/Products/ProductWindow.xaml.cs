@@ -26,7 +26,7 @@ namespace PL.Products
 
             productWindowButton.Content = "Add";
         }
-        public ProductWindow(IBl bl, ActionCase actionCase, int ProductId)
+        public ProductWindow(IBl bl, int ProductId)
         {
             localBl = bl;
             InitializeComponent();
@@ -37,9 +37,9 @@ namespace PL.Products
 
             idTextBox.Text = product.Id.ToString();
             categoryComboBox.Text = product.Category.ToString();
-            NameTextBox.Text = product.Name!.ToString();
-            PriceTextBox.Text = product.Price.ToString();
-            AmountTextBox.Text = product.InStock.ToString();
+            nameTextBox.Text = product.Name!.ToString();
+            priceTextBox.Text = product.Price.ToString();
+            inStockTextBox.Text = product.InStock.ToString();
 
         }
 

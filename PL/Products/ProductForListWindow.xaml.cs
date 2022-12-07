@@ -65,7 +65,7 @@ public partial class ProductForListWindow : Window
     {
         if (ProductListView.SelectedItem is BO.ProductForList p)
         {
-            new ProductWindow(bl, ActionCase.Update, p.Id).Show();
+            new ProductWindow(bl, p.Id).Show();
         }
         
 
