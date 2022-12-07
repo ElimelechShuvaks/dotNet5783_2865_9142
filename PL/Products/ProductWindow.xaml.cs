@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics.Metrics;
 using System.Numerics;
 using System.Windows;
@@ -15,7 +16,7 @@ namespace PL.Products
     {
         IBl localBl;
 
-        public ProductWindow(IBl bl, ActionCase actionCase)
+        public ProductWindow(IBl bl)
         {
             localBl = bl;
 
@@ -23,10 +24,7 @@ namespace PL.Products
 
             categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
 
-            if (actionCase == ActionCase.Add)
-                productWindowButton.Content = "Add";
-            else
-                productWindowButton.Content = "Update";
+            productWindowButton.Content = "Add";
         }
 
         private void productWindowButton_Click(object sender, RoutedEventArgs e)

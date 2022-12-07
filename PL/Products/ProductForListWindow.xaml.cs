@@ -55,7 +55,7 @@ public partial class ProductForListWindow : Window
 
     private void addProduct(object sender, RoutedEventArgs e)
     {
-        new ProductWindow(bl, ActionCase.Add).ShowDialog();
+        new ProductWindow(bl).ShowDialog();
 
         ProductListView.ItemsSource = bl.Product.ProductListRequest();
     }
