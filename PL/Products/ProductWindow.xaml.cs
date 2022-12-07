@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Metrics;
@@ -16,6 +17,7 @@ namespace PL.Products
     {
         IBl localBl;
 
+        BO.Product product1 = new BO.Product();
         public ProductWindow(IBl bl)
         {
             localBl = bl;
@@ -33,13 +35,14 @@ namespace PL.Products
 
             categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
             productWindowButton.Content = "Update";
-            BO.Product product = localBl.Product.ProductDetailsManger(ProductId);
+            product1 = localBl.Product.ProductDetailsManger(ProductId);
 
-            idTextBox.Text = product.Id.ToString();
-            categoryComboBox.Text = product.Category.ToString();
-            nameTextBox.Text = product.Name!.ToString();
-            priceTextBox.Text = product.Price.ToString();
-            inStockTextBox.Text = product.InStock.ToString();
+            idTextBox.Text = product1.Id.ToString();
+            categoryComboBox.Text = product1.Category.ToString();
+            nameTextBox.Text = product1.Name!.ToString();
+            priceTextBox.Text = product1.Price.ToString();
+            inStockTextBox.Text = product1.InStock.ToString();
+
 
         }
 
@@ -47,7 +50,7 @@ namespace PL.Products
         {
             if (productWindowButton.Content.ToString() == "Add")
             {
-                Product product = new Product()
+                BO.Product product = new BO.Product()
                 {
                     Category = OtherFunctions.CategoryParse(categoryComboBox),
                     Name = nameTextBox.Text.ToString(),
@@ -59,6 +62,23 @@ namespace PL.Products
                 try
                 {
                     localBl.Product.AddProduct(product);
+                    Close();
+                }
+                catch (BlExceptions ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                try
+                {
+                    product1.Category = OtherFunctions.CategoryParse(categoryComboBox);
+                    product1.Name = nameTextBox.Text.ToString();
+                    product1.Price = int.Parse(priceTextBox.Text);
+                    product1.InStock = int.Parse(inStockTextBox.Text);
+
+                    localBl.Product.UpdateProduct(product1);
                     Close();
                 }
                 catch (BlExceptions ex)

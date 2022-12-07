@@ -65,10 +65,11 @@ public partial class ProductForListWindow : Window
     {
         if (ProductListView.SelectedItem is BO.ProductForList p)
         {
-            new ProductWindow(bl, p.Id).Show();
-        }
-        
+            new ProductWindow(bl, p.Id).ShowDialog();
 
+            ProductListView.ItemsSource = bl.Product.ProductListRequest();
+
+        }
     }
 }
 

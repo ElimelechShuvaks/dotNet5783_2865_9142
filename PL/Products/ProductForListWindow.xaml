@@ -26,8 +26,8 @@
             <Setter Property="Width" Value="100"></Setter>
         </Style>
     </Window.Resources>-->
-    
-    
+
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -45,9 +45,26 @@ VerticalAlignment="Stretch" Width="auto">
             <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
             <Label Content="Category:" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100"/>
         </Grid>
-        
+
         <ListView x:Name="ProductListView" Grid.Row="1" MouseDoubleClick="ProductListView_MouseDoubleClick" >
-         
+
+            <ListView.View>
+                <GridView>
+
+                    <GridViewColumn Header="Id" DisplayMemberBinding='{Binding Id}' >
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Name"  DisplayMemberBinding='{Binding Name}'>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Category" DisplayMemberBinding='{Binding Category}'>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Price"  DisplayMemberBinding='{Binding Price}'>
+                    </GridViewColumn>
+                    
+                </GridView>
+            </ListView.View>
             <!--<ListView.ItemContainerStyle>
 
                 <Style TargetType="ListViewItem">
@@ -57,7 +74,7 @@ VerticalAlignment="Stretch" Width="auto">
                    
                 </Style>
             </ListView.ItemContainerStyle>-->
-            
+
             <!--<ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" >
                     
