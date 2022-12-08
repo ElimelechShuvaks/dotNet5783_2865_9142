@@ -123,6 +123,6 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>-->
         </ListView>
 
-        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="addProduct"/>
+        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="addProductButton_Click"/>
     </Grid>
 </Window>

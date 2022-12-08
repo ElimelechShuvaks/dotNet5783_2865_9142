@@ -54,7 +54,7 @@ public partial class ProductForListWindow : Window
             ProductListView.ItemsSource = bl.Product.ProductListRequest(productForLists => productForLists!.Category == (BO.Categories)categorySelector.SelectedItem);
     }
 
-    private void addProduct(object sender, RoutedEventArgs e)
+    private void addProductButton_Click(object sender, RoutedEventArgs e)
     {
         new ProductWindow(bl).ShowDialog();
 

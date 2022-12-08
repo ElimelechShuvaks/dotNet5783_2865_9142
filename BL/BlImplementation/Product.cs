@@ -12,7 +12,7 @@ internal class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> ProductListRequest(Func<BO.ProductForList?, bool>? func = null)
     {
-       IEnumerable<DO.Product?> products = dal.Product.GetList();
+        IEnumerable<DO.Product?> products = dal.Product.GetList();
 
         List<BO.ProductForList> newProductForList = new List<BO.ProductForList>(products.Count());
 
@@ -26,10 +26,10 @@ internal class Product : BlApi.IProduct
                 Price = p.Price,
                 //Image = p.Image,
                 //Uri = new Uri(Directory.GetCurrentDirectory() + $@"\Images\ProductImages\{p.Image}"),
-              //  ImageSource = new BitmapImage(new Uri($@"Images\ProductImages\{p.Image}")),
+                //  ImageSource = new BitmapImage(new Uri($@"Images\ProductImages\{p.Image}")),
             });
         }
-        if(func != null)
+        if (func != null)
         {
 
             return newProductForList.Where(func);
@@ -122,18 +122,22 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
-            {
-                product.ProductId = newProduct.Id;
-                product.Name = newProduct.Name;
-                product.Price = newProduct.Price;
-                product.InStock = newProduct.InStock;
-                product.Category = (DO.Categories)newProduct.Category!;
+            if (newProduct.Id < 100000)
+                throw new BO.IdNotValidException("The id is too short.");
+            if (newProduct.Price <= 0)
+                throw new BO.PriceNotValidException("The price is not valid.");
+            if (newProduct.Name == string.Empty)
+                throw new BO.NameNotValidException("The name is empty.");
+            if (newProduct.InStock <= 0)
+                throw new BO.InStockNotValidException("The amount in stock is not valid.");
 
-                dal.Product.Add(product);
-            }
-            else
-                throw new BO.NotValidDetailsException("Invalid product details");
+            product.ProductId = newProduct.Id;
+            product.Name = newProduct.Name;
+            product.Price = newProduct.Price;
+            product.InStock = newProduct.InStock;
+            product.Category = (DO.Categories)newProduct.Category!;
+
+            dal.Product.Add(product);
         }
         catch (BO.BlExceptions ex)
         {
@@ -169,18 +173,22 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id > 99999 && newProduct.Price > 0 && newProduct.Name != string.Empty && newProduct.InStock > 0)
-            {
-                product.ProductId = newProduct.Id;
-                product.Name = newProduct.Name;
-                product.Price = newProduct.Price;
-                product.InStock = newProduct.InStock;
-                product.Category = (DO.Categories)newProduct.Category!;
+            if (newProduct.Id < 100000)
+                throw new BO.IdNotValidException("The id is too short.");
+            if (newProduct.Price <= 0)
+                throw new BO.PriceNotValidException("The price is not valid.");
+            if (newProduct.Name == string.Empty)
+                throw new BO.NameNotValidException("The name is empty.");
+            if (newProduct.InStock <= 0)
+                throw new BO.InStockNotValidException("The amount in stock is not valid.");
 
-                dal.Product.Update(product);
-            }
-            else
-                throw new BO.NotValidDetailsException("Invalid product details");
+            product.ProductId = newProduct.Id;
+            product.Name = newProduct.Name;
+            product.Price = newProduct.Price;
+            product.InStock = newProduct.InStock;
+            product.Category = (DO.Categories)newProduct.Category!;
+
+            dal.Product.Update(product);
         }
         catch (BO.BlExceptions ex)
         {

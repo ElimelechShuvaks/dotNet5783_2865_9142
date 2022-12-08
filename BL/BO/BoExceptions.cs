@@ -55,3 +55,18 @@ public class EmptyCartException : BlExceptions
 {
     public EmptyCartException(string message) : base(message) { }
 }
+
+public class PriceNotValidException : BlExceptions
+{
+    public PriceNotValidException(string message) : base(message) { }
+}
+
+public class NameNotValidException : BlExceptions
+{
+    public NameNotValidException(string message) : base(message) { }
+}
+
+public class InStockNotValidException : BlExceptions
+{
+    public InStockNotValidException(string message) : base(message) { }
+}

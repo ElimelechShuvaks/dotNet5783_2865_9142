@@ -18,6 +18,9 @@ public partial class ProductWindow : Window
 {
     IBl localBl;
 
+    /// <summary>
+    /// ctor with 1 parameter for add product.
+    /// </summary>
     BO.Product product1 = new BO.Product();
     public ProductWindow(IBl bl)
     {
@@ -29,6 +32,12 @@ public partial class ProductWindow : Window
 
         productWindowButton.Content = "Add";
     }
+
+    /// <summary>
+    /// ctor with int parameter for update an exist product.
+    /// </summary>
+    /// <param name="bl"></param>
+    /// <param name="ProductId"></param>
     public ProductWindow(IBl bl, int ProductId)
     {
         localBl = bl;
@@ -39,12 +48,11 @@ public partial class ProductWindow : Window
         product1 = localBl.Product.ProductDetailsManger(ProductId);
 
         idTextBox.Text = product1.Id.ToString();
+        idTextBox.IsEnabled = false;
         categoryComboBox.Text = product1.Category.ToString();
         nameTextBox.Text = product1.Name!.ToString();
         priceTextBox.Text = product1.Price.ToString();
         inStockTextBox.Text = product1.InStock.ToString();
-
-
     }
 
     private void productWindowButton_Click(object sender, RoutedEventArgs e)
@@ -70,7 +78,7 @@ public partial class ProductWindow : Window
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        else
+        else // button content is "update".
         {
             try
             {
