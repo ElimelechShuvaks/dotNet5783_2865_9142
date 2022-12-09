@@ -18,18 +18,6 @@ internal class DalProduct : IProduct
         return newProduct.ProductId;
     }
 
-    //public Product Get(int idNum)
-    //{
-    //    int index = existProduct(idNum);
-
-    //    if (index == -1)
-    //    {
-    //        OtherFunctions.exceptionNotFound("product", idNum);
-    //    }
-
-    //    return DataSource._products[index]!.Value;
-    //}
-
     public void Delete(int idNum)
     {
         DataSource._products.Remove(Get(productFunc => productFunc?.ProductId == idNum));

@@ -211,7 +211,7 @@ void choisesProduct(IDal dal)
                 try
                 {
                     Console.WriteLine("cin the id thet you want to Get:");
-                    Console.WriteLine(dal.Product.Get(IntTryParse(ref intNum)));
+                    Console.WriteLine(dal.Product.Get(product=> product?.ProductId== IntTryParse(ref intNum)));
                 }
                 catch (IdNotExistException ex)
                 {
@@ -301,7 +301,7 @@ void choises_Order(IDal dal)
                 try
                 {
                     Console.WriteLine("cin the id order thet you want to Get:");
-                    Console.WriteLine(dal.Order.Get(IntTryParse(ref intNum)));
+                    Console.WriteLine(dal.Order.Get(order => order?.Id==IntTryParse(ref intNum)));
                 }
                 catch (IdNotExistException ex)
                 {
@@ -389,7 +389,7 @@ void choises_Orderitem(IDal dal)
                 try
                 {
                     Console.WriteLine("type an Order Item ProductId");
-                    Console.WriteLine(dal.OrderItem.Get(IntTryParse(ref intNum)));
+                    Console.WriteLine(dal.OrderItem.Get(orderItem => orderItem?.ProductId==IntTryParse(ref intNum)));
                 }
                 catch (IdNotExistException ex)
                 {

@@ -5,7 +5,6 @@ public interface ICrud<T> where T : struct
 {
     int Add(T t);
 
-    //T Get(int id);
 
     void Delete(int id);
 

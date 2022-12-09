@@ -39,7 +39,6 @@ public class Product
     /// </summary>
     public int InStock { get; set; }
 
-   // public ImageSource ImageSource { get; set; }
 
     public override string ToString() => $@"
 Product id: {Id}

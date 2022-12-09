@@ -31,10 +31,6 @@ public class ProductForList
     /// </summary>
     //public string? Image { get; set; }
 
-    //public Uri Uri { set; get; }
-
-    //public ImageSource ImageSource { get; set; }
-
     public override string ToString() => $@"
 Product id: {Id}
 Name: {Name}

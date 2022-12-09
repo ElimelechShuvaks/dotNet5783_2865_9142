@@ -19,17 +19,6 @@ internal class DalOrderitem : IOrderItem
         DataSource._orderItems.Remove(Get(productFunc => productFunc?.ProductId == idNum));
     }
 
-    //public OrderItem Get(int idNum)
-    //{
-    //    int index = existOrderItem(idNum);
-
-    //    if (index == -1)
-    //    {
-    //        OtherFunctions.exceptionNotFound("order item", idNum);
-    //    }
-    //    return DataSource._orderItems[index]!.Value;
-    //}
-
     public void Update(OrderItem newOrderItem)
     {
         int index = existOrderItem(newOrderItem.ItemId);

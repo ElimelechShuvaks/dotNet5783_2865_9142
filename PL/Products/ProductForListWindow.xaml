@@ -7,26 +7,6 @@
         mc:Ignorable="d"
         Title="ProductForListWindow" Height="640" Width="800">
 
-    <!--<Window.Resources>
-
-        <Style x:Key="GridViewColumnHeaderStyle" TargetType="GridViewColumnHeader">
-            <Setter Property="Width" Value="100"></Setter>
-            
-            <Setter Property="Background" >
-                <Setter.Value>
-                    <LinearGradientBrush>
-                        <GradientStop Color="White" Offset="0.7"></GradientStop>
-                        <GradientStop Color="Green" Offset="1"></GradientStop>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-            
-        </Style>
-        <Style x:Key="TbStyle" TargetType="TextBlock">
-            <Setter Property="Width" Value="100"></Setter>
-        </Style>
-    </Window.Resources>-->
-
 
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
@@ -62,65 +42,9 @@ VerticalAlignment="Stretch" Width="auto">
 
                     <GridViewColumn Header="Price"  DisplayMemberBinding='{Binding Price}'>
                     </GridViewColumn>
-                    
+
                 </GridView>
             </ListView.View>
-            <!--<ListView.ItemContainerStyle>
-
-                <Style TargetType="ListViewItem">
-           
-                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-                   
-                </Style>
-            </ListView.ItemContainerStyle>-->
-
-            <!--<ListView.View>
-                <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" >
-                    
-                    <GridViewColumn Header="Id" >
-                        <GridViewColumn.CellTemplate > 
-                            <DataTemplate >
-                                <TextBlock Text="{Binding ProductForListBo.Id}" ></TextBlock>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Header="Name" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding ProductForListBo.Name}"></TextBlock>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Header="Category">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding ProductForListBo.Category}"></TextBlock>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-
-                    <GridViewColumn Header="Price">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding ProductForListBo.Price}"></TextBlock>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Header="Image">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding ImageSource}" Width="20"></Image>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                </GridView>
-            </ListView.View>-->
         </ListView>
 
         <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="addProductButton_Click"/>

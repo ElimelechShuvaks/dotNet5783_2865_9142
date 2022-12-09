@@ -12,18 +12,6 @@ internal class DalOrder : IOrder
         return newOrder.Id;
     }
 
-    //public Order Get(int idNum)
-    //{
-    //    int index = existOrder(idNum);
-
-    //    if (index == -1)
-    //    {
-    //        OtherFunctions.exceptionNotFound("order", idNum);
-    //    }
-
-    //    return DataSource._orders[index]!.Value;
-    //}
-
     public void Delete(int idNum)
     {
         DataSource._orders.Remove(Get(orderFunc => orderFunc?.Id == idNum));
