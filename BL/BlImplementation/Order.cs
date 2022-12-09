@@ -61,8 +61,8 @@ internal class Order : BlApi.IOrder
 
     private (IEnumerable<DO.OrderItem?>, double) getOrders(int orderId)
     {
-        var orderItems = dal.OrderItem.GetList(orderItem => orderItem!.Value.OrderId == orderId);
-        return (orderItems, orderItems.Sum(orderItem => orderItem!.Value.Amount * orderItem.Value.Price));
+        var orderItems = dal.OrderItem.GetList(orderItem => orderItem?.OrderId == orderId);
+        return (orderItems, orderItems?.Sum(orderItem => orderItem?.Amount * orderItem.Price));
     }
 
     public IEnumerable<BO.OrderForList> OrderForListRequest()

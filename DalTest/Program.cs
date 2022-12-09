@@ -406,7 +406,7 @@ void choises_Orderitem(IDal dal)
                     Console.WriteLine("type an product ProductId");
                     intNum2 = IntTryParse(ref intNum2);
 
-                    Console.WriteLine(dal.OrderItem.Get(o => o.Value.ProductId == intNum2 && o.Value.OrderId == intNum));
+                    Console.WriteLine(dal.OrderItem.Get(o => o!.Value.ProductId == intNum2 && o.Value.OrderId == intNum));
                 }
                 catch (IdNotExistException ex)
                 {
@@ -417,7 +417,7 @@ void choises_Orderitem(IDal dal)
             case OrderItemFunctions.GetItemArray:
 
                 Console.WriteLine("type an Order ProductId");
-                PrintList(dal.OrderItem.GetList(o => o.Value.OrderId == IntTryParse(ref intNum)));
+                PrintList(dal.OrderItem.GetList(o => o!.Value.OrderId == IntTryParse(ref intNum)));
 
                 break;
 

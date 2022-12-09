@@ -113,18 +113,18 @@ internal class Cart : BlApi.ICart
 
     /*We have removed the name, address, and email fields in the shopping cart, 
     because there are duplicates here, and therefore we do accept data about the person as parameters*/
-    public void ConfirmationOrderToCart(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
+    public void ConfirmationOrderToCart(BO.Cart cart)
     {
         try
         {
             var items = cart.Items!;
 
             if (items.Count() == 0)
-                throw new BO.EmptyCartException("cn't confirm an empty cart.");
+                throw new BO.EmptyCartException("can't confirm an empty cart.");
 
-            if (customerName != string.Empty && customerAdress != string.Empty && isValidEmail(customerEmail))
+            if (cart.CustomerName != null && cart.CustomerAdress !=null && isValidEmail(cart.CustomerEmail!))
             {
-                List<DO.Product> products = null;
+                List<DO.Product> products = null!;
 
                 foreach (BO.OrderItem orderItem in cart.Items!)
                 {
@@ -138,9 +138,9 @@ internal class Cart : BlApi.ICart
 
                 DO.Order order = new DO.Order
                 {
-                    CustomerName = customerName,
-                    CustomerAdress = customerAdress,
-                    CustomerEmail = customerEmail,
+                    CustomerName = cart.CustomerName,
+                    CustomerAdress = cart.CustomerAdress,
+                    CustomerEmail = cart.CustomerEmail,
                     OrderDate = DateTime.Now,
                     ShipDate = null,
                     DeliveryDate = null,

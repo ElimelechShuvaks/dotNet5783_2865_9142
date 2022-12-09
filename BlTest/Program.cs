@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BlImplementation;
+using BO;
 
 namespace BlTest;
 
@@ -241,7 +242,10 @@ press 0 to exsit.
                     case CartMenu.Confirm:
 
                         Console.WriteLine("please enter a customer name, mail and adress.");
-                        bl.Cart.ConfirmationOrderToCart(cart, Console.ReadLine(), Console.ReadLine(), Console.ReadLine());
+                        cart.CustomerName= Console.ReadLine();
+                        cart.CustomerEmail= Console.ReadLine();
+                        cart.CustomerAdress = Console.ReadLine(); 
+                        bl.Cart.ConfirmationOrderToCart(cart);
 
                         break;
 

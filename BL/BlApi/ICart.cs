@@ -28,12 +28,8 @@ public interface ICart
     /// <summary>
     /// Basket confirmation for order \ placing an order (for shopping basket screen or order completion screen).
     /// </summary>
-    /// <param name="cart"></param>
-    /// <param name="customerName"></param>
-    /// <param name="customerEmail"></param>
-    /// <param name="customerAdress"></param>
     /// <exception cref="NotImplementedException"></exception>
-    public void ConfirmationOrderToCart(Cart cart, string customerName, string customerEmail, string customerAdress);
+    public void ConfirmationOrderToCart(Cart cart);
 
     /// <summary>
     /// reset the cart to be empty
