@@ -53,9 +53,9 @@ internal class Cart : BlApi.ICart
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
 
         return cart;
@@ -92,7 +92,7 @@ internal class Cart : BlApi.ICart
             }
             else // order item douse not exsit in cart
             {
-                throw new BO.IdNotExistException("There is no order with this product id");
+                throw new BO.EntityNotExistException("There is no order with this product id");
             }
         }
         catch (BO.BlExceptions ex)
@@ -110,9 +110,6 @@ internal class Cart : BlApi.ICart
     /// <returns></returns>
     private bool isValidEmail(string email) => new EmailAddressAttribute().IsValid(email);
 
-
-    /*We have removed the name, address, and email fields in the shopping cart, 
-    because there are duplicates here, and therefore we do accept data about the person as parameters*/
     public void ConfirmationOrderToCart(BO.Cart cart)
     {
         try
@@ -176,9 +173,9 @@ internal class Cart : BlApi.ICart
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
 

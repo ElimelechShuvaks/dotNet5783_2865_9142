@@ -29,7 +29,7 @@ internal class Order : BlApi.IOrder
 
                     Items = items.Select(_orderItem =>
                     {
-                        DO.OrderItem orderItem = _orderItem!.Value;
+                        DO.OrderItem orderItem =(DO.OrderItem) _orderItem!;
 
                         return new BO.OrderItem
                         {
@@ -43,14 +43,14 @@ internal class Order : BlApi.IOrder
 
                     }).ToList(),
 
-                    TotalPrice = sum,
+                    TotalPrice = (double)sum!,
                 };
 
                 return retOrdrt;
             }
-            catch (DO.IdNotExistException ex)
+            catch (DO.EntityNotExistException ex)
             {
-                throw new BO.IdNotExistException($"Order with id: {idOrder} doesn't exsist in data source", ex);
+                throw new BO.EntityNotExistException($"Order with id: {idOrder} doesn't exsist in data source", ex);
             }
         }
         else // unvalide id
@@ -59,10 +59,10 @@ internal class Order : BlApi.IOrder
         }
     }
 
-    private (IEnumerable<DO.OrderItem?>, double) getOrders(int orderId)
+    private (IEnumerable<DO.OrderItem?>, double?) getOrders(int orderId)
     {
-        var orderItems = dal.OrderItem.GetList(orderItem => orderItem?.OrderId == orderId);
-        return (orderItems, orderItems?.Sum(orderItem => orderItem?.Amount * orderItem.Price));
+        IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetList(orderItem => orderItem?.OrderId == orderId);
+        return (orderItems, orderItems.Sum(orderItem => orderItem?.Amount * orderItem?.Price));
     }
 
     public IEnumerable<BO.OrderForList> OrderForListRequest()
@@ -71,7 +71,7 @@ internal class Order : BlApi.IOrder
         {
             return dal.Order.GetList().Select(order =>
             {
-                DO.Order _order = order!.Value;
+                DO.Order _order =(DO.Order) order!;
                 var (items, sum) = getOrders(_order.Id);
 
                 return new BO.OrderForList
@@ -80,7 +80,7 @@ internal class Order : BlApi.IOrder
                     CustomerName = _order.CustomerName,
                     Status = GetStatus(_order),
                     AmountOfItems = items.Count(),
-                    TotalPrice = sum,
+                    TotalPrice = (double)sum!,
                 };
 
             }).ToList();
@@ -116,9 +116,9 @@ internal class Order : BlApi.IOrder
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
 
@@ -148,9 +148,9 @@ internal class Order : BlApi.IOrder
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
 
@@ -191,9 +191,9 @@ internal class Order : BlApi.IOrder
 
             return orderTracking;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
 
@@ -251,16 +251,16 @@ internal class Order : BlApi.IOrder
             }
             else
             {
-                throw new BO.IdNotExistException($"There is no order with such id: {orderId}");
+                throw new BO.EntityNotExistException($"There is no order with such id: {orderId}");
             }
         }
         catch (BO.BlExceptions ex)
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
 }

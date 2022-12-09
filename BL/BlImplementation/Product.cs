@@ -63,9 +63,9 @@ internal class Product : BlApi.IProduct
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
 
@@ -107,9 +107,9 @@ internal class Product : BlApi.IProduct
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
 
         return newProductItem;
@@ -160,9 +160,9 @@ internal class Product : BlApi.IProduct
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
 
@@ -191,9 +191,9 @@ internal class Product : BlApi.IProduct
         {
             throw ex;
         }
-        catch (DO.IdNotExistException ex)
+        catch (DO.EntityNotExistException ex)
         {
-            throw new BO.IdNotExistException(ex.Message, ex);
+            throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
 }

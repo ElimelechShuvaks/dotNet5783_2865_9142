@@ -10,10 +10,10 @@ public class BlExceptions : Exception
     public BlExceptions(string message, Exception innerException) : base(message, innerException) { }
 }
 
-public class IdNotExistException : BlExceptions
+public class EntityNotExistException : BlExceptions
 {
-    public IdNotExistException(string message) : base(message) { }
-    public IdNotExistException(string message, DO.IdNotExistException exception) : base(message, exception) { }
+    public EntityNotExistException(string message) : base(message) { }
+    public EntityNotExistException(string message, DO.EntityNotExistException exception) : base(message, exception) { }
 }
 
 
