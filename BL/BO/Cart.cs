@@ -7,9 +7,21 @@ namespace BO;
 /// </summary>
 public class Cart
 {
-    /*We have removed the name, address, and email fields in the shopping cart, 
-    because there are duplicates here, and therefore we do accept data about the person as parameters*/
 
+    /// <summary>
+    /// CustomerName of order
+    /// </summary>
+    public string? CustomerName { get; set; }
+
+    /// <summary>
+    /// CustomerEmail of order
+    /// </summary>
+    public string? CustomerEmail { get; set; }
+
+    /// <summary>
+    /// CustomerAdress of order
+    /// </summary>
+    public string? CustomerAdress { get; set; }
     /// <summary>
     /// Items of Cart
     /// </summary>
