@@ -10,3 +10,8 @@ public class IdExistException : Exception
 {
     public IdExistException(string message) : base(message) { }
 }
+
+public class EntityNotExistException : Exception
+{
+    public EntityNotExistException(string message) : base(message) { }
+}

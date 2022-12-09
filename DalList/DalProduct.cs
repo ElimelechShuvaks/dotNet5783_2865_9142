@@ -43,11 +43,12 @@ internal class DalProduct : IProduct
 
     public Product Get(Func<Product?, bool>? func)
     {
-        if (DataSource._products.FirstOrDefault(func!) is Product product)
+        Product? product = DataSource._products.FirstOrDefault(func!);
+        if (product is not null)
         {
-            return product;
+            return (Product)product;
         }
-        throw new Exception();
+        throw new EntityNotExistException("There is no product that meets these conditions in the database");
     }
 
     public IEnumerable<Product?> GetList(Func<Product?, bool>? func = null)

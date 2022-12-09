@@ -37,11 +37,12 @@ internal class DalOrder : IOrder
 
     public Order Get(Func<Order?, bool>? func)
     {
-        if (DataSource._orders.FirstOrDefault(func!) is Order order)
+        Order? order = DataSource._orders.FirstOrDefault(func!);
+        if (order is not null)
         {
-            return order;
+            return (Order)order;
         }
-        throw new Exception();
+        throw new EntityNotExistException("There is no order that meets these conditions in the database.");
     }
 
     public IEnumerable<Order?> GetList(Func<Order?, bool>? func = null)

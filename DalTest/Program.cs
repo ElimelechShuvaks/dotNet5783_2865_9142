@@ -189,7 +189,7 @@ void choisesProduct(IDal dal)
     );
         choiseProduct = IntTryParse(ref choiseProduct);
         Product product = new Product(); // for add and update functions.
-        int intNum = 0; // for add, getand delete functions.
+        int intNum = 0; // for add, get and delete functions.
 
         switch ((Functions)choiseProduct)
         {
@@ -211,9 +211,10 @@ void choisesProduct(IDal dal)
                 try
                 {
                     Console.WriteLine("cin the id thet you want to Get:");
-                    Console.WriteLine(dal.Product.Get(product=> product?.ProductId== IntTryParse(ref intNum)));
+                    IntTryParse(ref intNum);
+                    Console.WriteLine(dal.Product.Get(product => product?.ProductId == intNum));
                 }
-                catch (IdNotExistException ex)
+                catch (EntityNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -232,7 +233,7 @@ void choisesProduct(IDal dal)
                     Console.WriteLine("cin id for product thet you want to Delete:");
                     dal.Product.Delete(IntTryParse(ref intNum));
                 }
-                catch (IdNotExistException ex)
+                catch (EntityNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -278,7 +279,7 @@ void choises_Order(IDal dal)
     );
         chice_Order = IntTryParse(ref chice_Order);
         Order order = new Order();// for add and update functions.
-        int intNum = 0; // for add, getand delete functions.
+        int intNum = 0; // for add, get and delete functions.
 
         switch ((Functions)chice_Order)
         {
@@ -301,9 +302,10 @@ void choises_Order(IDal dal)
                 try
                 {
                     Console.WriteLine("cin the id order thet you want to Get:");
-                    Console.WriteLine(dal.Order.Get(order => order?.Id==IntTryParse(ref intNum)));
+                    IntTryParse(ref intNum);
+                    Console.WriteLine(dal.Order.Get(order => order?.Id == intNum));
                 }
-                catch (IdNotExistException ex)
+                catch (EntityNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -323,7 +325,7 @@ void choises_Order(IDal dal)
                     Console.WriteLine("cin id for order thet you want to Delete:");
                     dal.Order.Delete(IntTryParse(ref intNum));
                 }
-                catch (IdNotExistException ex)
+                catch (EntityNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -362,8 +364,8 @@ void choises_Orderitem(IDal dal)
  press 0 to Exsit.
  press 1 to Add an Order Item.
  press 2 to Get a specific Order Item.
- press 3 to Get a specific Order Item by product ProductId and order ProductId.
- press 4 to Get an Array of specific Order.
+ press 3 to Get a specific Order Item by Product id and order id.
+ press 4 to Get an Array of a specific Order.
  press 5 to Get an Array of all Order Items.
  press 6 to Delete an Order Item.
  press 7 to Updata an Order Item.
@@ -388,10 +390,11 @@ void choises_Orderitem(IDal dal)
 
                 try
                 {
-                    Console.WriteLine("type an Order Item ProductId");
-                    Console.WriteLine(dal.OrderItem.Get(orderItem => orderItem?.ProductId==IntTryParse(ref intNum)));
+                    Console.WriteLine("type an Order Item id");
+                    IntTryParse(ref intNum);
+                    Console.WriteLine(dal.OrderItem.Get(orderItem => orderItem?.ItemId == intNum));
                 }
-                catch (IdNotExistException ex)
+                catch (EntityNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -400,15 +403,15 @@ void choises_Orderitem(IDal dal)
             case OrderItemFunctions.GetBy_2Id:
                 try
                 {
-                    Console.WriteLine("type an Order ProductId");
-                    intNum = IntTryParse(ref intNum);
+                    Console.WriteLine("type an Order id");
+                    IntTryParse(ref intNum);
 
-                    Console.WriteLine("type an product ProductId");
-                    intNum2 = IntTryParse(ref intNum2);
+                    Console.WriteLine("type a Product id");
+                    IntTryParse(ref intNum2);
 
-                    Console.WriteLine(dal.OrderItem.Get(o => o.Value.ProductId == intNum2 && o.Value.OrderId == intNum));
+                    Console.WriteLine(dal.OrderItem.Get(o => o?.ProductId == intNum2 && o?.OrderId == intNum));
                 }
-                catch (IdNotExistException ex)
+                catch (EntityNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -416,8 +419,9 @@ void choises_Orderitem(IDal dal)
 
             case OrderItemFunctions.GetItemArray:
 
-                Console.WriteLine("type an Order ProductId");
-                PrintList(dal.OrderItem.GetList(o => o.Value.OrderId == IntTryParse(ref intNum)));
+                Console.WriteLine("type an order id of Order item");
+                IntTryParse(ref intNum);
+                PrintList(dal.OrderItem.GetList(o => o?.OrderId == intNum));
 
                 break;
 
@@ -430,10 +434,10 @@ void choises_Orderitem(IDal dal)
             case OrderItemFunctions.Del:
                 try
                 {
-                    Console.WriteLine("type an Order Item ProductId to Delete");
+                    Console.WriteLine("type an Order Item id to Delete");
                     dal.OrderItem.Delete(IntTryParse(ref intNum));
                 }
-                catch (IdNotExistException ex)
+                catch (EntityNotExistException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }

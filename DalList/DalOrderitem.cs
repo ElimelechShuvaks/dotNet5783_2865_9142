@@ -47,10 +47,11 @@ internal class DalOrderitem : IOrderItem
 
     public OrderItem Get(Func<OrderItem?, bool>? func)
     {
-        if (DataSource._orderItems.FirstOrDefault(func!) is OrderItem orderItem)
+        OrderItem? orderItem = DataSource._orderItems.FirstOrDefault(func!);
+        if (orderItem is not null)
         {
-            return orderItem;
+            return (OrderItem)orderItem;
         }
-        throw new Exception();
+        throw new EntityNotExistException("There is no order item that meets these conditions in the database");
     }
 }
