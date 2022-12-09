@@ -174,7 +174,7 @@ internal class Product : BlApi.IProduct
                 throw new BO.IdNotValidException("The id is too short.");
             if (newProduct.Price <= 0)
                 throw new BO.PriceNotValidException("The price is not valid.");
-            if (newProduct.Name == string.Empty)
+            if (newProduct.Name is null)
                 throw new BO.NameNotValidException("The name is empty.");
             if (newProduct.InStock <= 0)
                 throw new BO.InStockNotValidException("The amount in stock is not valid.");
