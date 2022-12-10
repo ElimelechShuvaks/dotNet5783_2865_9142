@@ -13,7 +13,7 @@ internal class Order : BlApi.IOrder
         {
             try
             {
-                DO.Order order = dal.Order.Get(orderFunc=> orderFunc?.Id ==  idOrder); // asking for a DO order with this order id.
+                DO.Order order = dal.Order.Get(orderFunc => orderFunc?.Id == idOrder); // asking for a DO order with this order id.
                 var (items, sum) = getOrders(order.Id);
 
                 BO.Order retOrdrt = new BO.Order
@@ -29,7 +29,7 @@ internal class Order : BlApi.IOrder
 
                     Items = items.Select(_orderItem =>
                     {
-                        DO.OrderItem orderItem =(DO.OrderItem) _orderItem!;
+                        DO.OrderItem orderItem = (DO.OrderItem)_orderItem!;
 
                         return new BO.OrderItem
                         {
@@ -71,7 +71,7 @@ internal class Order : BlApi.IOrder
         {
             return dal.Order.GetList().Select(order =>
             {
-                DO.Order _order =(DO.Order) order!;
+                DO.Order _order = (DO.Order)order!;
                 var (items, sum) = getOrders(_order.Id);
 
                 return new BO.OrderForList
@@ -163,7 +163,7 @@ internal class Order : BlApi.IOrder
             {
                 OrderId = order.Id,
                 Status = GetStatus(order),
-                tuplesOfDateAndDescription = new List<(DateTime?, string?)> ()
+                tuplesOfDateAndDescription = new List<(DateTime?, string?)>()
             };
 
             switch (orderTracking.Status)
@@ -225,7 +225,7 @@ internal class Order : BlApi.IOrder
                 DO.OrderItem orderItem = dal.OrderItem.Get(item => item?.OrderId == orderId &&
                 item?.ProductId == productId);
 
-                DO.Product product = dal.Product.Get(productFunc=> productFunc?.ProductId== productId);
+                DO.Product product = dal.Product.Get(productFunc => productFunc?.ProductId == productId);
 
                 if (orderItem.Equals(default(DO.OrderItem))) // there is'n an order item with these ids, than add a new order item with this produc
                 {

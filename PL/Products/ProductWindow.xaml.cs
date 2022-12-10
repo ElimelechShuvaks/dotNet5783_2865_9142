@@ -104,7 +104,7 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void IntegerValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        Regex regex = new Regex("[^0-9]+");
+        Regex regex = new Regex("[^0-9]");
         e.Handled = regex.IsMatch(e.Text);
     }
 
@@ -115,7 +115,7 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void DoubleValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        Regex regex = new Regex("[^0-9.]+");
+        Regex regex = new Regex("[^0-9.]");
         e.Handled = regex.IsMatch(e.Text);
     }
 }
