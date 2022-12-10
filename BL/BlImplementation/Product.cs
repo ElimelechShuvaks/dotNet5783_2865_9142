@@ -1,8 +1,5 @@
 ﻿using DalApi;
 using System.Drawing;
-//using Windows.UI.Xaml.Media.Imaging;
-//using Xamarin.Forms.Internals;
-
 namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
