@@ -238,16 +238,22 @@ internal class Order : BlApi.IOrder
                     orderItem.Price = product.Price * newAmount;
 
                     dal.OrderItem.Add(orderItem);
+
+                    product.InStock = product.InStock - newAmount;
                 }
                 else // the product alredy exist in the order, than 
                 {
                     if (product.InStock < newAmount) // check if there is enough in stock
-                        throw new BO.NotExsitInStockException("the product is out of stock");
+                        throw new BO.NotExsitInStockException("the product is out of stock for this amount, you can try again with less amount");
+
+                    product.InStock = product.InStock - (newAmount - orderItem.Amount);
 
                     orderItem.Amount = newAmount;
 
                     dal.OrderItem.Update(orderItem);
                 }
+
+                dal.Product.Update(product);
             }
             else
             {
