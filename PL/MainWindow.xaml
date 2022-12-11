@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\1\source\repos\ElimelechShuvaks\dotNet5783_2865_9142\PL\image\mainWindow\רקע חנות.jpg"></ImageBrush>
+    </Window.Background>
     <Window.Resources>
         <Style x:Key="common style" TargetType="Control">
             <Setter Property="Foreground" Value="Yellow">
@@ -22,13 +24,14 @@
             </Setter>
         </Style>
 
-        <Style x:Key="Button style" TargetType="Button" BasedOn="{StaticResource common style}"/>
+        <Style x:Key="Button style" TargetType="Button"  BasedOn="{StaticResource common style}"/>
         <Style x:Key="label style" TargetType="Label" BasedOn="{StaticResource common style}"/>
 
     </Window.Resources>
 
     <Grid>
-        <Label Content="The center for wholesale vehicles" Style="{StaticResource label style}" Height="60" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
-        <Button Content="Catalog"  Click="ShowCatalogButton_Click" Style="{StaticResource Button style}" Width="200" Height="150" Margin="0,0,220,50"/>
+        <Label Content="The center for wholesale vehicles" Style="{StaticResource label style}" Height="60" VerticalAlignment="Top" 
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" />
+        <Button Content="Catalog"  Click="ShowCatalogButton_Click"  Width="200" Height="75"  Background="Transparent" BorderThickness="1"/>
     </Grid>
 </Window>
