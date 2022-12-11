@@ -15,3 +15,10 @@ public class EntityNotExistException : Exception
 {
     public EntityNotExistException(string message) : base(message) { }
 }
+
+[Serializable]
+public class DalConfigException : Exception
+{
+    public DalConfigException(string message) : base(message) { }
+    public DalConfigException(string message, Exception ex) : base(message, ex) { }
+}
