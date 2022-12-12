@@ -4,12 +4,12 @@ namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    private IDal dal = new Dal.DalList();
+    private IDal? dal = Factory.Get();
     private DO.Product product = new();
 
     public IEnumerable<BO.ProductForList> ProductListRequest(Func<BO.ProductForList?, bool>? func = null)
     {
-        IEnumerable<DO.Product?> products = dal.Product.GetList();
+        IEnumerable<DO.Product?> products = dal?.Product.GetList() ?? throw new BO.DalConfigException("Error in configuration process");
 
         List<BO.ProductForList> newProductForList = new List<BO.ProductForList>(products.Count());
 
@@ -38,7 +38,7 @@ internal class Product : BlApi.IProduct
         {
             if (idProduct >= 100000 && idProduct < 1000000)
             {
-                product = dal.Product.Get(productFunc => productFunc?.ProductId == idProduct);
+                product = dal?.Product.Get(productFunc => productFunc?.ProductId == idProduct) ?? throw new BO.DalConfigException("Error in configuration process"); ;
 
                 BO.Product newProduct = new BO.Product
                 {
@@ -73,7 +73,7 @@ internal class Product : BlApi.IProduct
         {
             if (idProduct >= 100000)
             {
-                product = dal.Product.Get(productFunc => productFunc?.ProductId == idProduct);
+                product = dal?.Product.Get(productFunc => productFunc?.ProductId == idProduct) ?? throw new BO.DalConfigException("Error in configuration process");
                 newProductItem.Id = product.ProductId;
                 newProductItem.Name = product.Name;
                 newProductItem.Price = product.Price;
@@ -131,7 +131,7 @@ internal class Product : BlApi.IProduct
             product.InStock = newProduct.InStock;
             product.Category = (DO.Categories)newProduct.Category!;
 
-            dal.Product.Add(product);
+            dal?.Product.Add(product);
         }
         catch (BO.BlExceptions ex)
         {
@@ -147,7 +147,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (dal.OrderItem.GetList(orderItem => orderItem?.ProductId == idProduct).Any())
+            if ((dal?.OrderItem.GetList(orderItem => orderItem?.ProductId == idProduct) ?? throw new BO.DalConfigException("Error in configuration process")).Any())
                 throw new BO.CanNotRemoveProductException("can't remove the product becouse he is found in exsist orders.");
 
             else
@@ -182,7 +182,7 @@ internal class Product : BlApi.IProduct
             product.InStock = newProduct.InStock;
             product.Category = (DO.Categories)newProduct.Category!;
 
-            dal.Product.Update(product);
+            dal?.Product.Update(product);
         }
         catch (BO.BlExceptions ex)
         {

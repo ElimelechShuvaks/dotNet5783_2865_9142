@@ -1,11 +1,10 @@
-﻿using Dal;
-using DalApi;
+﻿using DalApi;
 
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
-    private IDal dal = new DalList();
+    private IDal? dal = Factory.Get();
 
     public BO.Order GetDetailsOrder(int idOrder)
     {
@@ -13,7 +12,7 @@ internal class Order : BlApi.IOrder
         {
             try
             {
-                DO.Order order = dal.Order.Get(orderFunc => orderFunc?.Id == idOrder); // asking for a DO order with this order id.
+                DO.Order order = dal?.Order.Get(orderFunc => orderFunc?.Id == idOrder) ?? throw new BO.DalConfigException("Error in configuration process"); // asking for a DO order with this order id.
                 var (items, sum) = getOrders(order.Id);
 
                 BO.Order retOrdrt = new BO.Order
@@ -61,7 +60,7 @@ internal class Order : BlApi.IOrder
 
     private (IEnumerable<DO.OrderItem?>, double?) getOrders(int orderId)
     {
-        IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetList(orderItem => orderItem?.OrderId == orderId);
+        IEnumerable<DO.OrderItem?> orderItems = dal?.OrderItem.GetList(orderItem => orderItem?.OrderId == orderId) ?? throw new BO.DalConfigException("Error in configuration process");
         return (orderItems, orderItems.Sum(orderItem => orderItem?.Amount * orderItem?.Price));
     }
 
@@ -69,7 +68,7 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            return dal.Order.GetList().Select(order =>
+            return dal?.Order.GetList().Select(order =>
             {
                 DO.Order _order = (DO.Order)order!;
                 var (items, sum) = getOrders(_order.Id);
@@ -83,7 +82,7 @@ internal class Order : BlApi.IOrder
                     TotalPrice = (double)sum!,
                 };
 
-            }).ToList();
+            }).ToList() ?? throw new BO.DalConfigException("Error in configuration process");
         }
         catch (BO.BlExceptions ex)
         {
@@ -99,7 +98,7 @@ internal class Order : BlApi.IOrder
 
             if (boOrder.Status is BO.OrderStatus.Confirmed)
             {
-                DO.Order order = dal.Order.Get(orderFunc => orderFunc?.Id == idOrder);
+                DO.Order order = dal?.Order.Get(orderFunc => orderFunc?.Id == idOrder) ?? throw new BO.DalConfigException("Error in configuration process"); ;
                 order.ShipDate = DateTime.Now;
 
                 dal.Order.Update(order);
@@ -130,7 +129,7 @@ internal class Order : BlApi.IOrder
 
             if (boOrder.Status == BO.OrderStatus.Shipied)
             {
-                DO.Order order = dal.Order.Get(orderFunc => orderFunc?.Id == idOrder);
+                DO.Order order = dal?.Order.Get(orderFunc => orderFunc?.Id == idOrder) ?? throw new BO.DalConfigException("Error in configuration process"); ;
 
                 order.DeliveryDate = DateTime.Now;
                 dal.Order.Update(order);
@@ -158,7 +157,7 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            DO.Order order = dal.Order.Get(orderFunc => orderFunc?.Id == idOrder);
+            DO.Order order = dal?.Order.Get(orderFunc => orderFunc?.Id == idOrder) ?? throw new BO.DalConfigException("Error in configuration process"); ;
             BO.OrderTracking orderTracking = new BO.OrderTracking
             {
                 OrderId = order.Id,
@@ -217,7 +216,7 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (GetStatus(dal.Order.Get(orderFunc => orderFunc?.Id == orderId)) != BO.OrderStatus.Confirmed) // check if the order is'n sent.
+            if (GetStatus(dal?.Order.Get(orderFunc => orderFunc?.Id == orderId) ?? throw new BO.DalConfigException("Error in configuration process")) != BO.OrderStatus.Confirmed) // check if the order is'n sent.
                 throw new BO.StatusErrorException("cnn't updating the order becouse it's alredy sent.");
 
             if (dal.Order.GetList().ToList().Any(order => order?.Id == orderId)) // check if it exsit an order with this id.

@@ -1,11 +1,10 @@
-﻿using DalApi;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
 {
-    private IDal dal = new Dal.DalList();
+    DalApi.IDal? dal = DalApi.Factory.Get();
 
     public BO.Cart AddToCart(BO.Cart cart, int idProduct)
     {
@@ -13,7 +12,7 @@ internal class Cart : BlApi.ICart
         {
             BO.OrderItem? orderItem = cart.Items!.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
 
-            DO.Product product = dal.Product.Get(productFunc => productFunc?.ProductId == idProduct);
+            DO.Product product = dal?.Product.Get(productFunc => productFunc?.ProductId == idProduct) ?? throw new BO.DalConfigException("Error in configuration process");
 
             if (orderItem is null) //Not exsist in cart.
             {
@@ -125,7 +124,7 @@ internal class Cart : BlApi.ICart
 
                 foreach (BO.OrderItem orderItem in cart.Items!)
                 {
-                    DO.Product product = dal.Product.Get(productFunc => productFunc?.ProductId == orderItem.ProductId);
+                    DO.Product product = dal?.Product.Get(productFunc => productFunc?.ProductId == orderItem.ProductId) ?? throw new BO.DalConfigException("Error in configuration process");
 
                     if (product.InStock < 0 || orderItem.Amount > product.InStock)
                         throw new BO.NotExsitInStockException("the product is out of stock");
@@ -143,7 +142,7 @@ internal class Cart : BlApi.ICart
                     DeliveryDate = null,
                 };
 
-                int orderNumber = dal.Order.Add(order);
+                int orderNumber = dal?.Order.Add(order) ?? throw new BO.DalConfigException("Error in configuration process");
 
                 var orderItemAndProducts = items.Zip(products!).ToList();
 

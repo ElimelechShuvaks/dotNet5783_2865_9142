@@ -23,18 +23,16 @@ public class IdExistException : BlExceptions
     public IdExistException(string message, DO.IdExistException exception) : base(message, exception) { }
 }
 
+public class DalConfigException : BlExceptions
+{
+    public DalConfigException(string message) : base(message) { }
+    public DalConfigException(string message, Exception inner) : base(message, inner) { }  
+}
 
 public class IdNotValidException : BlExceptions
 {
     public IdNotValidException(string message) : base(message) { }
 }
-
-
-public class NotValidDetailsException : BlExceptions
-{
-    public NotValidDetailsException(string message) : base(message) { }
-}
-
 
 public class CanNotRemoveProductException : BlExceptions
 {

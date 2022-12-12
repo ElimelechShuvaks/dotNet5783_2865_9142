@@ -23,12 +23,12 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
-    IBl bl = new Bl();
+    IBl? bl = Factory.get();
+
     public MainWindow()
     {
         InitializeComponent();
     }
-
 
     private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
 

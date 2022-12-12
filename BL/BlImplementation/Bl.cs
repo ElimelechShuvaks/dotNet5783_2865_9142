@@ -4,7 +4,7 @@ namespace BlImplementation;
 /// <summary>
 /// inplementation of IBl interface, that holds the 3 main entities Product, Order and Cart.
 /// </summary>
-sealed public class Bl : IBl
+sealed internal class Bl : IBl
 {
     public IProduct Product => new Product();
 

@@ -17,4 +17,10 @@
 	  <ProjectReference Include="..\BL\BL.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="image\mainWindow\main bakeground.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>

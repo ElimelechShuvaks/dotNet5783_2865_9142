@@ -1,11 +1,10 @@
-﻿using Dal;
-using DalApi;
+﻿using DalApi;
 using DO;
 
 //--------------main------------------------------------------------
 
 int choice = 0;
-IDal dal = new DalList();
+IDal? dal = Factory.Get();
 
 while (true)
 {
@@ -20,15 +19,15 @@ while (true)
     switch ((Menu)choice)
     {
         case Menu.Product:
-            choisesProduct(dal);
+            choisesProduct(dal?? throw new DO.DalConfigException("Error in configuration process"));
             break;
 
         case Menu.Order:
-            choises_Order(dal);
+            choises_Order(dal?? throw new DO.DalConfigException("Error in configuration process"));
             break;
 
         case Menu.OrderItem:
-            choises_Orderitem(dal);
+            choises_Orderitem(dal?? throw new DO.DalConfigException("Error in configuration process"));
             break;
 
         case Menu.Exsit:

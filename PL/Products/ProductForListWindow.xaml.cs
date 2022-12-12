@@ -23,7 +23,7 @@ namespace PL.Products;
 /// </summary>
 public partial class ProductForListWindow : Window
 {
-    IBl bl = new Bl();
+    IBl bl = Factory.get();
 
     public ProductForListWindow()
     {

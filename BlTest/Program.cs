@@ -1,12 +1,13 @@
 ﻿using BlApi;
 using BlImplementation;
 using BO;
+using DalApi;
 
 namespace BlTest;
 
 internal class Program
 {
-    static IBl bl = new Bl();
+    static IBl? bl = BlApi.Factory.get();
 
     static BO.Cart cart = new BO.Cart
     {
@@ -80,18 +81,18 @@ press 0 to exsit.
                 {
                     case ProductMenu.GetManager:
                         Console.WriteLine("please enter a product id.");
-                        Console.WriteLine(bl.Product.ProductDetailsManger(IntTryParse()));
+                        Console.WriteLine(bl?.Product.ProductDetailsManger(IntTryParse()));
 
                         break;
 
                     case ProductMenu.GetClient:
                         Console.WriteLine("please enter a product id.");
-                        Console.WriteLine(bl.Product.ProductDetailsClient(cart, IntTryParse()));
+                        Console.WriteLine(bl?.Product.ProductDetailsClient(cart, IntTryParse()));
 
                         break;
 
                     case ProductMenu.GetList:
-                        foreach (var product in bl.Product.ProductListRequest())
+                        foreach (var product in bl?.Product.ProductListRequest())
                         {
                             Console.WriteLine(product);
                         }
@@ -99,18 +100,18 @@ press 0 to exsit.
                         break;
 
                     case ProductMenu.Add:
-                        bl.Product.AddProduct(GetProduct());
+                        bl?.Product.AddProduct(GetProduct());
 
                         break;
 
                     case ProductMenu.Remove:
                         Console.WriteLine("please enter a product id.");
-                        bl.Product.RemoveProduct(IntTryParse());
+                        bl?.Product.RemoveProduct(IntTryParse());
 
                         break;
 
                     case ProductMenu.Update:
-                        bl.Product.UpdateProduct(GetProduct());
+                        bl?.Product.UpdateProduct(GetProduct());
 
                         break;
 
@@ -154,30 +155,30 @@ press 0 to exit.
 
                     case OrderMenu.Get:
                         Console.WriteLine("please enter an order id.");
-                        Console.WriteLine(bl.Order.GetDetailsOrder(IntTryParse()));
+                        Console.WriteLine(bl?.Order.GetDetailsOrder(IntTryParse()));
 
                         break;
 
                     case OrderMenu.ShipingUpdate:
                         Console.WriteLine("please enter an order id.");
-                        Console.WriteLine(bl.Order.OrderShippingUpdate(IntTryParse()));
+                        Console.WriteLine(bl?.Order.OrderShippingUpdate(IntTryParse()));
 
                         break;
 
                     case OrderMenu.DeliveryUpdate:
                         Console.WriteLine("please enter an order id.");
-                        Console.WriteLine(bl.Order.OrderDeliveryUpdate(IntTryParse()));
+                        Console.WriteLine(bl?.Order.OrderDeliveryUpdate(IntTryParse()));
 
                         break;
 
                     case OrderMenu.OrderTracking:
                         Console.WriteLine("please enter an order id.");
-                        Console.WriteLine(bl.Order.OrderTracking(IntTryParse()));
+                        Console.WriteLine(bl?.Order.OrderTracking(IntTryParse()));
 
                         break;
 
                     case OrderMenu.GetList:
-                        foreach (var item in bl.Order.OrderForListRequest())
+                        foreach (var item in bl?.Order.OrderForListRequest())
                         {
                             Console.WriteLine(item);
                         }
@@ -186,7 +187,7 @@ press 0 to exit.
 
                     case OrderMenu.OrderUpdate:
                         Console.WriteLine("please enter an order id, product id and the new amount.");
-                        bl.Order.OrderUpdate(IntTryParse(), IntTryParse(), IntTryParse());
+                        bl?.Order.OrderUpdate(IntTryParse(), IntTryParse(), IntTryParse());
 
                         break;
 
@@ -228,14 +229,14 @@ press 0 to exsit.
                     case CartMenu.Add:
 
                         Console.WriteLine("please enter a product id.");
-                        Console.WriteLine(bl.Cart.AddToCart(cart, IntTryParse()));
+                        Console.WriteLine(bl?.Cart.AddToCart(cart, IntTryParse()));
 
                         break;
 
                     case CartMenu.Update:
 
                         Console.WriteLine("please enter a product id and the amount that you want.");
-                        Console.WriteLine(bl.Cart.ProductUpdateCart(cart, IntTryParse(), IntTryParse()));
+                        Console.WriteLine(bl?.Cart.ProductUpdateCart(cart, IntTryParse(), IntTryParse()));
 
                         break;
 
@@ -245,13 +246,13 @@ press 0 to exsit.
                         cart.CustomerName= Console.ReadLine();
                         cart.CustomerEmail= Console.ReadLine();
                         cart.CustomerAdress = Console.ReadLine(); 
-                        bl.Cart.ConfirmationOrderToCart(cart);
+                        bl?.Cart.ConfirmationOrderToCart(cart);
 
                         break;
 
                     case CartMenu.Reset:
 
-                        bl.Cart.ResetCart(cart);
+                        bl?.Cart.ResetCart(cart);
 
                         break;
 
