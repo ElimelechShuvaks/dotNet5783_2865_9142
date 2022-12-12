@@ -36,4 +36,5 @@
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" />
         <Button Content="Catalog"  Click="ShowCatalogButton_Click"  Width="200" Height="75"  Background="White" BorderThickness="1" Margin="0,0,500,200"/>
     </Grid>
+    
 </Window>
