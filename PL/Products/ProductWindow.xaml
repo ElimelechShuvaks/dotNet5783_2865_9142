@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="ID:" VerticalAlignment="Center" Width="100"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Id:" VerticalAlignment="Center" Width="100"/>
             <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Category:" VerticalAlignment="Center" Width="100"/>
             <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Name:" VerticalAlignment="Center" Width="100"/>
             <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Price:" VerticalAlignment="Center" Width="100"/>

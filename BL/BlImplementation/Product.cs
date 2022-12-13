@@ -1,10 +1,10 @@
-﻿using DalApi;
-using System.Drawing;
+﻿
+
 namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    private IDal? dal = Factory.Get();
+    private DalApi.IDal? dal = DalApi.Factory.Get();
     private DO.Product product = new();
 
     public IEnumerable<BO.ProductForList> ProductListRequest(Func<BO.ProductForList?, bool>? func = null)
