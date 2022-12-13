@@ -3,6 +3,9 @@ using DO;
 using System.Xml.Linq;
 namespace DalApi;
 
+/// <summary>
+/// help class to read and analyze an xml file.
+/// </summary>
 static class DalConfig
 {
     internal static string? s_dalName;

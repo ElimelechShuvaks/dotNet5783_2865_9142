@@ -6,9 +6,16 @@ namespace BlImplementation;
 /// </summary>
 sealed internal class Bl : IBl
 {
-    public IProduct Product => new Product();
+    Bl()
+    {
+        Product = new Product();
+        Order = new Order();
+       Cart = new Cart();
+    }
 
-    public IOrder Order => new Order();
+    public IProduct Product { get; }
 
-    public ICart Cart => new Cart();
+    public IOrder Order { get; }
+
+    public ICart Cart { get; }
 }

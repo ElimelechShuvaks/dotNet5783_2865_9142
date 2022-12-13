@@ -4,6 +4,9 @@ using static DalApi.DalConfig;
 
 namespace DalApi;
 
+/// <summary>
+/// factory class to get a show of dal list or dal xml.
+/// </summary>
 public static class Factory
 {
     public static IDal? Get()
