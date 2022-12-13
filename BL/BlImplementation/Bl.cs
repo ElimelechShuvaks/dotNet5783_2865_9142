@@ -6,11 +6,11 @@ namespace BlImplementation;
 /// </summary>
 sealed internal class Bl : IBl
 {
-    Bl()
+    public Bl()
     {
         Product = new Product();
         Order = new Order();
-       Cart = new Cart();
+        Cart = new Cart();
     }
 
     public IProduct Product { get; }

@@ -1,6 +1,5 @@
 ﻿using BlImplementation;
 
-
 namespace BlApi;
 
 static public class Factory
