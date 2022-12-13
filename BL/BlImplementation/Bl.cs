@@ -6,7 +6,7 @@ namespace BlImplementation;
 /// </summary>
 sealed internal class Bl : IBl
 {
-    public Bl()
+    internal Bl()
     {
         Product = new Product();
         Order = new Order();
