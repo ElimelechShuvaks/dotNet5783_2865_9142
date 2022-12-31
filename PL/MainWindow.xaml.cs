@@ -30,6 +30,7 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
+    private void AdminButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().ShowDialog();
 
+    private void NewOrderButton_Click(object sender, RoutedEventArgs e) => new ProductCatalogWindow().ShowDialog();
 }

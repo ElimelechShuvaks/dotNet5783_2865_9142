@@ -33,7 +33,8 @@
     <Grid>
         <Label Content="The center for wholesale vehicles" Style="{StaticResource label style}" Height="60" VerticalAlignment="Top" 
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" />
-        <Button Content="Catalog"  Click="ShowCatalogButton_Click"  Width="200" Height="75"  Background="White" BorderThickness="1" Margin="0,0,500,200"/>
+        <Button Content="Admin" Click="AdminButton_Click"  Width="200" Height="75"  Background="White" BorderThickness="1" Margin="0,0,500,200"/>
+        <Button Content="New Order" Click="NewOrderButton_Click" Width="200" Height="75"  Background="White" BorderThickness="1" Margin="0,0,200,0"/>
     </Grid>
     
 </Window>
