@@ -1,0 +1,50 @@
+﻿<Window x:Class="PL.Products.ProductItemWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Products"
+        mc:Ignorable="d"
+        Title="Product details" Height="450" Width="400"
+        DataContext="{Binding RelativeSource={RelativeSource self}}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="up">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Id:" VerticalAlignment="Center" Width="100"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Category:" VerticalAlignment="Center" Width="100"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Name:" VerticalAlignment="Center" Width="100"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Price:" VerticalAlignment="Center" Width="100"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Text="Amount in cart:" VerticalAlignment="Center" Width="100"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Text="Is in stock:" VerticalAlignment="Center" Width="100"/>
+
+            <TextBlock x:Name="idTextBlock" Text="{Binding ProductItem.Id}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+            <TextBlock Text="{Binding ProductItem.Category}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+            <TextBlock Text="{Binding ProductItem.Name}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+            <TextBlock Text="{Binding ProductItem.Price}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+            <TextBox IsEnabled="{Binding ProductItem.Amount}" Text="{Binding ProductItem.Amount}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+            <CheckBox IsChecked="{Binding ProductItem.InStock}" IsEnabled="False" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Button Content="Add to cart" Grid.Row="2" Width="80" Height="18" Click="AddCartButton_Click"/>
+
+    </Grid>
+</Window>
