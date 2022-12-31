@@ -1,5 +1,7 @@
 ﻿
 
+using BO;
+
 namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
@@ -13,23 +15,15 @@ internal class Product : BlApi.IProduct
 
         List<BO.ProductForList> newProductForList = new List<BO.ProductForList>(products.Count());
 
-        foreach (DO.Product p in products)
-        {
-            newProductForList.Add(new BO.ProductForList
-            {
-                Id = p.ProductId,
-                Name = p.Name,
-                Category = (BO.Categories)p.Category!,
-                Price = p.Price,
-            });
-        }
-        if (func != null)
-        {
-
-            return newProductForList.Where(func);
-        }
-
-        return newProductForList;
+        bool f = func is null;
+        return (from product in products
+                select new BO.ProductForList()
+                {
+                    Id = (int)product?.ProductId!,
+                    Name = product?.Name,
+                    Category = (BO.Categories)product?.Category!,
+                    Price = (double)product?.Price!,
+                }).Where(productForList => f ? f : func!(productForList));
     }
 
     public BO.Product ProductDetailsManger(int idProduct)
@@ -87,13 +81,9 @@ internal class Product : BlApi.IProduct
                 BO.OrderItem orderItem = newCart.Items!.FirstOrDefault(ProductItem => ProductItem.ProductId == idProduct)!;
 
                 if (orderItem is null)
-                {
                     newProductItem.Amount = 0;
-                }
                 else
-                {
                     newProductItem.Amount = orderItem.Amount;
-                }
             }
             else // product id is invalid.
             {

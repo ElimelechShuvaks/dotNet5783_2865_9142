@@ -162,32 +162,32 @@ internal class Order : BlApi.IOrder
             {
                 OrderId = order.Id,
                 Status = GetStatus(order),
-                tuplesOfDateAndDescription = new List<(DateTime?, string?)>()
+                TuplesOfDateAndDescription = new List<Tuple<DateTime?, string?>>()
             };
 
             switch (orderTracking.Status)
             {
                 case BO.OrderStatus.Confirmed:
 
-                    orderTracking.tuplesOfDateAndDescription.Add((order.OrderDate, "The order has been created"));
+                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")! );
                     break;
 
                 case BO.OrderStatus.Shipied:
 
-                    orderTracking.tuplesOfDateAndDescription.Add((order.OrderDate, "The order has been created"));
-                    orderTracking.tuplesOfDateAndDescription.Add((order.ShipDate, "The order has been sent"));
+                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
+                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent")!);
                     break;
 
                 case BO.OrderStatus.Deliveried:
-                    orderTracking.tuplesOfDateAndDescription.Add((order.OrderDate, "The order has been created"));
-                    orderTracking.tuplesOfDateAndDescription.Add((order.ShipDate, "The order has been sent"));
-                    orderTracking.tuplesOfDateAndDescription.Add((order.DeliveryDate, "The order is deliveried"));
+                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
+                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent")!);
+                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.DeliveryDate, "The order is deliveried")!);
                     break;
 
                 default:
                     break;
             }
-
+            
             return orderTracking;
         }
         catch (DO.EntityNotExistException ex)
@@ -217,7 +217,7 @@ internal class Order : BlApi.IOrder
         try
         {
             if (GetStatus(dal?.Order.Get(orderFunc => orderFunc?.Id == orderId) ?? throw new BO.DalConfigException("Error in configuration process")) != BO.OrderStatus.Confirmed) // check if the order is'n sent.
-                throw new BO.StatusErrorException("cnn't updating the order becouse it's alredy sent.");
+                throw new BO.StatusErrorException("can't updating the order becouse it's alredy sent.");
 
             if (dal.Order.GetList().ToList().Any(order => order?.Id == orderId)) // check if it exsit an order with this id.
             {

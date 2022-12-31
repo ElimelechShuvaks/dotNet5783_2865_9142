@@ -62,31 +62,33 @@ internal class Cart : BlApi.ICart
 
     public BO.Cart ProductUpdateCart(BO.Cart cart, int idProduct, int newQuantity)
     {
-        var items = cart.Items!;
+        if (newQuantity < 0)
+            throw new BO.NegativeAmountExeption("Negative amount");
 
-        BO.OrderItem? orderItem = items.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
+        BO.OrderItem? orderItem = cart.Items!.FirstOrDefault(orderItems => orderItems.ProductId == idProduct);
 
         try
         {
             if (orderItem is not null) // order item exsit in cart
             {
-                int QuantitySummary = newQuantity - orderItem.Amount;   // QuantitySummary Saves the difference between the new and old quantity.
+                int temp = (int)dal?.Product.Get(p => p?.ProductId == idProduct).InStock!;
 
-                if (QuantitySummary > 0 && newQuantity != 0)
+                if (newQuantity > temp)
+                    throw new BO.NotExsitInStockException("the product is out of stock");
+
+                if (newQuantity > 0 && newQuantity != orderItem!.Amount && dal.Product.Get(product => product?.ProductId == idProduct).InStock >= newQuantity)
                 {
-                    for (int i = 0; i < QuantitySummary; i++)
-                        AddToCart(cart, idProduct);
-                }
-                if (QuantitySummary < 0 && newQuantity != 0)
-                {
+                    cart.TotalPrice = cart.TotalPrice - orderItem!.TotalPrice + orderItem.Price * newQuantity;
                     orderItem.Amount = newQuantity;
                     orderItem.TotalPrice = newQuantity * orderItem.Price;
-                    cart.TotalPrice -= -1 * (QuantitySummary * orderItem.Price);
+
+                    return cart;
                 }
                 if (newQuantity == 0)
                 {
-                    cart.TotalPrice -= orderItem.Amount * orderItem.Price;
-                    items.Remove(orderItem);
+                    cart.TotalPrice -= orderItem!.TotalPrice;
+                    cart.Items!.Remove(orderItem);
+                    return cart;
                 }
             }
             else // order item douse not exsit in cart
@@ -118,19 +120,13 @@ internal class Cart : BlApi.ICart
             if (items.Count() == 0)
                 throw new BO.EmptyCartException("can't confirm an empty cart.");
 
-            if (cart.CustomerName != null && cart.CustomerAdress !=null && isValidEmail(cart.CustomerEmail!))
+            if (cart.CustomerName != null && cart.CustomerAdress != null && isValidEmail(cart.CustomerEmail!))
             {
-                List<DO.Product> products = null!;
 
-                foreach (BO.OrderItem orderItem in cart.Items!)
-                {
-                    DO.Product product = dal?.Product.Get(productFunc => productFunc?.ProductId == orderItem.ProductId) ?? throw new BO.DalConfigException("Error in configuration process");
-
-                    if (product.InStock < 0 || orderItem.Amount > product.InStock)
-                        throw new BO.NotExsitInStockException("the product is out of stock");
-
-                    (products ??= new List<DO.Product>()).Add(product);
-                }
+                List<DO.Product> products = (from item in items
+                                             let product = dal?.Product.Get(productFunc => productFunc?.ProductId == item.ProductId) ?? throw new BO.DalConfigException("Error in configuration process")
+                                             select item!.Amount > product.InStock || product.InStock < 0 ?
+                                             throw new BO.NotExsitInStockException("the product is out of stock") : product).ToList();
 
                 DO.Order order = new DO.Order
                 {
@@ -167,7 +163,6 @@ internal class Cart : BlApi.ICart
                 ResetCart(cart); // reset the cart.
             }
         }
-
         catch (BO.BlExceptions ex)
         {
             throw ex;
@@ -180,7 +175,7 @@ internal class Cart : BlApi.ICart
 
     public void ResetCart(BO.Cart cart)
     {
-        // reset the cart
+        //reset the cart
         cart.Items!.Clear();
         cart.TotalPrice = 0;
     }

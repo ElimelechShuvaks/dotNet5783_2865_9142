@@ -92,7 +92,7 @@ press 0 to exsit.
                         break;
 
                     case ProductMenu.GetList:
-                        foreach (var product in bl?.Product.ProductListRequest())
+                        foreach (var product in bl?.Product.ProductListRequest()!)
                         {
                             Console.WriteLine(product);
                         }
@@ -178,7 +178,7 @@ press 0 to exit.
                         break;
 
                     case OrderMenu.GetList:
-                        foreach (var item in bl?.Order.OrderForListRequest())
+                        foreach (var item in bl?.Order.OrderForListRequest()!)
                         {
                             Console.WriteLine(item);
                         }

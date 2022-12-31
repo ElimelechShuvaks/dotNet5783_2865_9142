@@ -207,7 +207,7 @@ internal static class DataSource
                         OrderId = order.Id,
                         ProductId = product.ProductId,
                         Price = product.Price,
-                        Amount = random.Next(10)
+                        Amount = random.Next(1,10)
                     });
                 }
             }

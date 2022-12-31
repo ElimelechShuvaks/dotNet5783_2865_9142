@@ -19,7 +19,7 @@ public class OrderTracking
     /// <summary>
     /// List of DateTime and Description.
     /// </summary>
-    public List<(DateTime?, string?)>? tuplesOfDateAndDescription { get; set; }
+    public List<Tuple<DateTime?, string?>>? TuplesOfDateAndDescription { get; set; }
 
     public override string ToString()
     {
@@ -27,7 +27,7 @@ public class OrderTracking
 Order id: {OrderId}
 Status: {Status}
 Order Tracking: 
-{tuplesOfDateAndDescription?.GetToStrings()}
+{TuplesOfDateAndDescription?.GetToStrings()}
 ";
     }
 }

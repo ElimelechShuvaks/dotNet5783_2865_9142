@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.Serialization;
+
 namespace BO;
 
 // i make a class that all BL exceptions inherit from him, and ve inherit from the basic exception class
@@ -67,4 +69,15 @@ public class NameNotValidException : BlExceptions
 public class InStockNotValidException : BlExceptions
 {
     public InStockNotValidException(string message) : base(message) { }
+}
+
+public class NegativeAmountExeption : Exception
+{
+    public NegativeAmountExeption(string? message) : base(message)
+    {
+    }
+
+    public NegativeAmountExeption(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
 }
