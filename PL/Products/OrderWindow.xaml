@@ -1,0 +1,98 @@
+﻿<Window x:Class="PL.Products.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Products"
+        mc:Ignorable="d"
+        Title="OrderWindow" Height="450" Width="800" DataContext="{Binding RelativeSource={RelativeSource self}}">
+
+    <Window.Background>
+        <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill" ></ImageBrush>
+    </Window.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="400"/>
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Text="Id:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Text="Status:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Text="Customer name:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Text="Customer email:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Text="Customer adress:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Text="Order date:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+        <TextBlock Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Text="Ship date:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+        <TextBlock Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left" Text="Delivery date:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+        <TextBlock Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" Text="Total price:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+
+        <TextBox Name="idTextBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" MaxLength="6" IsEnabled="False" Text="{Binding order.Id}"/>
+        <TextBox Name="StatusTextBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False" Text="{Binding order.Status}"/>
+        <TextBox Name="CustomerNameTextBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.CustomerName}"/>
+        <TextBox Name="CustomerEmailTextBox" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.CustomerEmail}"/>
+        <TextBox Name="CustomerAdressTextBox" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.CustomerAdress}" />
+        <TextBox Name="OrderDateTextBox" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.OrderDate}" />
+        <TextBox Name="ShipDateTextBox" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.ShipDate}"/>
+        <TextBox Name="DeliveryDateTextBox" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.DeliveryDate}" />
+        <TextBox Name="TotalPriceTextBox" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.TotalPrice}"/>
+
+        <Button x:Name="ShipDateButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="12" Width="80" Height="18" Click="ShipDateButton_Click" Content="UpdateShiped" Background="Black"  Foreground="Yellow" />
+        <Button x:Name="DeliveryDateButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="12" Width="80" Height="18" Click="DeliveryDateButton_Click" Content="UpdateDelivery" Background="Black"  Foreground="Yellow" />
+
+        <ListView x:Name="OrderItemListView" Grid.Row="2" Grid.Column="3" MouseDoubleClick="UpDataItem" Grid.RowSpan="9"  Foreground="Red" ItemsSource="{Binding order.Items}">
+
+            <ListView.Background>
+                <ImageBrush/>
+            </ListView.Background>
+
+            <ListView.Resources >
+                <Style x:Key="Amount" TargetType="ListView" />
+            </ListView.Resources>
+
+            <ListView.View >
+                <GridView>
+                    <GridViewColumn Header="Order Id"  DisplayMemberBinding='{Binding OrderId}' Width='60'>
+                    </GridViewColumn>
+
+
+                    <GridViewColumn Header="Product Id"  DisplayMemberBinding='{Binding ProductId}' Width='63'>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Name" DisplayMemberBinding='{Binding Name}' Width='90'>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Price"  DisplayMemberBinding='{Binding Price}' Width='64'>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Amount"  DisplayMemberBinding='{Binding Amount}' Width='48'>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Total Price"  DisplayMemberBinding='{Binding TotalPrice}' Width='63'>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>

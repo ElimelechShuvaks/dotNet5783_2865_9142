@@ -1,0 +1,48 @@
+﻿<Window x:Class="PL.Products.OrderItemWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Products"
+        mc:Ignorable="d"
+        Title="OrderItemWindow" Height="450" Width="800" DataContext="{Binding RelativeSource={RelativeSource self}}">
+    <Window.Background>
+        <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill" ></ImageBrush>
+    </Window.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Order Id:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Product Id:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Name:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Price:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Text="Amount:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Text="Total Price:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+
+        <TextBox  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.OrderId}"/>
+        <TextBox  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.ProductId}"/>
+        <TextBox  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.Name}"/>
+        <TextBox  Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.Price}"/>
+        <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Text="{Binding Item.Amount}"/>
+        <TextBox x:Name="TotalPriceTextBox"  Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.TotalPrice}"/>
+
+        <Button x:Name="OrderWindowButton" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6" Width="80" Height="18" Click="OrderItemWindowButton_Click" Content="Update" Background="Black" Foreground="Yellow"/>
+
+
+
+    </Grid>
+</Window>
