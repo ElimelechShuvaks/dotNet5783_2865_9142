@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
-        Title="ProductForListWindow" Height="640" Width="800">
-
+        Title="ProductForListWindow" Height="640" Width="800"  DataContext="{Binding RelativeSource={RelativeSource self}}" >
+    
+    <Window.Background>
+        <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill" ></ImageBrush>
+    </Window.Background>
 
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
@@ -23,11 +26,13 @@ VerticalAlignment="Stretch" Width="auto">
             </Grid.ColumnDefinitions >
 
             <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
-            <Label Content="Category:" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100"/>
+            <Label Content="Category:" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100"  Foreground="Yellow" FontSize="15"/>
         </Grid>
 
-        <ListView x:Name="ProductListView" Grid.Row="1" MouseDoubleClick="ProductListView_MouseDoubleClick" >
-
+        <ListView x:Name="ProductListView" Grid.Row="1" MouseDoubleClick="ProductListView_MouseDoubleClick"  Foreground="Red" ItemsSource="{Binding ProductForList}" >
+            <ListView.Background>
+                <ImageBrush/>
+            </ListView.Background>
             <ListView.View>
                 <GridView>
 
@@ -47,6 +52,6 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
 
-        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="addProductButton_Click"/>
+        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="addProductButton_Click" Background="Black" Foreground="Yellow"/>
     </Grid>
 </Window>

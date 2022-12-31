@@ -14,7 +14,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Products\ProductWindow.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="image\mainWindow\mainbakeground.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Remove="Products\ProductWindow.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>

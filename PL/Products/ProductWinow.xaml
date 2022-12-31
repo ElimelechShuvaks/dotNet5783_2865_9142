@@ -33,13 +33,13 @@
             <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Price:" VerticalAlignment="Center" Width="100"/>
             <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Text="Amount in stock:" VerticalAlignment="Center" Width="100"/>
 
-            <TextBox Name="idTextBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" MaxLength="6" PreviewTextInput="IntegerValidationTextBox"/>
+            <TextBox Name="idTextBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" MaxLength="6" PreviewTextInput="IntegerValidationTextBox" Text="{Binding Id}"/>
 
-            <ComboBox Name="categoryComboBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+            <ComboBox Name="categoryComboBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Text="{Binding Category}"/>
 
-            <TextBox Name="nameTextBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
-            <TextBox Name="priceTextBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" PreviewTextInput="DoubleValidationTextBox"/>
-            <TextBox Name="inStockTextBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" PreviewTextInput="IntegerValidationTextBox"/>
+            <TextBox Name="nameTextBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Text="{Binding Name}"/>
+            <TextBox Name="priceTextBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" PreviewTextInput="DoubleValidationTextBox" Text="{Binding Price}"/>
+            <TextBox Name="inStockTextBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" PreviewTextInput="IntegerValidationTextBox" Text="{Binding InStock}"/>
         </Grid>
 
         <Button x:Name="productWindowButton" Grid.Row="2" Width="80" Height="18" Click="productWindowButton_Click"/>

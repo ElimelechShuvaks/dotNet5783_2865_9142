@@ -1,10 +1,6 @@
 ﻿using BlApi;
 using BO;
-using DO;
 using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
-using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -16,20 +12,20 @@ namespace PL.Products;
 /// </summary>
 public partial class ProductWindow : Window
 {
-    IBl localBl;
+    private IBl localBl;
+
+   private ProductForListWindow productForListWindow;
 
     /// <summary>
     /// ctor with 1 parameter for add product.
     /// </summary>
-    BO.Product product1 = new BO.Product();
-    public ProductWindow(IBl bl)
+    private BO.Product product1 = new();
+    public ProductWindow(IBl bl, ProductForListWindow _productForListWindow)
     {
         localBl = bl;
-
+        productForListWindow = _productForListWindow;
         InitializeComponent();
-
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-
         productWindowButton.Content = "Add";
     }
 
@@ -38,21 +34,16 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="bl"></param>
     /// <param name="ProductId"></param>
-    public ProductWindow(IBl bl, int ProductId)
-    {
-        localBl = bl;
+    public ProductWindow(IBl bl, int ProductId, ProductForListWindow _productForListWindow)
+    {  
         InitializeComponent();
-
+        productForListWindow = _productForListWindow;
+        localBl = bl;
+        product1 = localBl.Product.ProductDetailsManger(ProductId);
+        DataContext = product1;
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
         productWindowButton.Content = "Update";
-        product1 = localBl.Product.ProductDetailsManger(ProductId);
-
-        idTextBox.Text = product1.Id.ToString();
         idTextBox.IsEnabled = false;
-        categoryComboBox.Text = product1.Category.ToString();
-        nameTextBox.Text = product1.Name!.ToString();
-        priceTextBox.Text = product1.Price.ToString();
-        inStockTextBox.Text = product1.InStock.ToString();
     }
 
     private void productWindowButton_Click(object sender, RoutedEventArgs e)
@@ -72,6 +63,7 @@ public partial class ProductWindow : Window
             {
                 localBl.Product.AddProduct(product);
                 Close();
+                productForListWindow.ProductForList = localBl?.Product.ProductListRequest()!;
             }
             catch (BlExceptions ex)
             {
@@ -82,13 +74,9 @@ public partial class ProductWindow : Window
         {
             try
             {
-                product1.Category = OtherFunctions.CategoryParse(categoryComboBox);
-                product1.Name = nameTextBox.Text.ToString();
-                product1.Price = double.Parse(priceTextBox.Text);
-                product1.InStock = int.Parse(inStockTextBox.Text);
-
                 localBl.Product.UpdateProduct(product1);
                 Close();
+                productForListWindow.ProductForList = localBl?.Product.ProductListRequest()!;
             }
             catch (BlExceptions ex)
             {
