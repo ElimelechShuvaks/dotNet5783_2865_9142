@@ -1,20 +1,9 @@
 ﻿using BlApi;
-using BlImplementation;
+using BO;
 using PL.Products;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace PL;
 
@@ -30,6 +19,26 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
+    private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new AdminWindow().Show();
 
+    /// <summary>
+    /// Order tracking.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ShowOrderTracking(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if(bl!.Order.GetDetailsOrder(int.Parse(idTextBox.Text)) is BO.Order)
+            {
+                new OrderTrackingWindow(int.Parse(idTextBox.Text)).Show();
+            }
+        }
+        catch (BlExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+    }
 }

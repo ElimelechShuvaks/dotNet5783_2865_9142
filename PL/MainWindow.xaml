@@ -4,36 +4,68 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:localTo="clr-namespace:PL.Converter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" FontFamily="Castellar" >
+
 
     <Window.Background>
         <ImageBrush ImageSource="image\mainWindow\mainbakeground.jpg" ></ImageBrush>
     </Window.Background>
+
     <Window.Resources>
+        <localTo:isEnibel x:Key="Enibal" ></localTo:isEnibel>
         <Style x:Key="common style" TargetType="Control">
-            <Setter Property="Foreground" Value="Yellow">
-            </Setter>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush>
-                        <GradientStop Color="Black" Offset="0.2"/>
-                        <GradientStop  Color="Blue" Offset="0.5"/>
-                        <GradientStop Color="Orange" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="Foreground" Value="Red"/>
         </Style>
 
         <Style x:Key="Button style" TargetType="Button"  BasedOn="{StaticResource common style}"/>
         <Style x:Key="label style" TargetType="Label" BasedOn="{StaticResource common style}"/>
 
+        <Style x:Key ="styleGrid" TargetType="Button">
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property ="Background" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Yellow"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Foreground" Value="Yellow"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Arial Black"/>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
-        <Label Content="The center for wholesale vehicles" Style="{StaticResource label style}" Height="60" VerticalAlignment="Top" 
-               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" />
-        <Button Content="Catalog"  Click="ShowCatalogButton_Click"  Width="200" Height="75"  Background="White" BorderThickness="1" Margin="0,0,500,200"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Content="The center for wholesale vehicles" Style="{StaticResource label style}" Height="60" VerticalAlignment="Top" FontWeight="Bold"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="23"  Grid.ColumnSpan="3"/>
+        <Button Content="Admin" Click="ShowCatalogButton_Click"  Width="130" Height="75"  BorderThickness="1" Grid.Row="1" Grid.Column="0" Style="{StaticResource styleGrid}"/>
+
+        <Border CornerRadius="55" BorderThickness="5" Grid.Row="1" Grid.Column="2">
+            <Grid x:Name="myGrid">
+                <Label  Margin="0,0,0,360" FontFamily="Caladea" FontSize="25"
+                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                    Round Window</Label>
+                <Label x:Name="myLabelLink" Content="please enter Id for track:" Style="{StaticResource label style}"  FontSize="15"
+                   HorizontalAlignment="Center"  VerticalAlignment="Top">
+                </Label>
+                <TextBox Name="idTextBox" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="75"/>
+                <Button Content="Track" Width="100" Height="30" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" Click="ShowOrderTracking" IsEnabled="{Binding ElementName=idTextBox,Path=Text,Converter={StaticResource Enibal}}" Style="{StaticResource styleGrid}"/>
+            </Grid>
+        </Border>
+
     </Grid>
-    
+
 </Window>
