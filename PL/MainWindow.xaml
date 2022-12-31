@@ -10,11 +10,11 @@
 
 
     <Window.Background>
-        <ImageBrush ImageSource="image\mainWindow\mainbakeground.jpg" ></ImageBrush>
+        <ImageBrush ImageSource="image\mainWindow\mainbakeground.jpg" />
     </Window.Background>
 
     <Window.Resources>
-        <localTo:isEnibel x:Key="Enibal" ></localTo:isEnibel>
+        <localTo:isEnibel x:Key="Enibal" />
         <Style x:Key="common style" TargetType="Control">
             <Setter Property="Foreground" Value="Red"/>
         </Style>
@@ -37,9 +37,6 @@
     </Window.Resources>
 
     <Grid>
-
-        <Button Content="Admin" Click="AdminButton_Click"  Width="200" Height="75"  Background="White" BorderThickness="1" Margin="0,0,500,200"/>
-        <Button Content="New Order" Click="NewOrderButton_Click" Width="200" Height="75"  Background="White" BorderThickness="1" Margin="0,0,200,0"/>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -51,9 +48,11 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <Label Content="The center for wholesale vehicles" Style="{StaticResource label style}" Height="60" VerticalAlignment="Top" FontWeight="Bold"
-               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="23"  Grid.ColumnSpan="3"/>
+        <Button Content="Admin" Click="AdminButton_Click"  Width="200" Height="75"  Background="White" BorderThickness="1" Grid.Column="0" Grid.Row="1"/>
+        <Button Content="New Order" Click="NewOrderButton_Click" Width="200" Height="75"  Background="White" BorderThickness="1" Grid.Column="1" Grid.Row="1"/>
+       
+
+        <Label Content="The center for wholesale vehicles" Height="60" VerticalAlignment="Top" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="23"  Grid.ColumnSpan="3" />
 
         <Border CornerRadius="55" BorderThickness="5" Grid.Row="1" Grid.Column="2">
             <Grid x:Name="myGrid">

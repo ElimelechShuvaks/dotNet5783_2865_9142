@@ -19,7 +19,7 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new AdminWindow().Show();
+    private void AdminButton_Click(object sender, RoutedEventArgs e) => new AdminWindow().Show();
 
     /// <summary>
     /// Order tracking.
@@ -41,6 +41,8 @@ public partial class MainWindow : Window
         }
 
     }
-}
+
     private void NewOrderButton_Click(object sender, RoutedEventArgs e) => new ProductCatalogWindow().ShowDialog();
+
 }
+
