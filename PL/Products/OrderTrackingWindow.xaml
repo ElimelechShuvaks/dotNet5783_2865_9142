@@ -1,0 +1,53 @@
+﻿<Window x:Class="PL.Products.OrderTrackingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Products"
+        mc:Ignorable="d"
+        Title="OrderTrackingWindow" Height="450" Width="800" DataContext="{Binding RelativeSource={RelativeSource self}}">
+
+    <Window.Background>
+        <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="Uniform"></ImageBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="OrderId:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Status:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+
+        <TextBox Name="OrderIdTextBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Text="{Binding orderTracking.OrderId}" />
+        <TextBox Name="StatusTextBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Text="{Binding orderTracking.Status}"/>
+        <Button x:Name="ShowOrder" Grid.Column="1" Grid.Row="4" Width="80" Height="18"  Content="ShowOrder" Click="ShowOrderButton" Background="Black" Foreground="Yellow"/>
+
+
+        <ListView x:Name="DateTimeAndDescription" Foreground="Red" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding orderTracking.TuplesOfDateAndDescription}">
+            <ListView.Background>
+                <ImageBrush/>
+            </ListView.Background>
+            <ListView.View>
+                <GridView>
+
+                    <GridViewColumn Header="Data Time" Width="200"  DisplayMemberBinding="{Binding Item1}">
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Description"  Width="200" DisplayMemberBinding="{Binding Item2}" >
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+
+</Window>
