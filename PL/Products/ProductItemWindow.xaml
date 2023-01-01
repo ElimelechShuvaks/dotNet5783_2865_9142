@@ -4,10 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Products"
+        xmlns:localTo="clr-namespace:PL.Converter"
         mc:Ignorable="d"
         Title="Product details" Height="450" Width="400"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
-    
+
+    <Window.Resources>
+        <localTo:IntToVisibility x:Key="convert"/>
+        <localTo:IntToVisibilityNot x:Key="convertNot"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
@@ -40,11 +46,19 @@
             <TextBlock Text="{Binding ProductItem.Category}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
             <TextBlock Text="{Binding ProductItem.Name}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
             <TextBlock Text="{Binding ProductItem.Price}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
-            <TextBox IsEnabled="{Binding ProductItem.Amount}" Text="{Binding ProductItem.Amount}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+            <TextBlock Text="{Binding ProductItem.Amount}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
             <CheckBox IsChecked="{Binding ProductItem.InStock}" IsEnabled="False" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"/>
         </Grid>
 
-        <Button Content="Add to cart" Grid.Row="2" Width="80" Height="18" Click="AddCartButton_Click"/>
+        <Button Content="Add to cart" Visibility="{Binding ProductItem.Amount, Converter={StaticResource convert}}" Grid.Row="2" Width="80" Height="18" Click="AddCartButton_Click"/>
+
+        <StackPanel x:Name="numbericButton" Visibility="{Binding ProductItem.Amount, Converter={StaticResource convertNot}}" Orientation="Horizontal" Grid.Row="2" Height="28" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+            <Button x:Name="cmdDown" Content="˅" Click="cmdDown_Click" />
+            <TextBox x:Name="textNumber" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ProductItem.Amount}" Width="50"/>
+            <Button x:Name="cmdUp" Content="˄" Click="cmdUp_Click" />
+        </StackPanel>
+        <Button x:Name="updateButton" Content="Update the amount" Visibility="{Binding ProductItem.Amount, Converter={StaticResource convertNot}}" Grid.Row="2" Width="120" Height="18" Click="UpdateCartButton_Click" Margin="0,20,0,0" />
 
     </Grid>
 </Window>

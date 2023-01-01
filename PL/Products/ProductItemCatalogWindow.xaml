@@ -41,7 +41,18 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="cartButton" Grid.Row="2" Content="Cart" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="80" Click="cartButton_Click"/>
-        <TextBlock Text="{Binding Cart.Items.Count}" Grid.Row="2" Width="100"/>
+        <Grid x:Name="row2" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="cartButton" Grid.Column="2" Content="Cart" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="80" Click="cartButton_Click"/>
+            <TextBlock Text="{Binding Cart.Items.Count}" Grid.Column="1" Width="100" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+            <TextBlock Text="Amount items in cart: " Grid.Column="0" Width="auto" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        
+        </Grid>
+
     </Grid>
 </Window>

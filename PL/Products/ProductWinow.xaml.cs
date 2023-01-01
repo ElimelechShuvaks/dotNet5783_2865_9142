@@ -14,17 +14,19 @@ public partial class ProductWindow : Window
 {
     private IBl localBl;
 
-   private ProductForListWindow productForListWindow;
+    Action action;
 
     /// <summary>
     /// ctor with 1 parameter for add product.
     /// </summary>
     private BO.Product product1 = new();
-    public ProductWindow(IBl bl, ProductForListWindow _productForListWindow)
+    public ProductWindow(IBl bl, Action senderAction)
     {
         localBl = bl;
-        productForListWindow = _productForListWindow;
+        action = senderAction;
+
         InitializeComponent();
+
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
         productWindowButton.Content = "Add";
     }
@@ -34,11 +36,12 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="bl"></param>
     /// <param name="ProductId"></param>
-    public ProductWindow(IBl bl, int ProductId, ProductForListWindow _productForListWindow)
-    {  
-        InitializeComponent();
-        productForListWindow = _productForListWindow;
+    public ProductWindow(IBl bl, int ProductId, Action senderAction)
+    {
+        action = senderAction;
         localBl = bl;
+
+        InitializeComponent();
         product1 = localBl.Product.ProductDetailsManger(ProductId);
         DataContext = product1;
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
@@ -62,8 +65,8 @@ public partial class ProductWindow : Window
             try
             {
                 localBl.Product.AddProduct(product);
+                action();
                 Close();
-                productForListWindow.ProductForList = localBl?.Product.ProductListRequest()!;
             }
             catch (BlExceptions ex)
             {
@@ -75,8 +78,8 @@ public partial class ProductWindow : Window
             try
             {
                 localBl.Product.UpdateProduct(product1);
+                action();
                 Close();
-                productForListWindow.ProductForList = localBl?.Product.ProductListRequest()!;
             }
             catch (BlExceptions ex)
             {
