@@ -10,6 +10,26 @@
     <Window.Background>
         <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="Uniform"></ImageBrush>
     </Window.Background>
+    
+        <Window.Resources>
+        <Style x:Key="TextBlock Style" TargetType="TextBlock">
+            <Setter Property="Grid.Column" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Foreground" Value="Yellow"/>
+
+        </Style>
+
+        <Style x:Key="TextBox Style" TargetType="TextBox">
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="150"/>
+        </Style>
+
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -24,11 +44,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="OrderId:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Status:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+        <TextBlock Grid.Row="0" Text="OrderId:" Style="{StaticResource TextBlock Style}" />
+        <TextBlock Grid.Row="1" Text="Status:" Style="{StaticResource TextBlock Style}"/>
 
-        <TextBox Name="OrderIdTextBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Text="{Binding orderTracking.OrderId}" />
-        <TextBox Name="StatusTextBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Text="{Binding orderTracking.Status}"/>
+        <TextBox Name="OrderIdTextBox" Grid.Row="0" Text="{Binding orderTracking.OrderId}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="StatusTextBox" Grid.Row="1"  Style="{StaticResource TextBox Style}" Text="{Binding orderTracking.Status}"/>
+        
         <Button x:Name="ShowOrder" Grid.Column="1" Grid.Row="4" Width="80" Height="18"  Content="ShowOrder" Click="ShowOrderButton" Background="Black" Foreground="Yellow"/>
 
 

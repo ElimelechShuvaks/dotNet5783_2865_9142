@@ -6,6 +6,24 @@
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="400">
+    
+    <Window.Resources>
+        
+        <Style x:Key="TextBlock Style" TargetType="TextBlock">
+            <Setter Property="Grid.Column" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
+
+        <Style x:Key="TextBox Style" TargetType="TextBox">
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="120"/>
+        </Style>
+
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,19 +45,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Id:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Category:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Name:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Price:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Text="Amount in stock:" VerticalAlignment="Center" Width="100"/>
+            <TextBlock Grid.Row="0" Text="Id:" Style="{StaticResource TextBlock Style}"/>
+            <TextBlock Grid.Row="1" Text="Category:"  Style="{StaticResource TextBlock Style}"/>
+            <TextBlock Grid.Row="2" Text="Name:"  Style="{StaticResource TextBlock Style}"/>
+            <TextBlock Grid.Row="3" Text="Price:"  Style="{StaticResource TextBlock Style}"/>
+            <TextBlock Grid.Row="4" Text="Amount in stock:"  Style="{StaticResource TextBlock Style}" />
 
-            <TextBox Name="idTextBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" MaxLength="6" PreviewTextInput="IntegerValidationTextBox" Text="{Binding Id}"/>
-
+            <TextBox Name="idTextBox" Grid.Row="0" MaxLength="6" PreviewTextInput="IntegerValidationTextBox" Text="{Binding Id}" Style="{StaticResource TextBox Style}"/>
             <ComboBox Name="categoryComboBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Text="{Binding Category}"/>
-
-            <TextBox Name="nameTextBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Text="{Binding Name}"/>
-            <TextBox Name="priceTextBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" PreviewTextInput="DoubleValidationTextBox" Text="{Binding Price}"/>
-            <TextBox Name="inStockTextBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" PreviewTextInput="IntegerValidationTextBox" Text="{Binding InStock}"/>
+            <TextBox Name="nameTextBox" Grid.Row="2" Text="{Binding Name}" Style="{StaticResource TextBox Style}"/>
+            <TextBox Name="priceTextBox" Grid.Row="3" PreviewTextInput="DoubleValidationTextBox" Text="{Binding Price}" Style="{StaticResource TextBox Style}"/>
+            <TextBox Name="inStockTextBox" Grid.Row="4" PreviewTextInput="IntegerValidationTextBox" Text="{Binding InStock}" Style="{StaticResource TextBox Style}"/>
         </Grid>
 
         <Button x:Name="productWindowButton" Grid.Row="2" Width="80" Height="18" Click="productWindowButton_Click"/>

@@ -7,8 +7,28 @@
         mc:Ignorable="d"
         Title="OrderItemWindow" Height="450" Width="800" DataContext="{Binding RelativeSource={RelativeSource self}}">
     <Window.Background>
+        
         <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill" ></ImageBrush>
     </Window.Background>
+
+    <Window.Resources>
+        <Style x:Key="TextBlock Style" TargetType="TextBlock">
+            <Setter Property="Grid.Column" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Foreground" Value="Yellow"/>
+        </Style>
+
+        <Style x:Key="TextBox Style" TargetType="TextBox">
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="IsEnabled" Value="False"/>
+        </Style>
+
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -26,19 +46,19 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Order Id:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Product Id:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Name:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Price:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Text="Amount:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Text="Total Price:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
+        <TextBlock Grid.Row="0" Text="Order Id:" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="1" Text="Product Id:" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="2" Text="Name:" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="3" Text="Price:" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="4" Text="Amount:" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="5" Text="Total Price:" Style="{StaticResource TextBlock Style}"/>
 
-        <TextBox  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.OrderId}"/>
-        <TextBox  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.ProductId}"/>
-        <TextBox  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.Name}"/>
-        <TextBox  Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.Price}"/>
-        <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Text="{Binding Item.Amount}"/>
-        <TextBox x:Name="TotalPriceTextBox"  Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" IsEnabled="False" Text="{Binding Item.TotalPrice}"/>
+        <TextBox  Grid.Row="0" Text="{Binding Item.OrderId}" Style="{StaticResource TextBox Style}"/>
+        <TextBox  Grid.Row="1" Text="{Binding Item.ProductId}" Style="{StaticResource TextBox Style}"/>
+        <TextBox  Grid.Row="2" Text="{Binding Item.Name}" Style="{StaticResource TextBox Style}"/>
+        <TextBox  Grid.Row="3" Text="{Binding Item.Price}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Grid.Row="4"  IsEnabled="True"  Text="{Binding Item.Amount}" Style="{StaticResource TextBox Style}"/>
+        <TextBox x:Name="TotalPriceTextBox"  Grid.Row="5" Text="{Binding Item.TotalPrice}" Style="{StaticResource TextBox Style}"/>
 
         <Button x:Name="OrderWindowButton" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6" Width="80" Height="18" Click="OrderItemWindowButton_Click" Content="Update" Background="Black" Foreground="Yellow"/>
 

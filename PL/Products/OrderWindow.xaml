@@ -11,6 +11,25 @@
         <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill" ></ImageBrush>
     </Window.Background>
 
+    <Window.Resources>
+        <Style x:Key="TextBlock Style" TargetType="TextBlock">
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Foreground" Value="Yellow"/>
+        </Style>
+
+        <Style x:Key="TextBox Style" TargetType="TextBox">
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="130"/>
+            <Setter Property="IsEnabled" Value="False"/>
+        </Style>
+
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -36,25 +55,25 @@
 
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Text="Id:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Text="Status:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Text="Customer name:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
-        <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Text="Customer email:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Text="Customer adress:" VerticalAlignment="Center" Width="100"  Foreground="Yellow"/>
-        <TextBlock Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Text="Order date:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
-        <TextBlock Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Text="Ship date:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
-        <TextBlock Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left" Text="Delivery date:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
-        <TextBlock Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" Text="Total price:" VerticalAlignment="Center" Width="100" Foreground="Yellow"/>
+        <TextBlock Grid.Row="2" Text="Id:"  Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="3" Text="Status:"  Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="4" Text="Customer name:"  Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="5" Text="Customer email:"  Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="6" Text="Customer adress:"  Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="7" Text="Order date:"  Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="8" Text="Ship date:"  Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="9" Text="Delivery date:"  Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="10" Text="Total price:"  Style="{StaticResource TextBlock Style}"/>
 
-        <TextBox Name="idTextBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" MaxLength="6" IsEnabled="False" Text="{Binding order.Id}"/>
-        <TextBox Name="StatusTextBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False" Text="{Binding order.Status}"/>
-        <TextBox Name="CustomerNameTextBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.CustomerName}"/>
-        <TextBox Name="CustomerEmailTextBox" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.CustomerEmail}"/>
-        <TextBox Name="CustomerAdressTextBox" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.CustomerAdress}" />
-        <TextBox Name="OrderDateTextBox" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.OrderDate}" />
-        <TextBox Name="ShipDateTextBox" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.ShipDate}"/>
-        <TextBox Name="DeliveryDateTextBox" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.DeliveryDate}" />
-        <TextBox Name="TotalPriceTextBox" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" IsEnabled="False"  Text="{Binding order.TotalPrice}"/>
+        <TextBox Name="idTextBox" Grid.Row="2" MaxLength="6" Text="{Binding order.Id}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="StatusTextBox" Grid.Row="3" Text="{Binding order.Status}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="CustomerNameTextBox" Grid.Row="4"  Text="{Binding order.CustomerName}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="CustomerEmailTextBox" Grid.Row="5" Text="{Binding order.CustomerEmail}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="CustomerAdressTextBox" Grid.Row="6" Text="{Binding order.CustomerAdress}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="OrderDateTextBox" Grid.Row="7" Text="{Binding order.OrderDate}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="ShipDateTextBox" Grid.Row="8"  Text="{Binding order.ShipDate}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="DeliveryDateTextBox" Grid.Row="9" Text="{Binding order.DeliveryDate}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="TotalPriceTextBox" Grid.Row="10" Text="{Binding order.TotalPrice}" Style="{StaticResource TextBox Style}"/>
 
         <Button x:Name="ShipDateButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="12" Width="80" Height="18" Click="ShipDateButton_Click" Content="UpdateShiped" Background="Black"  Foreground="Yellow" />
         <Button x:Name="DeliveryDateButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="12" Width="80" Height="18" Click="DeliveryDateButton_Click" Content="UpdateDelivery" Background="Black"  Foreground="Yellow" />

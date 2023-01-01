@@ -17,6 +17,8 @@
         <localTo:isEnibel x:Key="Enibal" />
         <Style x:Key="common style" TargetType="Control">
             <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="FontSize" Value="23"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
         </Style>
 
         <Style x:Key="Button style" TargetType="Button"  BasedOn="{StaticResource common style}"/>
@@ -48,19 +50,19 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <Button Content="Admin" Click="AdminButton_Click"  Width="200" Height="75"  Background="White" BorderThickness="1" Grid.Column="0" Grid.Row="1"/>
         <Button Content="New Order" Click="NewOrderButton_Click" Width="200" Height="75"  Background="White" BorderThickness="1" Grid.Column="1" Grid.Row="1"/>
        
-
-        <Label Content="The center for wholesale vehicles" Height="60" VerticalAlignment="Top" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="23"  Grid.ColumnSpan="3" />
+        <Label Content="The center for wholesale vehicles" Height="60" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="3" Style="{StaticResource label style}" />
 
         <Border CornerRadius="55" BorderThickness="5" Grid.Row="1" Grid.Column="2">
             <Grid x:Name="myGrid">
                 <Label  Margin="0,0,0,360" FontFamily="Caladea" FontSize="25"
                    HorizontalAlignment="Center" VerticalAlignment="Center">
                     Round Window</Label>
-                <Label x:Name="myLabelLink" Content="please enter Id for track:" Style="{StaticResource label style}"  FontSize="15"
-                   HorizontalAlignment="Center"  VerticalAlignment="Top">
+                <Label x:Name="myLabelLink" Content="please enter Id for track:" Style="{StaticResource label style}" 
+                   HorizontalAlignment="Center">
                 </Label>
                 <TextBox Name="idTextBox" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="75"/>
                 <Button Content="Track" Width="100" Height="30" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" Click="ShowOrderTracking" IsEnabled="{Binding ElementName=idTextBox,Path=Text,Converter={StaticResource Enibal}}" Style="{StaticResource styleGrid}"/>
