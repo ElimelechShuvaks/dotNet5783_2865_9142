@@ -22,7 +22,7 @@ public partial class ProductWindow : Window
     private BO.Product product1 = new();
     public ProductWindow(IBl bl, Action senderAction)
     {
-        Action1 = action;
+        action = senderAction;
         localBl = bl;
         action = senderAction;
 
