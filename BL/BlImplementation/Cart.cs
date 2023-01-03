@@ -105,13 +105,6 @@ internal class Cart : BlApi.ICart
         return cart;
     }
 
-    /// <summary>
-    /// This function returns true or false if the email address is valid.
-    /// </summary>
-    /// <param name="email"></param>
-    /// <returns></returns>
-    private bool isValidEmail(string email) => new EmailAddressAttribute().IsValid(email);
-
     public void ConfirmationOrderToCart(BO.Cart cart)
     {
         try
@@ -127,7 +120,7 @@ internal class Cart : BlApi.ICart
             if (cart.CustomerAdress is null)
                 throw new BO.EmailNotValidException("An address is required");
 
-            if (isValidEmail(cart.CustomerEmail!))
+            if (! new EmailAddressAttribute().IsValid(cart.CustomerEmail))
                 throw new BO.EmailNotValidException("Email is not valid");
 
             List<DO.Product> products = (from item in items
