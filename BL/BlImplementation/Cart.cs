@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BO;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlImplementation;
 
@@ -120,48 +121,54 @@ internal class Cart : BlApi.ICart
             if (items.Count() == 0)
                 throw new BO.EmptyCartException("can't confirm an empty cart.");
 
-            if (cart.CustomerName != null && cart.CustomerAdress != null && isValidEmail(cart.CustomerEmail!))
+            if (cart.CustomerName is null)
+                throw new BO.NameNotValidException("Name required");
+
+            if (cart.CustomerAdress is null)
+                throw new BO.EmailNotValidException("An address is required");
+
+            if (isValidEmail(cart.CustomerEmail!))
+                throw new BO.EmailNotValidException("Email is not valid");
+
+            List<DO.Product> products = (from item in items
+                                         let product = dal?.Product.Get(productFunc => productFunc?.ProductId == item.ProductId) ?? throw new BO.DalConfigException("Error in configuration process")
+                                         select item!.Amount > product.InStock || product.InStock < 0 ?
+                                         throw new BO.NotExsitInStockException("the product is out of stock") : product).ToList();
+
+            DO.Order order = new DO.Order
             {
+                CustomerName = cart.CustomerName,
+                CustomerAdress = cart.CustomerAdress,
+                CustomerEmail = cart.CustomerEmail,
+                OrderDate = DateTime.Now,
+                ShipDate = null,
+                DeliveryDate = null,
+            };
 
-                List<DO.Product> products = (from item in items
-                                             let product = dal?.Product.Get(productFunc => productFunc?.ProductId == item.ProductId) ?? throw new BO.DalConfigException("Error in configuration process")
-                                             select item!.Amount > product.InStock || product.InStock < 0 ?
-                                             throw new BO.NotExsitInStockException("the product is out of stock") : product).ToList();
+            int orderNumber = dal?.Order.Add(order) ?? throw new BO.DalConfigException("Error in configuration process");
 
-                DO.Order order = new DO.Order
+            var orderItemAndProducts = items.Zip(products!).ToList();
+
+            orderItemAndProducts.ForEach(orderItemAndProduct =>
+            {
+                var orderItem = orderItemAndProduct.First;
+                var product = orderItemAndProduct.Second;
+
+                dal.OrderItem.Add(new DO.OrderItem
                 {
-                    CustomerName = cart.CustomerName,
-                    CustomerAdress = cart.CustomerAdress,
-                    CustomerEmail = cart.CustomerEmail,
-                    OrderDate = DateTime.Now,
-                    ShipDate = null,
-                    DeliveryDate = null,
-                };
-
-                int orderNumber = dal?.Order.Add(order) ?? throw new BO.DalConfigException("Error in configuration process");
-
-                var orderItemAndProducts = items.Zip(products!).ToList();
-
-                orderItemAndProducts.ForEach(orderItemAndProduct =>
-                {
-                    var orderItem = orderItemAndProduct.First;
-                    var product = orderItemAndProduct.Second;
-
-                    dal.OrderItem.Add(new DO.OrderItem
-                    {
-                        OrderId = orderNumber,
-                        ProductId = orderItem.ProductId,
-                        Amount = orderItem.Amount,
-                        Price = orderItem.Price,
-                    });
-
-                    product.InStock -= orderItem.Amount;
-
-                    dal.Product.Update(product);
+                    OrderId = orderNumber,
+                    ProductId = orderItem.ProductId,
+                    Amount = orderItem.Amount,
+                    Price = orderItem.Price,
                 });
 
-                ResetCart(cart); // reset the cart.
-            }
+                product.InStock -= orderItem.Amount;
+
+                dal.Product.Update(product);
+            });
+
+            ResetCart(cart); // reset the cart.
+
         }
         catch (BO.BlExceptions ex)
         {

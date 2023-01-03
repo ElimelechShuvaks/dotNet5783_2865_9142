@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
-        Title="Cart details" Height="350" Width="800"
+        Title="Cart details" Height="350" Width="900"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3.5*"/>
+            <ColumnDefinition Width="260*"/>
+            <ColumnDefinition Width="640*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
@@ -27,15 +27,58 @@
             <TextBlock Grid.Row="2" Text=" Customer Adress:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <TextBlock Grid.Row="3" Text=" Total price:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
-            <TextBlock Grid.Row="0" Text="{Binding Cart.CustomerName}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            <TextBlock Grid.Row="1" Text="{Binding Cart.CustomerEmail}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            <TextBlock Grid.Row="2" Text="{Binding Cart.CustomerAdress}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="0" Text="{Binding Cart.CustomerName}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150"/>
+            <TextBox Grid.Row="1" Text="{Binding Cart.CustomerEmail}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150"/>
+            <TextBox Grid.Row="2" Text="{Binding Cart.CustomerAdress}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150"/>
             <TextBlock Grid.Row="3" Text="{Binding Cart.TotalPrice}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
         </Grid>
 
         <Grid Grid.Column="1">
-            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="259*"/>
+                <RowDefinition Height="33*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="149*"/>
+                <ColumnDefinition Width="5*"/>
+
+            </Grid.ColumnDefinitions>
+
+            <ListView x:Name="OrderItemListView" Grid.Column="1" ItemsSource="{Binding Cart.Items}" Grid.Row="1">
+
+                <ListView.View >
+                    <GridView>
+                        <GridViewColumn Header="Order Id"  DisplayMemberBinding='{Binding OrderId}' Width='60'/>
+
+                        <GridViewColumn Header="Product Id"  DisplayMemberBinding='{Binding ProductId}' Width='63'/>
+
+                        <GridViewColumn Header="Name" DisplayMemberBinding='{Binding Name}' Width='90'/>
+
+                        <GridViewColumn Header="Price"  DisplayMemberBinding='{Binding Price}' Width='64'/>
+
+                        <GridViewColumn Header="Amount"  DisplayMemberBinding='{Binding Amount}' Width='48'/>
+
+                        <GridViewColumn Header="Total Price"  DisplayMemberBinding='{Binding TotalPrice}' Width='63'/>
+                        <!--<GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button>'
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>-->
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button Grid.Row="2" Grid.Column="1" Content="Confirm the order" Width="110" HorizontalAlignment="Right" Click="ConfirmButton_Click" IsEnabled="{Binding Cart.Items.Count}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Add a new car" Width="110" Click="AddButton_Click"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Reset the cart" Width="100" HorizontalAlignment="Left" Click="ResetButton_Click" IsEnabled="{Binding Cart.Items.Count}"/>
         </Grid>
     </Grid>
 </Window>
