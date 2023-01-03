@@ -71,13 +71,19 @@ public class InStockNotValidException : BlExceptions
     public InStockNotValidException(string message) : base(message) { }
 }
 
-public class NegativeAmountExeption : Exception
+public class NegativeAmountExeption : BlExceptions
 {
-    public NegativeAmountExeption(string? message) : base(message)
-    {
-    }
+    public NegativeAmountExeption(string? message) : base(message) { }
 
-    public NegativeAmountExeption(string? message, Exception? innerException) : base(message, innerException)
-    {
-    }
+    public NegativeAmountExeption(string? message, Exception? innerException) : base(message, innerException) { }
+}
+
+public class EmailNotValidException : BlExceptions
+{
+    public EmailNotValidException(string message) : base(message) { }
+}
+
+public class AddressNotValidException : BlExceptions
+{
+    public AddressNotValidException(string message) : base(message) { }
 }
