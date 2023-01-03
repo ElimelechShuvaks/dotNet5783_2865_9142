@@ -14,16 +14,20 @@ public partial class ProductWindow : Window
 {
     private IBl localBl;
 
-    Action Action1;
+    Action action;
+
     /// <summary>
     /// ctor with 1 parameter for add product.
     /// </summary>
-    private BO.Product product1 { get; set; }
-    public ProductWindow(IBl bl,Action action)
+    private BO.Product product1 = new();
+    public ProductWindow(IBl bl, Action senderAction)
     {
         Action1 = action;
         localBl = bl;
+        action = senderAction;
+
         InitializeComponent();
+
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
         productWindowButton.Content = "Add";
     }
@@ -33,11 +37,12 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="bl"></param>
     /// <param name="ProductId"></param>
-    public ProductWindow(IBl bl, int ProductId, Action action)
+    public ProductWindow(IBl bl, int ProductId, Action senderAction)
     {
-        Action1 = action;
-        InitializeComponent();
+        action = senderAction;
         localBl = bl;
+
+        InitializeComponent();
         product1 = localBl.Product.ProductDetailsManger(ProductId);
         DataContext = product1;
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
@@ -61,9 +66,8 @@ public partial class ProductWindow : Window
             try
             {
                 localBl.Product.AddProduct(product);
-                this.Action1();
+                action();
                 Close();
-             
             }
             catch (BlExceptions ex)
             {
@@ -75,9 +79,8 @@ public partial class ProductWindow : Window
             try
             {
                 localBl.Product.UpdateProduct(product1);
-                this.Action1();
+                action();
                 Close();
-               
             }
             catch (BlExceptions ex)
             {

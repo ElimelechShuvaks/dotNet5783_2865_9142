@@ -26,11 +26,9 @@ public partial class ProductCatalogWindow : Window, INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     IBl bl = Factory.get();
-    IEnumerable<IGrouping<BO.Categories?, ProductItem?>> groups;
 
-    //public ObservableCollection<ProductItem> ProductItems = new ObservableCollection<ProductItem>();
-    private IEnumerable<BO.ProductItem?> productItems;
-    public IEnumerable<BO.ProductItem?> ProductItems
+    private IEnumerable<ProductItem?> productItems;
+    public IEnumerable<ProductItem?> ProductItems
     {
         get => productItems;
         set { productItems = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ProductItems")); }
@@ -43,37 +41,41 @@ public partial class ProductCatalogWindow : Window, INotifyPropertyChanged
 
     public ProductCatalogWindow()
     {
-        Cart = new Cart { Items = new() };
-        ProductItems = bl.Product.ProductListRequest().Select(item => bl.Product.ProductDetailsClient(Cart, item!.Id));
+        try
+        {
+            Cart = new Cart { Items = new() };
+            ProductItems = bl.Product.ProductListRequest().Select(item => (bl.Product.ProductDetailsClient(Cart, item!.Id)));
 
-        InitializeComponent();
+            InitializeComponent();
 
-        //ProductItemsListView.ItemsSource = ProductItems;
-
-        groups = from e in ProductItems
-                 group e by e.Category into t
-                 select t;
-
-        CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Categories));
+        }
+        catch (BlExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductItemsListView.DataContext = groups.FirstOrDefault(item => (BO.Categories)CategorySelector.SelectedItem == item.Key);
+        ProductItemsListView.ItemsSource = from item in ProductItems
+                                           where item.Category == (BO.Categories)CategorySelector.SelectedItem
+                                           select item;
         refreshButton.Visibility = Visibility.Visible;
     }
 
     private void refreshButton_Click(object sender, RoutedEventArgs e)
     {
-        ProductItemsListView.DataContext = ProductItems;
+        ProductItemsListView.ItemsSource = ProductItems;
         refreshButton.Visibility = Visibility.Hidden;
     }
 
     private void ProductDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        ProductItem item = (ProductItemsListView.SelectedItem as ProductItem)!;
-        action = () => ProductItems = ProductItems;
+        ProductItem item = ProductItemsListView.SelectedItem as ProductItem;
+
+        action = () => { ProductItems = ProductItems.Select(item => item); Cart = Cart; };
+        
         new ProductItemWindow(item!, Cart, action).ShowDialog();
     }
 

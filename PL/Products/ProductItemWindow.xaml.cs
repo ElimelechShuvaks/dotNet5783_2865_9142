@@ -23,13 +23,14 @@ namespace PL.Products;
 public partial class ProductItemWindow : Window
 {
     IBl bl = Factory.get();
+
     public ProductItem ProductItem { get; set; }
     public Cart Cart { get; set; }
     Action Action { get; set; }
 
-    public ProductItemWindow(ProductItem sender, Cart senderCart, Action senderActio)
+    public ProductItemWindow(ProductItem senderItem, Cart senderCart, Action senderActio)
     {
-        ProductItem = sender;
+        ProductItem = senderItem;
         Cart = senderCart;
         Action = senderActio;
 
@@ -38,8 +39,41 @@ public partial class ProductItemWindow : Window
 
     private void AddCartButton_Click(object sender, RoutedEventArgs e)
     {
-        bl.Cart.AddToCart(Cart, int.Parse(idTextBlock.Text));
-        Action();
-        this.Close();
+        try
+        {
+            bl.Cart.AddToCart(Cart, ProductItem.Id);
+            Action();
+            Thread.Sleep(500);
+            Close();
+        }
+        catch (BlExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void UpdateCartButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            bl.Cart.ProductUpdateCart(Cart, ProductItem.Id, int.Parse(textNumber.Text));
+            Action();
+            Close();
+        }
+        catch (BlExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void cmdUp_Click(object sender, RoutedEventArgs e)
+    {
+        textNumber.Text = (int.Parse(textNumber.Text) + 1).ToString();
+    }
+
+    private void cmdDown_Click(object sender, RoutedEventArgs e)
+    {
+        int num = int.Parse(textNumber.Text);
+        textNumber.Text = (num > 0 ? num -= 1 : num = 0).ToString();
     }
 }

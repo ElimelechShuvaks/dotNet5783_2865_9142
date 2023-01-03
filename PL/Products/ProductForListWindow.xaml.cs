@@ -1,12 +1,11 @@
 ﻿using BlApi;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Linq;
 
 
 namespace PL.Products;
@@ -14,20 +13,25 @@ namespace PL.Products;
 /// <summary>
 /// Interaction logic for ProductForListWindow.xaml
 /// </summary>
-public partial class ProductForListWindow : Window,INotifyPropertyChanged
+public partial class ProductForListWindow : Window, INotifyPropertyChanged
 {
-
     IBl bl = Factory.get();
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private IEnumerable<BO.ProductForList> productForList;
-    public IEnumerable<BO.ProductForList> ProductForList { get { return productForList; } set { productForList = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ProductForList")); } }
+    public IEnumerable<BO.ProductForList> ProductForList
+    {
+        get { return productForList; }
+        set { productForList = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ProductForList")); }
+    }
 
     Action action;
+
     public ProductForListWindow()
     {
         ProductForList = bl.Product.ProductListRequest()!;
+
         InitializeComponent();
 
         for (int i = 0; i < 5; i++) // include the 5 categories into the comboBox.
@@ -41,12 +45,15 @@ public partial class ProductForListWindow : Window,INotifyPropertyChanged
     private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (categorySelector.SelectedItem.ToString() == "All products")
-            ProductListView.ItemsSource = from item in ProductForList
-                             select item;
+        {
+            ProductListView.ItemsSource = ProductForList;
+        }
         else
+        {
             ProductListView.ItemsSource = from item in ProductForList
-                             where  item!.Category == (BO.Categories)categorySelector.SelectedItem
-                             select item;
+                                          where item.Category == (BO.Categories)categorySelector.SelectedItem
+                                          select item;
+        }
     }
 
     /// <summary>
@@ -56,16 +63,16 @@ public partial class ProductForListWindow : Window,INotifyPropertyChanged
     /// <param name="e"></param>
     private void addProductButton_Click(object sender, RoutedEventArgs e)
     {
-        action = () => { ProductForList.Select(item => item); };
+        action = () => {ProductForList = ProductForList.Select(item => item); };
         new ProductWindow(bl, action).ShowDialog();
     }
 
     private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        action = () => { ProductForList.Select(item => item); };
+        BO.ProductForList p = ProductListView.SelectedItem as BO.ProductForList;
 
-       if (ProductListView.SelectedItem is BO.ProductForList p)
-        
-            new ProductWindow(bl, p.Id, action).ShowDialog();
+        action = () => {ProductForList = ProductForList.Select(item => item); };
+
+        new ProductWindow(bl, p.Id, action).ShowDialog();
     }
 }

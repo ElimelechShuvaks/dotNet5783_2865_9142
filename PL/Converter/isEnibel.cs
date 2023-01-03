@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -10,7 +8,7 @@ internal class isEnibel : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-       string Text = (value as string)!;
+        string Text = (value as string)!;
         return !string.IsNullOrWhiteSpace(Text);
     }
 
