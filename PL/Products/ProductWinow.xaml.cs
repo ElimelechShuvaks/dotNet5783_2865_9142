@@ -14,16 +14,15 @@ public partial class ProductWindow : Window
 {
     private IBl localBl;
 
-   private ProductForListWindow productForListWindow;
-
+    Action Action1;
     /// <summary>
     /// ctor with 1 parameter for add product.
     /// </summary>
-    private BO.Product product1 = new();
-    public ProductWindow(IBl bl, ProductForListWindow _productForListWindow)
+    private BO.Product product1 { get; set; }
+    public ProductWindow(IBl bl,Action action)
     {
+        Action1 = action;
         localBl = bl;
-        productForListWindow = _productForListWindow;
         InitializeComponent();
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
         productWindowButton.Content = "Add";
@@ -34,10 +33,10 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="bl"></param>
     /// <param name="ProductId"></param>
-    public ProductWindow(IBl bl, int ProductId, ProductForListWindow _productForListWindow)
-    {  
+    public ProductWindow(IBl bl, int ProductId, Action action)
+    {
+        Action1 = action;
         InitializeComponent();
-        productForListWindow = _productForListWindow;
         localBl = bl;
         product1 = localBl.Product.ProductDetailsManger(ProductId);
         DataContext = product1;
@@ -62,8 +61,9 @@ public partial class ProductWindow : Window
             try
             {
                 localBl.Product.AddProduct(product);
+                this.Action1();
                 Close();
-                productForListWindow.ProductForList = localBl?.Product.ProductListRequest()!;
+             
             }
             catch (BlExceptions ex)
             {
@@ -75,8 +75,9 @@ public partial class ProductWindow : Window
             try
             {
                 localBl.Product.UpdateProduct(product1);
+                this.Action1();
                 Close();
-                productForListWindow.ProductForList = localBl?.Product.ProductListRequest()!;
+               
             }
             catch (BlExceptions ex)
             {

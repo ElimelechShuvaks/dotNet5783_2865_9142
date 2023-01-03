@@ -26,17 +26,21 @@ public partial class orderForListWindow : Window
     public IEnumerable<BO.OrderForList> OrderForList { get => (IEnumerable<BO.OrderForList>)GetValue(OrderForListProperty); set => SetValue(OrderForListProperty, value); }
 
     IBl bl = BlApi.Factory.get();
+
+    public IEnumerable<BO.OrderStatistics> orderStatistics { get; set; }
     public orderForListWindow()
     {
         OrderForList = bl?.Order.OrderForListRequest()!;
+        orderStatistics = bl?.Order.GetOrderStatiscs(OrderForList)!;
         InitializeComponent();
+
         for (int i = 0; i < 3; i++) // include the 3 OrderStatus into the comboBox
         {
             Selector.Items.Add((BO.OrderStatus)i);
         }
         Selector.Items.Add("All orders"); // add a basic condition.
 
-      //  OrderListView.ItemsSource = bl?.Order.OrderForListRequest();
+
     }
 
     private void Selector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,6 +55,16 @@ public partial class orderForListWindow : Window
     {
         new OrderWindow((BO.OrderForList)OrderListView.SelectedItem,true,this).ShowDialog();
 
-       // OrderListView.ItemsSource = bl.Order.OrderForListRequest();
+    }
+
+    private void OrderList(object sender, RoutedEventArgs e)
+    {
+        OrderForList= bl?.Order.OrderByName(OrderForList)!;
+    }
+
+    private void ShowOrder(object sender, RoutedEventArgs e)
+    {
+        orderStatistics = bl?.Order.GetOrderStatiscs(OrderForList)!;
+
     }
 }

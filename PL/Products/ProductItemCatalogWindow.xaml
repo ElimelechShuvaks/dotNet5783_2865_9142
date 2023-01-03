@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <ComboBox Name="CategorySelector" Grid.Row="0" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" VerticalContentAlignment="Center"/>
+            <ComboBox Name="CategorySelector" Grid.Row="0" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" VerticalContentAlignment="Center" />
             <Label Grid.Row="0" Grid.Column="0" Content="Category:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <Button x:Name="refreshButton" Grid.Column="1" Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Stretch" Height="20" Width="60" Visibility="Hidden" Click="refreshButton_Click"/>
         </Grid>

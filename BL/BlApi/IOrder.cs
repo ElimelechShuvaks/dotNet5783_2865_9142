@@ -1,4 +1,6 @@
 ﻿using BO;
+using System.Text.RegularExpressions;
+
 namespace BlApi;
 
 /// <summary>
@@ -52,4 +54,19 @@ public interface IOrder
     /// <param name="newAmount"></param>
     /// <returns></returns>
     public void OrderUpdate(int orderId, int productId, int newAmount);
+
+    /// <summary>
+    /// The func order the List by name.
+    /// </summary>
+    /// <param name="orderForLists"></param>
+    /// <returns></returns>
+    public IEnumerable<OrderForList?> OrderByName(IEnumerable<OrderForList?> orderForLists);
+
+
+    /// <summary>
+    /// the function Division into groups according to order status
+    /// </summary>
+    /// <param name="orderForLists"></param>
+    /// <returns></returns>
+    public IEnumerable< BO.OrderStatistics> GetOrderStatiscs(IEnumerable<OrderForList?> orderForLists);
 }

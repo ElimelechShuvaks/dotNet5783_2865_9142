@@ -26,18 +26,20 @@ public partial class ProductCatalogWindow : Window, INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     IBl bl = Factory.get();
-    IEnumerable<IGrouping<BO.Categories?, ProductItem>> groups;
+    IEnumerable<IGrouping<BO.Categories?, ProductItem?>> groups;
 
     //public ObservableCollection<ProductItem> ProductItems = new ObservableCollection<ProductItem>();
     private IEnumerable<BO.ProductItem?> productItems;
-    public IEnumerable<BO.ProductItem?> ProductItems { 
+    public IEnumerable<BO.ProductItem?> ProductItems
+    {
         get => productItems;
-        set { productItems = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ProductItems")); } }
+        set { productItems = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ProductItems")); }
+    }
 
     private Cart cart;
     public Cart Cart { get => cart; set { cart = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Cart")); } }
 
-    Action action; 
+    Action action;
 
     public ProductCatalogWindow()
     {
@@ -53,6 +55,7 @@ public partial class ProductCatalogWindow : Window, INotifyPropertyChanged
                  select t;
 
         CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Categories));
+
     }
 
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -69,8 +72,8 @@ public partial class ProductCatalogWindow : Window, INotifyPropertyChanged
 
     private void ProductDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        ProductItem item = ProductItemsListView.SelectedItem as ProductItem;
-        action = () => ProductItems = ProductItems; 
+        ProductItem item = (ProductItemsListView.SelectedItem as ProductItem)!;
+        action = () => ProductItems = ProductItems;
         new ProductItemWindow(item!, Cart, action).ShowDialog();
     }
 

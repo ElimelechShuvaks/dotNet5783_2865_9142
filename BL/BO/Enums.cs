@@ -22,4 +22,3 @@ public enum OrderStatus
     Shipied,
     Deliveried
 }
-

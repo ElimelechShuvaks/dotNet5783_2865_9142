@@ -1,5 +1,9 @@
 ﻿
 
+using BO;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
@@ -169,7 +173,7 @@ internal class Order : BlApi.IOrder
             {
                 case BO.OrderStatus.Confirmed:
 
-                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")! );
+                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
                     break;
 
                 case BO.OrderStatus.Shipied:
@@ -187,7 +191,7 @@ internal class Order : BlApi.IOrder
                 default:
                     break;
             }
-            
+
             return orderTracking;
         }
         catch (DO.EntityNotExistException ex)
@@ -267,5 +271,23 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.EntityNotExistException(ex.Message, ex);
         }
+    }
+
+    public IEnumerable<OrderForList?> OrderByName(IEnumerable<OrderForList?> orderForLists)
+    {
+        return from item in orderForLists
+               orderby item.CustomerName
+               select item;
+    }
+
+    public IEnumerable<BO.OrderStatistics> GetOrderStatiscs(IEnumerable<OrderForList?> orderForLists)
+    {
+        return from item in orderForLists
+               group item by item.Status into j
+               select new OrderStatistics
+               {
+                   Status = j.Key,
+                   CcountSumStatus = j.Count()
+               };
     }
 }
