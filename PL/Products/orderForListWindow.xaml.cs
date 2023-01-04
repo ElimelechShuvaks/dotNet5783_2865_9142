@@ -1,7 +1,9 @@
 ﻿using BlApi;
 using BO;
+using PL.PO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,19 +21,29 @@ namespace PL.Products;
 /// <summary>
 /// Interaction logic for orderForListWindow.xaml
 /// </summary>
-public partial class orderForListWindow : Window
+public partial class orderForListWindow : Window, INotifyPropertyChanged
 {
-    public static readonly DependencyProperty OrderForListProperty = DependencyProperty.Register(nameof(OrderForList), typeof(IEnumerable<BO.OrderForList>), typeof(orderForListWindow));
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    public IEnumerable<BO.OrderForList> OrderForList { get => (IEnumerable<BO.OrderForList>)GetValue(OrderForListProperty); set => SetValue(OrderForListProperty, value); }
+    private List<OrderForList> orderForLists;
+    public List<BO.OrderForList> OrderForLists
+    {
+        get => orderForLists;
+        set { orderForLists = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("OrderForLists")); }
+    }
+
+    public IEnumerable<BO.OrderStatistics> orderStatistics { get; set; }
+
+    Action<BO.OrderStatus?> action;
 
     IBl bl = BlApi.Factory.get();
 
-    public IEnumerable<BO.OrderStatistics> orderStatistics { get; set; }
     public orderForListWindow()
     {
-        OrderForList = bl?.Order.OrderForListRequest()!;
-        orderStatistics = bl?.Order.GetOrderStatiscs(OrderForList)!;
+        OrderForLists = bl?.Order.OrderForListRequest()!.ToList();
+
+        orderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
+
         InitializeComponent();
 
         for (int i = 0; i < 3; i++) // include the 3 OrderStatus into the comboBox
@@ -39,32 +51,37 @@ public partial class orderForListWindow : Window
             Selector.Items.Add((BO.OrderStatus)i);
         }
         Selector.Items.Add("All orders"); // add a basic condition.
-
-
     }
 
     private void Selector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (Selector.SelectedItem.ToString() == "All orders")
-            OrderForList = bl?.Order.OrderForListRequest()!;
+            OrderForLists = bl?.Order.OrderForListRequest()!.ToList();
         else
-            OrderForList = bl?.Order.OrderForListRequest().Where(orderStatus => orderStatus!.Status ==(OrderStatus)Selector.SelectedItem)!;
+            OrderForLists = bl?.Order.OrderForListRequest().Where(orderStatus => orderStatus!.Status == (OrderStatus)Selector.SelectedItem)!.ToList();
     }
 
     private void OrderListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        new OrderWindow((BO.OrderForList)OrderListView.SelectedItem,true,this).ShowDialog();
+        BO.OrderForList orderForList = (OrderListView.SelectedItem as BO.OrderForList)!;
+        BO.Order order = bl.Order.GetDetailsOrder(orderForList.OrderId);
 
+        action = (BO.OrderStatus? status) =>
+        {
+            OrderForLists[OrderListView.SelectedIndex].Status = status;
+            OrderForLists = OrderForLists.Select(item => item).ToList();
+        };
+        new OrderWindow(order, true, action).ShowDialog();
     }
 
     private void OrderList(object sender, RoutedEventArgs e)
     {
-        OrderForList= bl?.Order.OrderByName(OrderForList)!;
+        OrderForLists = bl?.Order.OrderByName(OrderForLists)!.ToList();
     }
 
     private void ShowOrder(object sender, RoutedEventArgs e)
     {
-        orderStatistics = bl?.Order.GetOrderStatiscs(OrderForList)!;
+        orderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
 
     }
 }

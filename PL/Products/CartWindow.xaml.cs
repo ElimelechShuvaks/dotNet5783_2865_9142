@@ -39,7 +39,23 @@ public partial class CartWindow : Window
 
     private void cmdDown_Click(object sender, RoutedEventArgs e)
     {
-
+        try
+        {
+            Button button = (sender as Button)!;
+            if (button is not null)
+            {
+                BO.OrderItem orderItem = (button.DataContext as BO.OrderItem)!;
+                if (orderItem is not null)
+                {
+                    Cart = bl.Cart.ProductUpdateCart(Cart, orderItem.ProductId, orderItem.Amount - 1);
+                    action();
+                }
+            }
+        }
+        catch (BlExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void cmdUp_Click(object sender, RoutedEventArgs e)
@@ -52,8 +68,28 @@ public partial class CartWindow : Window
                 BO.OrderItem orderItem = (button.DataContext as BO.OrderItem)!;
                 if (orderItem is not null)
                 {
-                    orderItem.Amount += 1;
-                    bl.Cart.ProductUpdateCart(Cart, orderItem.ProductId, orderItem.Amount);
+                    Cart = bl.Cart.ProductUpdateCart(Cart, orderItem.ProductId, orderItem.Amount + 1);
+                    action();
+                }
+            }
+        }
+        catch (BlExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void del_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Button button = (sender as Button)!;
+            if (button is not null)
+            {
+                BO.OrderItem orderItem = (button.DataContext as BO.OrderItem)!;
+                if (orderItem is not null)
+                {
+                    Cart = bl.Cart.ProductUpdateCart(Cart, orderItem.ProductId, 0);
                     action();
                 }
             }

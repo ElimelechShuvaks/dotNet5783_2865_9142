@@ -65,20 +65,20 @@
         <TextBlock Grid.Row="9" Text="Delivery date:"  Style="{StaticResource TextBlock Style}"/>
         <TextBlock Grid.Row="10" Text="Total price:"  Style="{StaticResource TextBlock Style}"/>
 
-        <TextBox Name="idTextBox" Grid.Row="2" MaxLength="6" Text="{Binding order.Id}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="StatusTextBox" Grid.Row="3" Text="{Binding order.Status}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="CustomerNameTextBox" Grid.Row="4"  Text="{Binding order.CustomerName}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="CustomerEmailTextBox" Grid.Row="5" Text="{Binding order.CustomerEmail}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="CustomerAdressTextBox" Grid.Row="6" Text="{Binding order.CustomerAdress}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="OrderDateTextBox" Grid.Row="7" Text="{Binding order.OrderDate}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="ShipDateTextBox" Grid.Row="8"  Text="{Binding order.ShipDate}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="DeliveryDateTextBox" Grid.Row="9" Text="{Binding order.DeliveryDate}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="TotalPriceTextBox" Grid.Row="10" Text="{Binding order.TotalPrice}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="idTextBox" Grid.Row="2" MaxLength="6" Text="{Binding Order.Id}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="StatusTextBox" Grid.Row="3" Text="{Binding Order.Status}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="CustomerNameTextBox" Grid.Row="4"  Text="{Binding Order.CustomerName}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="CustomerEmailTextBox" Grid.Row="5" Text="{Binding Order.CustomerEmail}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="CustomerAdressTextBox" Grid.Row="6" Text="{Binding Order.CustomerAdress}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="OrderDateTextBox" Grid.Row="7" Text="{Binding Order.OrderDate}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="ShipDateTextBox" Grid.Row="8"  Text="{Binding Order.ShipDate}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="DeliveryDateTextBox" Grid.Row="9" Text="{Binding Order.DeliveryDate}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Name="TotalPriceTextBox" Grid.Row="10" Text="{Binding Order.TotalPrice}" Style="{StaticResource TextBox Style}"/>
 
-        <Button x:Name="ShipDateButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="12" Width="80" Height="18" Click="ShipDateButton_Click" Content="UpdateShiped" Background="Black"  Foreground="Yellow" />
-        <Button x:Name="DeliveryDateButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="12" Width="80" Height="18" Click="DeliveryDateButton_Click" Content="UpdateDelivery" Background="Black"  Foreground="Yellow" />
+        <Button x:Name="ShipDateButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="12" Width="80" Height="18" Click="ShipDateButton_Click" Content="Update shiped" Background="Black"  Foreground="Yellow" />
+        <Button x:Name="DeliveryDateButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="12" Width="80" Height="18" Click="DeliveryDateButton_Click" Content="Update delivery" Background="Black"  Foreground="Yellow" />
 
-        <ListView x:Name="OrderItemListView" Grid.Row="2" Grid.Column="3" MouseDoubleClick="UpDataItem" Grid.RowSpan="9"  Foreground="Red" ItemsSource="{Binding order.Items}">
+        <ListView x:Name="OrderItemListView" Grid.Row="2" Grid.Column="3" MouseDoubleClick="UpDataItem" Grid.RowSpan="9"  Foreground="Red" ItemsSource="{Binding Order.Items}">
 
             <ListView.Background>
                 <ImageBrush/>

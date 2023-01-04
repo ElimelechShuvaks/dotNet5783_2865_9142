@@ -1,8 +1,10 @@
 ﻿using BlApi;
 using BO;
 using DO;
+using PL.PO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,59 +22,59 @@ namespace PL.Products
     /// <summary>
     /// Interaction logic for OrderWindow.xaml
     /// </summary>
-    public partial class OrderWindow : Window
+    public partial class OrderWindow : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         bool DontShow;
         private BlApi.IBl? bl = BlApi.Factory.get();
 
-        orderForListWindow orderForListWindow;
-
-        public BO.Order order { get; set; }
-
-        public OrderWindow(BO.OrderForList orderForList, bool Show, orderForListWindow _orderForListWindow)
+        private BO.Order order;
+        public BO.Order Order
         {
-            orderForListWindow = _orderForListWindow;
-            order = bl.Order.GetDetailsOrder(orderForList.OrderId);
+            get => order;
+            set { order = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Order")); }
+        }
+        Action<BO.OrderStatus?> action;
+
+        public OrderWindow(BO.Order senderOrder, bool Show, Action<BO.OrderStatus?> senderAction)
+        {
+            Order = senderOrder;
+            DontShow = Show;
+            action = senderAction;
 
             InitializeComponent();
 
-            DontShow = Show;
+            if (DontShow == true)
+            {
 
-                if (order.ShipDate != null && order.DeliveryDate != null)
+                if (Order.Status == OrderStatus.Deliveried)
                 {
                     ShipDateButton.Visibility = Visibility.Hidden;
                     DeliveryDateButton.Visibility = Visibility.Hidden;
                 }
-                if (order.ShipDate == null)
+                else if (Order.Status == OrderStatus.Shipied)
+                    ShipDateButton.Visibility = Visibility.Hidden;
+
+                else
                     DeliveryDateButton.Visibility = Visibility.Hidden;
 
-                if (order.DeliveryDate == null && order.ShipDate != null)
-                    ShipDateButton.Visibility = Visibility.Hidden;
-       
-        }
-        public OrderWindow(BO.OrderForList orderForList, bool Show)
-        {
-           
-            order = bl.Order.GetDetailsOrder(orderForList.OrderId);
-
-            InitializeComponent();
-
-            DontShow = Show;
-
-            ShipDateButton.Visibility = Visibility.Hidden;
-            DeliveryDateButton.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                ShipDateButton.Visibility = Visibility.Hidden;
+                DeliveryDateButton.Visibility = Visibility.Hidden;
+            }
         }
 
         private void ShipDateButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                bl!.Order.OrderShippingUpdate(order.Id);
-                order = bl.Order.GetDetailsOrder(order.Id);
-                ShipDateTextBox.Text = order.ShipDate.ToString();
+                Order = bl!.Order.OrderShippingUpdate(Order.Id);
                 ShipDateButton.Visibility = Visibility.Hidden;
                 DeliveryDateButton.Visibility = Visibility.Visible;
-                orderForListWindow.OrderForList = bl?.Order.OrderForListRequest()!;
+                action(Order.Status);
             }
             catch (BlExceptions ex)
             {
@@ -84,11 +86,8 @@ namespace PL.Products
         {
             try
             {
-                bl!.Order.OrderDeliveryUpdate(order.Id);
-                order = bl.Order.GetDetailsOrder(order.Id);
-                DeliveryDateTextBox.Text = order.DeliveryDate.ToString();
+                Order = bl!.Order.OrderDeliveryUpdate(Order.Id);
                 DeliveryDateButton.Visibility = Visibility.Hidden;
-                orderForListWindow.OrderForList = bl?.Order.OrderForListRequest()!;
             }
             catch (BlExceptions ex)
             {
@@ -101,9 +100,7 @@ namespace PL.Products
             if (DontShow)
             {
                 new OrderItemWindow((BO.OrderItem)OrderItemListView.SelectedItem).ShowDialog();
-                orderForListWindow.OrderForList = bl?.Order.OrderForListRequest()!;
             }
-
         }
     }
 }

@@ -36,7 +36,7 @@ namespace PL.Products
         {
             BO.OrderForList orderForList = new BO.OrderForList();
             orderForList.OrderId = orderTracking.OrderId;
-            new OrderWindow(orderForList, false).Show();
+            //new OrderWindow(orderForList, false).Show();
         }
     }
 }

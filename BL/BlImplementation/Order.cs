@@ -108,6 +108,7 @@ internal class Order : BlApi.IOrder
                 dal.Order.Update(order);
 
                 boOrder.ShipDate = DateTime.Now;
+                boOrder.Status = OrderStatus.Shipied;
                 return boOrder;
             }
             else
@@ -139,6 +140,8 @@ internal class Order : BlApi.IOrder
                 dal.Order.Update(order);
 
                 boOrder.DeliveryDate = DateTime.Now;
+
+                boOrder.Status = OrderStatus.Deliveried;
 
                 return boOrder;
             }

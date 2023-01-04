@@ -70,15 +70,21 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        
-                                        <Button x:Name="cmdDown" Content="˅" Click="cmdDown_Click" Margin="10" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Right"/>
-                                        <Button x:Name="cmdUp" Content="˄" Click="cmdUp_Click" VerticalAlignment="Center" Grid.Column="0"/>
-                                    </Grid>
 
+                                        <Button x:Name="cmdDown" Content="-" Click="cmdDown_Click" Margin="10" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Right"/>
+                                        <Button x:Name="cmdUp" Content="+" Click="cmdUp_Click" VerticalAlignment="Center" Grid.Column="0"/>
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
+                        <GridViewColumn Header="Delete" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="del" Content="X" Click="del_Click" BorderBrush="Red"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
