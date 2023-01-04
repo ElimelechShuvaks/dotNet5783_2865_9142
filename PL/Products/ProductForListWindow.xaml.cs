@@ -64,15 +64,15 @@ public partial class ProductForListWindow : Window, INotifyPropertyChanged
     private void addProductButton_Click(object sender, RoutedEventArgs e)
     {
         action = () => {ProductForList = ProductForList.Select(item => item); };
-        new ProductWindow(bl, action).ShowDialog();
+        new ProductWindow(action).ShowDialog();
     }
 
     private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.ProductForList p = (ProductListView.SelectedItem as BO.ProductForList)!;
+        BO.ProductForList productForList = (ProductListView.SelectedItem as BO.ProductForList)!;
 
         action = () => {ProductForList = ProductForList.Select(item => item); };
 
-        new ProductWindow(bl, p.Id, action).ShowDialog();
+        new ProductWindow(productForList.Id, action).ShowDialog();
     }
 }

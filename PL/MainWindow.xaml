@@ -25,21 +25,21 @@
         <Style x:Key="label style" TargetType="Label" BasedOn="{StaticResource common style}"/>
 
         <Style x:Key ="styleGrid" TargetType="Button">
-            <Setter Property="Height" Value="50" />
-            <Setter Property="Width" Value="150" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Height" Value="75" ></Setter>
+            <Setter Property="Width" Value="200" ></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center" ></Setter>
             <Setter Property ="Background" Value="Black"/>
             <Setter Property="BorderBrush" Value="Yellow"/>
-            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="Yellow"/>
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontFamily" Value="Arial Black"/>
         </Style>
 
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -50,22 +50,19 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <Button Content="Admin" Click="AdminButton_Click"  Width="200" Height="75"  Background="White" BorderThickness="1" Grid.Column="0" Grid.Row="1"/>
-        <Button Content="New Order" Click="NewOrderButton_Click" Width="200" Height="75"  Background="White" BorderThickness="1" Grid.Column="1" Grid.Row="1"/>
+
+        <Button Content="Admin" Click="AdminButton_Click"  Grid.Column="2" Grid.Row="2" Style="{StaticResource styleGrid}"/>
+        <Button Content="New Order" Click="NewOrderButton_Click"  Grid.Column="2" Grid.Row="3" Style="{StaticResource styleGrid}"/>
        
         <Label Content="The center for wholesale vehicles" Height="60" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="3" Style="{StaticResource label style}" />
 
-        <Border CornerRadius="55" BorderThickness="5" Grid.Row="1" Grid.Column="2">
+        <Border BorderThickness="2" Grid.Row="1" BorderBrush="Yellow" Height="75" Width="200" Grid.Column="2">
             <Grid x:Name="myGrid">
-                <Label  Margin="0,0,0,360" FontFamily="Caladea" FontSize="25"
-                   HorizontalAlignment="Center" VerticalAlignment="Center">
-                    Round Window</Label>
-                <Label x:Name="myLabelLink" Content="please enter Id for track:" Style="{StaticResource label style}" 
+                <Label x:Name="myLabelLink" Content="please enter Id for track:" FontSize="11"  FontWeight="Bold" Style="{StaticResource label style}" 
                    HorizontalAlignment="Center">
                 </Label>
                 <TextBox Name="idTextBox" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="75"/>
-                <Button Content="Track" Width="100" Height="30" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" Click="ShowOrderTracking" IsEnabled="{Binding ElementName=idTextBox,Path=Text,Converter={StaticResource Enibal}}" Style="{StaticResource styleGrid}"/>
+                <Button Content="Track" Width="100" Height="25" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" Click="ShowOrderTracking" IsEnabled="{Binding ElementName=idTextBox,Path=Text,Converter={StaticResource Enibal}}" Style="{StaticResource styleGrid}"/>
             </Grid>
         </Border>
 
