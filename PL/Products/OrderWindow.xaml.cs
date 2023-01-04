@@ -37,7 +37,7 @@ namespace PL.Products
         }
         Action<BO.OrderStatus?> action;
 
-        public OrderWindow(BO.Order senderOrder, bool Show, Action<BO.OrderStatus?> senderAction)
+        public OrderWindow(BO.Order senderOrder, bool Show, Action<BO.OrderStatus?> senderAction = null)
         {
             Order = senderOrder;
             DontShow = Show;

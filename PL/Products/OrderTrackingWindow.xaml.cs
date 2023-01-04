@@ -21,22 +21,22 @@ namespace PL.Products
     /// </summary>
     public partial class OrderTrackingWindow : Window
     {
-       public BO.OrderTracking orderTracking { set; get; }
+        public BO.OrderTracking orderTracking { set; get; }
 
         IBl bl = BlApi.Factory.get();
-      
+
 
         public OrderTrackingWindow(int IdOrder)
         {
             orderTracking = bl.Order.OrderTracking(IdOrder);
+
             InitializeComponent();
         }
 
         private void ShowOrderButton(object sender, RoutedEventArgs e)
         {
-            BO.OrderForList orderForList = new BO.OrderForList();
-            orderForList.OrderId = orderTracking.OrderId;
-            //new OrderWindow(orderForList, false).Show();
+            BO.Order order = bl.Order.GetDetailsOrder(orderTracking.OrderId);
+            new OrderWindow(order, false, null).Show();
         }
     }
 }
