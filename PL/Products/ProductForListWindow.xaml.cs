@@ -69,7 +69,7 @@ public partial class ProductForListWindow : Window, INotifyPropertyChanged
 
     private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.ProductForList p = ProductListView.SelectedItem as BO.ProductForList;
+        BO.ProductForList p = (ProductListView.SelectedItem as BO.ProductForList)!;
 
         action = () => {ProductForList = ProductForList.Select(item => item); };
 
