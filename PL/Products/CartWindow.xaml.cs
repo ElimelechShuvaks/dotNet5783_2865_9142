@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
 
 namespace PL.Products;
 
@@ -34,6 +35,33 @@ public partial class CartWindow : Window
         Cart = senderCart;
 
         InitializeComponent();
+    }
+
+    private void cmdDown_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void cmdUp_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Button button = (sender as Button)!;
+            if (button is not null)
+            {
+                BO.OrderItem orderItem = (button.DataContext as BO.OrderItem)!;
+                if (orderItem is not null)
+                {
+                    orderItem.Amount += 1;
+                    bl.Cart.ProductUpdateCart(Cart, orderItem.ProductId, orderItem.Amount);
+                    action();
+                }
+            }
+        }
+        catch (BlExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void ResetButton_Click(object sender, RoutedEventArgs e)

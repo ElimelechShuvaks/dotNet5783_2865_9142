@@ -43,7 +43,6 @@ public partial class ProductItemWindow : Window
         {
             bl.Cart.AddToCart(Cart, ProductItem.Id);
             Action();
-            Thread.Sleep(500);
             Close();
         }
         catch (BlExceptions ex)
