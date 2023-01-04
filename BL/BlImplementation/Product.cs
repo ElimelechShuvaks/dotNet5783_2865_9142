@@ -106,7 +106,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (newProduct.Id < 100000)
+            if (newProduct.Id < 99999)
                 throw new BO.IdNotValidException("The id is too short.");
             if (newProduct.Price <= 0)
                 throw new BO.PriceNotValidException("The price is not valid.");

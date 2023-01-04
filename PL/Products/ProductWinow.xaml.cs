@@ -8,28 +8,26 @@ using System.Windows.Input;
 namespace PL.Products;
 
 /// <summary>
-/// Interaction logic for Product.xaml
+/// Interaction logic for product.xaml
 /// </summary>
 public partial class ProductWindow : Window
 {
-    private IBl localBl;
+
+    private BlApi.IBl? bl = BlApi.Factory.get();
 
     Action action;
 
     /// <summary>
     /// ctor with 1 parameter for add product.
     /// </summary>
-    private BO.Product product1 = new();
-    public ProductWindow(IBl bl, Action senderAction)
+    public BO.Product product { get; set; } = new Product();
+    public ProductWindow(Action senderAction)
     {
-        action = senderAction;
-        localBl = bl;
-        action = senderAction;
 
+        action = senderAction;
         InitializeComponent();
-
+        UpDate.Visibility = Visibility.Hidden;
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-        productWindowButton.Content = "Add";
     }
 
     /// <summary>
@@ -37,55 +35,52 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="bl"></param>
     /// <param name="ProductId"></param>
-    public ProductWindow(IBl bl, int ProductId, Action senderAction)
+    public ProductWindow(int ProductId, Action senderAction)
     {
         action = senderAction;
-        localBl = bl;
-
+        product = bl?.Product.ProductDetailsManger(ProductId)!;
         InitializeComponent();
-        product1 = localBl.Product.ProductDetailsManger(ProductId);
-        DataContext = product1;
+        Add.Visibility = Visibility.Hidden;
         categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-        productWindowButton.Content = "Update";
         idTextBox.IsEnabled = false;
     }
 
-    private void productWindowButton_Click(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// Button Clic for add.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void addProductButton(object sender, RoutedEventArgs e)
     {
-        if (productWindowButton.Content.ToString() == "Add")
+        try
         {
-            BO.Product product = new BO.Product()
-            {
-                Category = OtherFunctions.CategoryParse(categoryComboBox),
-                Name = nameTextBox.Text.ToString(),
-                Id = int.Parse(idTextBox.Text),
-                Price = double.Parse(priceTextBox.Text),
-                InStock = int.Parse(inStockTextBox.Text)
-            };
-
-            try
-            {
-                localBl.Product.AddProduct(product);
-                action();
-                Close();
-            }
-            catch (BlExceptions ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            bl?.Product.AddProduct(product);
+            action();
+            Close();
         }
-        else // button content is "update".
+        catch (BlExceptions ex)
         {
-            try
-            {
-                localBl.Product.UpdateProduct(product1);
-                action();
-                Close();
-            }
-            catch (BlExceptions ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+    }
+
+    /// <summary>
+    /// Button Clic for upDate.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void updateProductButton(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            bl?.Product.UpdateProduct(product);
+            action();
+            Close();
+        }
+        catch (BlExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 

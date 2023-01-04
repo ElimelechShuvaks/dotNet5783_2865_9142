@@ -14,7 +14,7 @@ namespace PL.Products
         }
 
         /// <summary>
-        /// Click for to show Product list.
+        /// Click for to show product list.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
