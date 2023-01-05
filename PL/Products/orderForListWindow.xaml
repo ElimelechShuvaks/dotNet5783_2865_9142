@@ -64,7 +64,7 @@
             </ListView.View>
         </ListView>
 
-        <ListView x:Name="OrderStatisticsView" Grid.ColumnSpan="2" Grid.Column="3" Grid.RowSpan="4" Grid.Row="1"  Foreground="Red" FontWeight="Bold" ItemsSource="{Binding orderStatistics}" Margin="0,73,0,69">
+        <ListView x:Name="OrderStatisticsView" Grid.ColumnSpan="2" Grid.Column="3" Grid.RowSpan="4" Grid.Row="1"  Foreground="Red" FontWeight="Bold" ItemsSource="{Binding OrderStatistics}" Margin="0,73,0,69">
             <ListView.Background>
                 <ImageBrush/>
             </ListView.Background>
@@ -72,10 +72,10 @@
             <ListView.View>
                 <GridView>
 
-                    <GridViewColumn Header="Order Id" DisplayMemberBinding='{Binding Status}' Width="100" >
+                    <GridViewColumn Header="Order status" DisplayMemberBinding='{Binding Status}' Width="100" >
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Customer Name"  DisplayMemberBinding='{Binding CcountSumStatus}' Width="100">
+                    <GridViewColumn Header="Sun"  DisplayMemberBinding='{Binding CountSumStatus}' Width="100">
                     </GridViewColumn>
 
                 </GridView>

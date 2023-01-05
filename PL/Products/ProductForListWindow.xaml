@@ -11,14 +11,15 @@
         <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill" ></ImageBrush>
     </Window.Background>
 
-    <Grid Name="MainGrid">
+    <Grid> <!--main grid-->
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+        <!--up grid-->
+        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

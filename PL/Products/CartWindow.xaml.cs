@@ -13,20 +13,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
+using System.ComponentModel;
 
 namespace PL.Products;
 
 /// <summary>
 /// Interaction logic for CartWindow.xaml
 /// </summary>
-public partial class CartWindow : Window
+public partial class CartWindow : Window, INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     IBl bl = Factory.get();
 
     Action action;
     Action closeAction;
 
-    public BO.Cart Cart { get; set; }
+    private Cart cart;
+    public BO.Cart Cart
+    {
+        get => cart;
+        set { cart = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Cart")); }
+    }
 
     public CartWindow(BO.Cart senderCart, Action senderAction, Action senderCloseAction)
     {
@@ -48,6 +56,7 @@ public partial class CartWindow : Window
                 if (orderItem is not null)
                 {
                     Cart = bl.Cart.ProductUpdateCart(Cart, orderItem.ProductId, orderItem.Amount - 1);
+                    Cart.Items = Cart.Items.Select(item => item).ToList();
                     action();
                 }
             }
@@ -69,6 +78,7 @@ public partial class CartWindow : Window
                 if (orderItem is not null)
                 {
                     Cart = bl.Cart.ProductUpdateCart(Cart, orderItem.ProductId, orderItem.Amount + 1);
+                    Cart.Items = Cart.Items.Select(item => item).ToList();
                     action();
                 }
             }
@@ -90,6 +100,7 @@ public partial class CartWindow : Window
                 if (orderItem is not null)
                 {
                     Cart = bl.Cart.ProductUpdateCart(Cart, orderItem.ProductId, 0);
+                    Cart.Items = Cart.Items.Select(item => item).ToList();
                     action();
                 }
             }

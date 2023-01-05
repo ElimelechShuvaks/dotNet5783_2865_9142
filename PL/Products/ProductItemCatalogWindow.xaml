@@ -8,14 +8,16 @@
         Title="Product catalog" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
 
-    <Grid Name="mainGrid">
+    <!--main Grid-->
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="370*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="UpGread" Grid.Row="0">
+        <!--up grid-->
+        <Grid Grid.Row="0">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -41,14 +43,15 @@
             </ListView.View>
         </ListView>
 
-        <Grid x:Name="row2" Grid.Row="2">
+        <!--row 2-->
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="cartButton" Grid.Column="2" Content="Cart" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="80" Click="cartButton_Click"/>
+            <Button Grid.Column="2" Content="Cart" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="80" Click="cartButton_Click"/>
             <TextBlock Text="{Binding Cart.Items.Count}" Grid.Column="1" Width="100" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
             <TextBlock Text="Amount items in cart: " Grid.Column="0" Width="auto" VerticalAlignment="Center" HorizontalAlignment="Right" />
         

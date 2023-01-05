@@ -30,7 +30,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="up">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -52,9 +52,9 @@
 
             <TextBox Name="idTextBox" Grid.Row="0" MaxLength="6" PreviewTextInput="IntegerValidationTextBox" Text="{Binding product.Id}" Style="{StaticResource TextBox Style}"/>
             <ComboBox Name="categoryComboBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectedItem="{Binding  product.Category}"/>
-            <TextBox Name="nameTextBox" Grid.Row="2" Text="{Binding product.Name}" Style="{StaticResource TextBox Style}"/>
-            <TextBox Name="priceTextBox" Grid.Row="3" PreviewTextInput="DoubleValidationTextBox" Text="{Binding product.Price}" Style="{StaticResource TextBox Style}"/>
-            <TextBox Name="inStockTextBox" Grid.Row="4" PreviewTextInput="IntegerValidationTextBox" Text="{Binding product.InStock}" Style="{StaticResource TextBox Style}"/>
+            <TextBox Grid.Row="2" Text="{Binding product.Name}" Style="{StaticResource TextBox Style}"/>
+            <TextBox Grid.Row="3" PreviewTextInput="DoubleValidationTextBox" Text="{Binding product.Price}" Style="{StaticResource TextBox Style}"/>
+            <TextBox Grid.Row="4" PreviewTextInput="IntegerValidationTextBox" Text="{Binding product.InStock}" Style="{StaticResource TextBox Style}"/>
         </Grid>
 
         <Button x:Name="UpDate" Content="UpDate" Grid.Row="2" Width="80" Height="18" Click="updateProductButton"/>

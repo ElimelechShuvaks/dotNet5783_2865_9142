@@ -53,16 +53,14 @@
         <TextBlock Grid.Row="4" Text="Amount:" Style="{StaticResource TextBlock Style}"/>
         <TextBlock Grid.Row="5" Text="Total Price:" Style="{StaticResource TextBlock Style}"/>
 
-        <TextBox  Grid.Row="0" Text="{Binding Item.OrderId}" Style="{StaticResource TextBox Style}"/>
-        <TextBox  Grid.Row="1" Text="{Binding Item.ProductId}" Style="{StaticResource TextBox Style}"/>
-        <TextBox  Grid.Row="2" Text="{Binding Item.Name}" Style="{StaticResource TextBox Style}"/>
-        <TextBox  Grid.Row="3" Text="{Binding Item.Price}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Grid.Row="0" Text="{Binding Item.OrderId}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Grid.Row="1" Text="{Binding Item.ProductId}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Grid.Row="2" Text="{Binding Item.Name}" Style="{StaticResource TextBox Style}"/>
+        <TextBox Grid.Row="3" Text="{Binding Item.Price}" Style="{StaticResource TextBox Style}"/>
         <TextBox Grid.Row="4"  IsEnabled="True"  Text="{Binding Item.Amount}" Style="{StaticResource TextBox Style}"/>
-        <TextBox x:Name="TotalPriceTextBox"  Grid.Row="5" Text="{Binding Item.TotalPrice}" Style="{StaticResource TextBox Style}"/>
+        <TextBox  Grid.Row="5" Text="{Binding Item.TotalPrice}" Style="{StaticResource TextBox Style}"/>
 
-        <Button x:Name="OrderWindowButton" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6" Width="80" Height="18" Click="OrderItemWindowButton_Click" Content="Update" Background="Black" Foreground="Yellow"/>
-
-
+        <Button Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6" Width="80" Height="18" Click="OrderItemWindowButton_Click" Content="Update" Background="Black" Foreground="Yellow"/>
 
     </Grid>
 </Window>

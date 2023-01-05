@@ -2,6 +2,7 @@
 using BO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,9 +21,19 @@ namespace PL.Products;
 /// <summary>
 /// Interaction logic for ProductItemWindow.xaml
 /// </summary>
-public partial class ProductItemWindow : Window
+public partial class ProductItemWindow : Window, INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     IBl bl = Factory.get();
+
+    int newAmount;
+    public int NewAmount
+    {
+        get => newAmount;
+        set { newAmount = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("NewAmount")); }
+
+    }
 
     public ProductItem ProductItem { get; set; }
     public Cart Cart { get; set; }
@@ -33,6 +44,8 @@ public partial class ProductItemWindow : Window
         ProductItem = senderItem;
         Cart = senderCart;
         Action = senderActio;
+
+        NewAmount = ProductItem.Amount;
 
         InitializeComponent();
     }
@@ -55,7 +68,7 @@ public partial class ProductItemWindow : Window
     {
         try
         {
-            bl.Cart.ProductUpdateCart(Cart, ProductItem.Id, int.Parse(textNumber.Text));
+            bl.Cart.ProductUpdateCart(Cart, ProductItem.Id, NewAmount);
             Action();
             Close();
         }
@@ -67,12 +80,12 @@ public partial class ProductItemWindow : Window
 
     private void cmdUp_Click(object sender, RoutedEventArgs e)
     {
-        textNumber.Text = (int.Parse(textNumber.Text) + 1).ToString();
+        NewAmount += 1;
     }
 
     private void cmdDown_Click(object sender, RoutedEventArgs e)
     {
-        int num = int.Parse(textNumber.Text);
-        textNumber.Text = (num > 0 ? num -= 1 : num = 0).ToString();
+        if (NewAmount > 0)
+            NewAmount -= 1;
     }
 }

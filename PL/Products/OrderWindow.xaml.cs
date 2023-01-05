@@ -1,7 +1,6 @@
 ﻿using BlApi;
 using BO;
 using DO;
-using PL.PO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -88,6 +87,7 @@ namespace PL.Products
             {
                 Order = bl!.Order.OrderDeliveryUpdate(Order.Id);
                 DeliveryDateButton.Visibility = Visibility.Hidden;
+                action(Order.Status);
             }
             catch (BlExceptions ex)
             {

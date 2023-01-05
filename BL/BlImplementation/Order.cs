@@ -290,7 +290,7 @@ internal class Order : BlApi.IOrder
                select new OrderStatistics
                {
                    Status = j.Key,
-                   CcountSumStatus = j.Count()
+                   CountSumStatus = j.Count()
                };
     }
 }

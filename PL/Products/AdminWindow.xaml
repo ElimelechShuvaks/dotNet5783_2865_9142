@@ -37,8 +37,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <Button x:Name ="productForList" Content="products" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Style ="{StaticResource styleGrid}" Click="productClick"/>
-        <Button x:Name ="orderForList" Content="orders" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Style ="{StaticResource styleGrid}" Click="orderClick"/>
+        <Button Content="products" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Style ="{StaticResource styleGrid}" Click="productClick"/>
+        <Button Content="orders" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Style ="{StaticResource styleGrid}" Click="orderClick"/>
 
     </Grid>
 </Window>

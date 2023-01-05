@@ -10,8 +10,8 @@
     <Window.Background>
         <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="Uniform"></ImageBrush>
     </Window.Background>
-    
-        <Window.Resources>
+
+    <Window.Resources>
         <Style x:Key="TextBlock Style" TargetType="TextBlock">
             <Setter Property="Grid.Column" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -29,31 +29,31 @@
         </Style>
 
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="109*"/>
+            <RowDefinition Height="109*"/>
+            <RowDefinition Height="135*"/>
+            <RowDefinition Height="82*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="84*"/>
+            <ColumnDefinition Width="233*"/>
+            <ColumnDefinition Width="83*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Text="OrderId:" Style="{StaticResource TextBlock Style}" />
-        <TextBlock Grid.Row="1" Text="Status:" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Text="OrderId:" Style="{StaticResource TextBlock Style}" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="16" Margin="91,0,0,0" Width="100"/>
+        <TextBlock Grid.Row="1" Text="Status:" Style="{StaticResource TextBlock Style}" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="16" Margin="91,0,0,0" Width="100"/>
 
-        <TextBox Name="OrderIdTextBox" Grid.Row="0" Text="{Binding orderTracking.OrderId}" Style="{StaticResource TextBox Style}"/>
-        <TextBox Name="StatusTextBox" Grid.Row="1"  Style="{StaticResource TextBox Style}" Text="{Binding orderTracking.Status}"/>
-        
-        <Button x:Name="ShowOrder" Grid.Column="1" Grid.Row="4" Width="80" Height="18"  Content="ShowOrder" Click="ShowOrderButton" Background="Black" Foreground="Yellow"/>
+        <TextBox Text="{Binding orderTracking.OrderId}" Style="{StaticResource TextBox Style}" IsEnabled="False" Grid.Column="1" Height="18" Width="150"/>
+        <TextBox Grid.Row="1"  Style="{StaticResource TextBox Style}" Text="{Binding orderTracking.Status}" IsEnabled="False" Grid.Column="1" Height="18" Width="150"/>
+
+        <Button Grid.Column="1" Grid.Row="3"  Content="Show order" Click="ShowOrderButton" Background="Black" Foreground="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="35"/>
 
 
-        <ListView x:Name="DateTimeAndDescription" Foreground="Red" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding orderTracking.TuplesOfDateAndDescription}">
+        <ListView x:Name="DateTimeAndDescription" Foreground="Red" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding orderTracking.TuplesOfDateAndDescription}" Margin="0,108,0,7" Grid.RowSpan="2">
             <ListView.Background>
                 <ImageBrush/>
             </ListView.Background>

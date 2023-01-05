@@ -14,13 +14,14 @@ namespace BO;
 public class OrderStatistics
 {
 
-    public int CcountSumStatus { get; set; }
+    public int CountSumStatus { get; set; }
 
     public OrderStatus? Status { get; set; }
+
     public override string ToString()
     {
         return $@"
-count Sum Status {CcountSumStatus}
+count Sum Status {CountSumStatus}
 Order status: {Status}
 ";
     }

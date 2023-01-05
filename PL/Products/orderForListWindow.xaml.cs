@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BO;
-using PL.PO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +31,7 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
         set { orderForLists = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("OrderForLists")); }
     }
 
-    public IEnumerable<BO.OrderStatistics> orderStatistics { get; set; }
+    public IEnumerable<BO.OrderStatistics> OrderStatistics { get; set; }
 
     Action<BO.OrderStatus?> action;
 
@@ -40,9 +39,9 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
 
     public orderForListWindow()
     {
-        OrderForLists = bl?.Order.OrderForListRequest()!.ToList();
+        OrderForLists = bl?.Order.OrderForListRequest()!.ToList()!;
 
-        orderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
+        OrderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
 
         InitializeComponent();
 
@@ -56,9 +55,9 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
     private void Selector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (Selector.SelectedItem.ToString() == "All orders")
-            OrderForLists = bl?.Order.OrderForListRequest()!.ToList();
+            OrderForLists = bl?.Order.OrderForListRequest()!.ToList()!;
         else
-            OrderForLists = bl?.Order.OrderForListRequest().Where(orderStatus => orderStatus!.Status == (OrderStatus)Selector.SelectedItem)!.ToList();
+            OrderForLists = bl?.Order.OrderForListRequest().Where(orderStatus => orderStatus!.Status == (OrderStatus)Selector.SelectedItem)!.ToList()!;
     }
 
     private void OrderListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -68,7 +67,7 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
 
         action = (BO.OrderStatus? status) =>
         {
-            OrderForLists[OrderListView.SelectedIndex].Status = status;
+            orderForList.Status = status;
             OrderForLists = OrderForLists.Select(item => item).ToList();
         };
         new OrderWindow(order, true, action).ShowDialog();
@@ -76,12 +75,11 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
 
     private void OrderList(object sender, RoutedEventArgs e)
     {
-        OrderForLists = bl?.Order.OrderByName(OrderForLists)!.ToList();
+        OrderForLists = bl?.Order.OrderByName(OrderForLists)!.ToList()!;
     }
 
     private void ShowOrder(object sender, RoutedEventArgs e)
     {
-        orderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
-
+        OrderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
     }
 }

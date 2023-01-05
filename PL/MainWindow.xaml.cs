@@ -2,6 +2,7 @@
 using BO;
 using PL.Products;
 using System;
+using System.ComponentModel;
 using System.Windows;
 
 
@@ -12,6 +13,10 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
+    //public event PropertyChangedEventHandler? PropertyChanged;
+
+    public int OrderId { get; set; }
+
     IBl? bl = Factory.get();
 
     public MainWindow()
@@ -30,9 +35,9 @@ public partial class MainWindow : Window
     {
         try
         {
-            if(bl!.Order.GetDetailsOrder(int.Parse(idTextBox.Text)) is BO.Order)
+            if(bl!.Order.GetDetailsOrder(OrderId) is BO.Order)
             {
-                new OrderTrackingWindow(int.Parse(idTextBox.Text)).Show();
+                new OrderTrackingWindow(OrderId).Show();
             }
         }
         catch (BlExceptions ex)

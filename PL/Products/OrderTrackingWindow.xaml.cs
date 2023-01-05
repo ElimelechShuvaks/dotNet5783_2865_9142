@@ -36,7 +36,7 @@ namespace PL.Products
         private void ShowOrderButton(object sender, RoutedEventArgs e)
         {
             BO.Order order = bl.Order.GetDetailsOrder(orderTracking.OrderId);
-            new OrderWindow(order, false, null).Show();
+            new OrderWindow(order, false).Show();
         }
     }
 }
