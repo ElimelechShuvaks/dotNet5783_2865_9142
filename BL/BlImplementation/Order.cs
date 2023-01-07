@@ -276,10 +276,10 @@ internal class Order : BlApi.IOrder
         }
     }
 
-    public IEnumerable<OrderForList?> OrderByName(IEnumerable<OrderForList?> orderForLists)
+    public IEnumerable<OrderForList?> GetOrderAndOrderByName(IEnumerable<OrderForList?> orderForLists)
     {
         return from item in orderForLists
-               orderby item.CustomerName
+               orderby item.CustomerName 
                select item;
     }
 

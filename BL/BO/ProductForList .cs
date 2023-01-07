@@ -1,5 +1,4 @@
 ﻿
-//using Windows.UI.Xaml.Media;
 
 namespace BO;
 
@@ -7,7 +6,7 @@ public class ProductForList
 {
 
     /// <summary>
-    ///  OrderId of Product.
+    ///  Id of Product.
     /// </summary>
     public int Id { get; set; }
 

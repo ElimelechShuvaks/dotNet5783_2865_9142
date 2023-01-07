@@ -9,57 +9,59 @@
         Title="Product details" Height="450" Width="400"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
 
+    <Window.Background>
+        <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+
     <Window.Resources>
         <localTo:IntToVisibility x:Key="convert"/>
         <localTo:IntToVisibilityNot x:Key="convertNot"/>
     </Window.Resources>
 
     <Grid>
+        <!--up grid-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="6*"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <!--up grid-->
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Id:" VerticalAlignment="Center" Width="100" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Category:" VerticalAlignment="Center" Width="100" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Name:" VerticalAlignment="Center" Width="100" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Text="Price:" VerticalAlignment="Center" Width="100" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Text="Amount in cart:" VerticalAlignment="Center" Width="100" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Text="Is in stock:" VerticalAlignment="Center" Width="100" Style="{StaticResource TextBlock Style}"/>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="Id:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="Category:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="Name:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="Price:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Text="Amount in cart:" VerticalAlignment="Center" Width="100"/>
-            <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Text="Is in stock:" VerticalAlignment="Center" Width="100"/>
+        <TextBlock Text="{Binding ProductItem.Id}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Text="{Binding ProductItem.Category}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Text="{Binding ProductItem.Name}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Text="{Binding ProductItem.Price}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Style="{StaticResource TextBlock Style}"/>
+        <TextBlock Text="{Binding ProductItem.Amount}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Style="{StaticResource TextBlock Style}"/>
+        <CheckBox IsChecked="{Binding ProductItem.InStock}" IsEnabled="False" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center"/>
 
-            <TextBlock Text="{Binding ProductItem.Id}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
-            <TextBlock Text="{Binding ProductItem.Category}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
-            <TextBlock Text="{Binding ProductItem.Name}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
-            <TextBlock Text="{Binding ProductItem.Price}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
-            <TextBlock Text="{Binding ProductItem.Amount}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
-            <CheckBox IsChecked="{Binding ProductItem.InStock}" IsEnabled="False" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"/>
-        </Grid>
 
-        <Button Content="Add to cart" Visibility="{Binding ProductItem.Amount, Converter={StaticResource convert}}" Grid.Row="2" Width="80" Height="18" Click="AddCartButton_Click"/>
+        <Button Content="Add to cart" Visibility="{Binding ProductItem.Amount, Converter={StaticResource convert}}" Grid.Row="7" Grid.Column="1" Click="AddCartButton_Click" Width="140" Height="35" Style="{StaticResource styleButton}"/>
 
-        <StackPanel Visibility="{Binding ProductItem.Amount, Converter={StaticResource convertNot}}" Orientation="Horizontal" Grid.Row="2" Height="28" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <Button Content="-" Click="cmdDown_Click" />
-            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding NewAmount}" Width="50"/>
-            <Button Content="+" Click="cmdUp_Click" />
+        <StackPanel  Grid.Row="7" Grid.Column="2" Visibility="{Binding ProductItem.Amount, Converter={StaticResource convertNot}}" Orientation="Horizontal" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="-" Click="cmdDown_Click" Width="20" Height="30" Style="{StaticResource styleButton}" />
+            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding NewAmount}" Width="35" Style="{StaticResource StyleTextBox}"/>
+            <Button Content="+"  Width="20" Height="30" Click="cmdUp_Click" Style="{StaticResource styleButton}" />
         </StackPanel>
-        
-        <Button Content="Update the amount" Visibility="{Binding ProductItem.Amount, Converter={StaticResource convertNot}}" Grid.Row="2" Width="120" Height="18" Click="UpdateCartButton_Click" Margin="0,20,0,0" />
+
+        <Button Content="Update the amount" Visibility="{Binding ProductItem.Amount, Converter={StaticResource convertNot}}" Grid.Row="7" Grid.Column="1" Width="140" Height="35"  Click="UpdateCartButton_Click" Style="{StaticResource styleButton}" />
 
     </Grid>
 </Window>

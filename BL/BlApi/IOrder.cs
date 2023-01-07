@@ -60,7 +60,7 @@ public interface IOrder
     /// </summary>
     /// <param name="orderForLists"></param>
     /// <returns></returns>
-    public IEnumerable<OrderForList?> OrderByName(IEnumerable<OrderForList?> orderForLists);
+    public IEnumerable<OrderForList?> GetOrderAndOrderByName(IEnumerable<OrderForList?> orderForLists);
 
 
     /// <summary>

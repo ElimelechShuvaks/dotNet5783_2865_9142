@@ -44,6 +44,7 @@ public interface IProduct
     /// <param name="product"></param>
     public void UpdateProduct(Product product);
 
+    public IEnumerable<ProductForList?> GetProductAndOrderByName(IEnumerable<ProductForList?> productForLists);
 
-   
+
 }

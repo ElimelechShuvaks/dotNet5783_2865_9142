@@ -24,8 +24,8 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private List<OrderForList> orderForLists;
-    public List<BO.OrderForList> OrderForLists
+    private IEnumerable<OrderForList> orderForLists;
+    public IEnumerable<BO.OrderForList> OrderForLists
     {
         get => orderForLists;
         set { orderForLists = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("OrderForLists")); }
@@ -39,7 +39,7 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
 
     public orderForListWindow()
     {
-        OrderForLists = bl?.Order.OrderForListRequest()!.ToList()!;
+        OrderForLists = bl!.Order.GetOrderAndOrderByName(bl.Order.OrderForListRequest()!.ToList()!)!;
 
         OrderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
 
@@ -55,9 +55,9 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
     private void Selector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (Selector.SelectedItem.ToString() == "All orders")
-            OrderForLists = bl?.Order.OrderForListRequest()!.ToList()!;
+            OrderForLists = bl!.Order.GetOrderAndOrderByName(bl.Order.OrderForListRequest()!.ToList()!)!;
         else
-            OrderForLists = bl?.Order.OrderForListRequest().Where(orderStatus => orderStatus!.Status == (OrderStatus)Selector.SelectedItem)!.ToList()!;
+            OrderForLists = bl!.Order.GetOrderAndOrderByName(bl.Order.OrderForListRequest()!.ToList()!)!.Where(orderStatus => orderStatus!.Status == (OrderStatus)Selector.SelectedItem)!.ToList()!;
     }
 
     private void OrderListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -73,13 +73,4 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
         new OrderWindow(order, true, action).ShowDialog();
     }
 
-    private void OrderList(object sender, RoutedEventArgs e)
-    {
-        OrderForLists = bl?.Order.OrderByName(OrderForLists)!.ToList()!;
-    }
-
-    private void ShowOrder(object sender, RoutedEventArgs e)
-    {
-        OrderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
-    }
 }

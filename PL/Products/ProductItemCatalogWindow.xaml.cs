@@ -44,7 +44,7 @@ public partial class ProductCatalogWindow : Window, INotifyPropertyChanged
         try
         {
             Cart = new Cart { Items = new() };
-            ProductItems = bl.Product.ProductListRequest().Select(item => bl.Product.ProductDetailsClient(Cart, item!.Id));
+            ProductItems = bl.Product.GetProductAndOrderByName(bl.Product.ProductListRequest()).Select(item => bl.Product.ProductDetailsClient(Cart, item!.Id));
 
             InitializeComponent();
 

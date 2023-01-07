@@ -6,24 +6,11 @@
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
         Title="AdminWindow" Height="450" Width="450">
-    
+
     <Window.Background>
         <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill" ></ImageBrush>
     </Window.Background>
-    
-    <Window.Resources>
-        <Style x:Key ="styleGrid" TargetType="Button">
-            <Setter Property="Height" Value="50" ></Setter>
-            <Setter Property="Width" Value="150" ></Setter>
-            <Setter Property="HorizontalAlignment" Value="Center" ></Setter>
-            <Setter Property ="Background" Value="Black"/>
-            <Setter Property="BorderBrush" Value="Yellow"/>
-            <Setter Property="BorderThickness" Value="3"/>
-            <Setter Property="Foreground" Value="Yellow"/>
-            <Setter Property="FontSize" Value="15"/>
-        </Style>
-    </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -37,8 +24,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <Button Content="products" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Style ="{StaticResource styleGrid}" Click="productClick"/>
-        <Button Content="orders" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Style ="{StaticResource styleGrid}" Click="orderClick"/>
+        <Button Content="products" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Style ="{StaticResource styleButton}" Click="productClick"/>
+        <Button Content="orders" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Style ="{StaticResource styleButton}" Click="orderClick"/>
 
     </Grid>
 </Window>

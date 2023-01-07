@@ -8,6 +8,10 @@
         Title="Cart details" Height="350" Width="900"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
 
+    <Window.Background>
+        <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg"/>
+    </Window.Background>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="260*"/>
@@ -22,15 +26,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text=" Customer name:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="1" Text=" Customer email:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="2" Text=" Customer Adress:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="3" Text=" Total price:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="0" Text=" Customer name:" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource TextBlock Style}"/>
+            <TextBlock Grid.Row="1" Text=" Customer email:" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource TextBlock Style}"/>
+            <TextBlock Grid.Row="2" Text=" Customer Adress:" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource TextBlock Style}"/>
+            <TextBlock Grid.Row="3" Text=" Total price:" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource TextBlock Style}"/>
 
-            <TextBox Grid.Row="0" Text="{Binding Cart.CustomerName}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150"/>
-            <TextBox Grid.Row="1" Text="{Binding Cart.CustomerEmail}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150"/>
-            <TextBox Grid.Row="2" Text="{Binding Cart.CustomerAdress}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150"/>
-            <TextBlock Grid.Row="3" Text="{Binding Cart.TotalPrice}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="0" Text="{Binding Cart.CustomerName}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" Style="{StaticResource StyleTextBox}"/>
+            <TextBox Grid.Row="1" Text="{Binding Cart.CustomerEmail}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" Style="{StaticResource StyleTextBox}"/>
+            <TextBox Grid.Row="2" Text="{Binding Cart.CustomerAdress}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" Style="{StaticResource StyleTextBox}"/>
+            <TextBlock Grid.Row="3" Text="{Binding Cart.TotalPrice}" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource TextBlock Style}"/>
 
         </Grid>
 
@@ -48,19 +52,21 @@
 
             </Grid.ColumnDefinitions>
 
-            <ListView x:Name="OrderItemListView" Grid.Column="1" ItemsSource="{Binding Cart.Items}" Grid.Row="1">
-
+            <ListView x:Name="OrderItemListView" Grid.Column="1" Foreground="Red" FontWeight="Bold" ItemsSource="{Binding Cart.Items}" Grid.Row="1">
+                <ListView.Background>
+                    <ImageBrush/>
+                </ListView.Background>
                 <ListView.View >
                     <GridView>
-                        <GridViewColumn Header="Product Id"  DisplayMemberBinding='{Binding ProductId}' Width='63'/>
+                        <GridViewColumn Header="Product Id"  DisplayMemberBinding='{Binding ProductId}' Width='70'/>
 
-                        <GridViewColumn Header="Name" DisplayMemberBinding='{Binding Name}' Width='90'/>
+                        <GridViewColumn Header="Name" DisplayMemberBinding='{Binding Name}' Width='105'/>
 
                         <GridViewColumn Header="Price"  DisplayMemberBinding='{Binding Price}' Width='64'/>
 
-                        <GridViewColumn Header="Amount"  DisplayMemberBinding='{Binding Amount}' Width='48'/>
+                        <GridViewColumn Header="Amount"  DisplayMemberBinding='{Binding Amount}' Width='50'/>
 
-                        <GridViewColumn Header="Total Price"  DisplayMemberBinding='{Binding TotalPrice}' Width='63'/>
+                        <GridViewColumn Header="Total Price"  DisplayMemberBinding='{Binding TotalPrice}' Width='67'/>
 
                         <GridViewColumn Header="Add / Sub" Width="80">
                             <GridViewColumn.CellTemplate>
@@ -89,9 +95,9 @@
                 </ListView.View>
             </ListView>
 
-            <Button Grid.Row="2" Grid.Column="1" Content="Confirm the order" Width="110" HorizontalAlignment="Right" Click="ConfirmButton_Click" IsEnabled="{Binding Cart.Items.Count}"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Add a new car" Width="110" Click="AddButton_Click"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Reset the cart" Width="100" HorizontalAlignment="Left" Click="ResetButton_Click" IsEnabled="{Binding Cart.Items.Count}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Confirm the order" Height="33" Width="128" HorizontalAlignment="Right" Click="ConfirmButton_Click" IsEnabled="{Binding Cart.Items.Count}" Style="{StaticResource styleButton}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Add a new car" Height="33"  Width="110" Click="AddButton_Click" Style="{StaticResource styleButton}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Reset the cart" Height="33"  Width="100" HorizontalAlignment="Left" Click="ResetButton_Click" IsEnabled="{Binding Cart.Items.Count}" Style="{StaticResource styleButton}"/>
         </Grid>
     </Grid>
 </Window>

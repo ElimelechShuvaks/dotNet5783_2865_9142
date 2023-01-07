@@ -8,6 +8,11 @@
         Title="Product catalog" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
 
+
+    <Window.Background>
+        <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+
     <!--main Grid-->
     <Grid>
         <Grid.RowDefinitions>
@@ -25,12 +30,14 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Name="CategorySelector" Grid.Row="0" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" VerticalContentAlignment="Center" />
-            <Label Grid.Row="0" Grid.Column="0" Content="Category:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="Category:" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource StyleLabel}"/>
             <Button x:Name="refreshButton" Grid.Column="1" Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Stretch" Height="20" Width="60" Visibility="Hidden" Click="refreshButton_Click"/>
         </Grid>
 
-        <ListView x:Name="ProductItemsListView" Grid.Row="1" ItemsSource="{Binding ProductItems}" MouseDoubleClick="ProductDetails_MouseDoubleClick">
-
+        <ListView x:Name="ProductItemsListView" FontWeight="Bold" Foreground="Red" Grid.Row="1" ItemsSource="{Binding ProductItems}" MouseDoubleClick="ProductDetails_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.Background>
+                <ImageBrush/>
+            </ListView.Background>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Product id" DisplayMemberBinding="{Binding Id}"/>
@@ -51,9 +58,9 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="2" Content="Cart" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="80" Click="cartButton_Click"/>
-            <TextBlock Text="{Binding Cart.Items.Count}" Grid.Column="1" Width="100" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
-            <TextBlock Text="Amount items in cart: " Grid.Column="0" Width="auto" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <Button Grid.Column="2" Content="Cart" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="80" Height="37" Click="cartButton_Click" Style="{StaticResource styleButton}"/>
+            <TextBlock Text="{Binding Cart.Items.Count}" Grid.Column="1" Width="100" VerticalAlignment="Center" HorizontalAlignment="Stretch" Style="{StaticResource TextBlock Style}" />
+            <TextBlock Text="Amount items in cart: " Grid.Column="0" Width="auto" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource TextBlock Style}" />
         
         </Grid>
 

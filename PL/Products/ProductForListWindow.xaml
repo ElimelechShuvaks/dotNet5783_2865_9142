@@ -26,12 +26,12 @@
             </Grid.ColumnDefinitions >
 
             <ComboBox Name="categorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
-            <Label Content="Category:" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100"  Foreground="Yellow" FontSize="15"/>
+            <Label Content="Category:" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Style="{StaticResource StyleLabel}"/>
         </Grid>
 
-        <ListView x:Name="ProductListView" Grid.Row="1"    MouseDoubleClick="ProductListView_MouseDoubleClick"  Foreground="Red" ItemsSource="{Binding ProductForList}" >
+        <ListView x:Name="ProductListView" Grid.Row="1" FontWeight="Bold"   MouseDoubleClick="ProductListView_MouseDoubleClick"  Foreground="Red" ItemsSource="{Binding ProductForList}" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
             <ListView.Background>
-                <ImageBrush/>
+                <ImageBrush/> 
             </ListView.Background>
             <ListView.View>
                 <GridView>

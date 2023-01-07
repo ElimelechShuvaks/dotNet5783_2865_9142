@@ -183,5 +183,12 @@ internal class Product : BlApi.IProduct
             throw new BO.EntityNotExistException(ex.Message, ex);
         }
     }
+
+    public IEnumerable<ProductForList?> GetProductAndOrderByName(IEnumerable<ProductForList?> productForLists)
+    {
+        return from item in productForLists
+               orderby item.Category , item.Price
+               select item;
+    }
 }
 
