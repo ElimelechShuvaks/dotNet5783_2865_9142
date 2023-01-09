@@ -16,7 +16,7 @@ internal class DalOrderitem : IOrderItem
 
     public void Delete(int idNum)
     {
-        DataSource._orderItems.Remove(Get(productFunc => productFunc?.ProductId == idNum));
+        DataSource._orderItems.Remove(Get(productFunc => productFunc?.ItemId == idNum));
     }
 
     public void Update(OrderItem newOrderItem)

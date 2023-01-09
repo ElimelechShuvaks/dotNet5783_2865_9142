@@ -35,14 +35,18 @@
         <TextBlock  Grid.Column="0"  Grid.Row="4" Text="Amount:" Style="{StaticResource TextBlock Style}"  HorizontalAlignment="Right"/>
         <TextBlock  Grid.Column="0"  Grid.Row="5" Text="Total Price:" Style="{StaticResource TextBlock Style}"  HorizontalAlignment="Right"/>
 
-        <TextBox  Grid.Column="1"  Grid.Row="0" Text="{Binding Item.OrderId}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
-        <TextBox  Grid.Column="1" Grid.Row="1" Text="{Binding Item.ProductId}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
-        <TextBox  Grid.Column="1" Grid.Row="2" Text="{Binding Item.Name}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
-        <TextBox  Grid.Column="1" Grid.Row="3" Text="{Binding Item.Price}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
-        <TextBox  Grid.Column="1" Grid.Row="4"  IsEnabled="True"  Text="{Binding Item.Amount}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
-        <TextBox  Grid.Column="1"  Grid.Row="5" Text="{Binding Item.TotalPrice}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
+        <TextBox  Grid.Column="1"  Grid.Row="0" IsEnabled="False" Text="{Binding Item.OrderId}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
+        <TextBox  Grid.Column="1" Grid.Row="1" IsEnabled="False" Text="{Binding Item.ProductId}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
+        <TextBox  Grid.Column="1" Grid.Row="2" IsEnabled="False" Text="{Binding Item.Name}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
+        <TextBox  Grid.Column="1" Grid.Row="3" IsEnabled="False" Text="{Binding Item.Price}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
+        <TextBox  Grid.Column="1" Grid.Row="4"  IsEnabled="False" Text="{Binding Item.Amount}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
+        <TextBox  Grid.Column="1"  Grid.Row="5" IsEnabled="False" Text="{Binding Item.TotalPrice}" Style="{StaticResource StyleTextBox}"  HorizontalAlignment="Left"/>
 
         <Button Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="6" Width="100" Height="35" Click="OrderItemWindowButton_Click" Content="Update" Style="{StaticResource styleButton}"/>
-
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="-" Click="cmdDown_Click" Width="20" Height="30" Style="{StaticResource styleButton}" />
+            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding NewAmount}" Width="35" Style="{StaticResource StyleTextBox}"/>
+            <Button Content="+"  Width="20" Height="30" Click="cmdUp_Click" Style="{StaticResource styleButton}" />
+        </StackPanel>
     </Grid>
 </Window>

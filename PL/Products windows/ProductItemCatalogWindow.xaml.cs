@@ -72,18 +72,19 @@ public partial class ProductCatalogWindow : Window, INotifyPropertyChanged
 
     private void ProductDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        ProductItem? item = ProductItemsListView.SelectedItem as ProductItem;
-
-        action = () =>
+        if (ProductItemsListView.SelectedItem is ProductItem item)
         {
-            if (PropertyChanged != null)
+            action = () =>
             {
-                ProductItems = ProductItems.Select(item => item);
-                PropertyChanged(this, new PropertyChangedEventArgs("Cart"));
-            }
-        };
+                if (PropertyChanged != null)
+                {
+                    ProductItems = ProductItems.Select(item => item);
+                    PropertyChanged(this, new PropertyChangedEventArgs("Cart"));
+                }
+            };
 
-        new ProductItemWindow(item!, Cart, action).ShowDialog();
+            new ProductItemWindow(item!, Cart, action).ShowDialog(); 
+        }
     }
 
     private void cartButton_Click(object sender, RoutedEventArgs e)

@@ -34,13 +34,15 @@ namespace PL.Products
             get => order;
             set { order = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Order")); }
         }
-        Action<BO.OrderStatus?> action;
+        Action<BO.OrderStatus?> statusAction;
+        Action<BO.Order> orderUpdateAction;
 
-        public OrderWindow(BO.Order senderOrder, bool Show, Action<BO.OrderStatus?> senderAction = null)
+        public OrderWindow(BO.Order senderOrder, bool Show, Action<BO.OrderStatus?> senderActionStatus = null, Action<BO.Order> senderActionUpdate = null)
         {
             Order = senderOrder;
             DontShow = Show;
-            action = senderAction;
+            statusAction = senderActionStatus;
+            orderUpdateAction = senderActionUpdate;
 
             InitializeComponent();
 
@@ -73,7 +75,7 @@ namespace PL.Products
                 Order = bl!.Order.OrderShippingUpdate(Order.Id);
                 ShipDateButton.Visibility = Visibility.Hidden;
                 DeliveryDateButton.Visibility = Visibility.Visible;
-                action(Order.Status);
+                statusAction(Order.Status);
             }
             catch (BlExceptions ex)
             {
@@ -87,7 +89,7 @@ namespace PL.Products
             {
                 Order = bl!.Order.OrderDeliveryUpdate(Order.Id);
                 DeliveryDateButton.Visibility = Visibility.Hidden;
-                action(Order.Status);
+                statusAction(Order.Status);
             }
             catch (BlExceptions ex)
             {
@@ -95,11 +97,16 @@ namespace PL.Products
             }
         }
 
-        private void UpDataItem(object sender, MouseButtonEventArgs e)
+        private void UpdateItem(object sender, MouseButtonEventArgs e)
         {
             if (DontShow)
             {
-                new OrderItemWindow((BO.OrderItem)OrderItemListView.SelectedItem).ShowDialog();
+                if (OrderItemListView.SelectedItem is BO.OrderItem item)
+                {
+                    Action<BO.Order> action = (order) => { Order = order; Order.Items = Order.Items.Select(item => item).ToList(); };
+                    new OrderItemWindow(item, action).ShowDialog();
+                    orderUpdateAction(Order);
+                }
             }
         }
     }

@@ -7,7 +7,6 @@ namespace BO;
 /// </summary>
 public class Cart
 {
-
     /// <summary>
     /// CustomerName of order
     /// </summary>

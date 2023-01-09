@@ -219,52 +219,56 @@ internal class Order : BlApi.IOrder
         return BO.OrderStatus.Confirmed;
     }
 
-    public void OrderUpdate(int orderId, int productId, int newAmount)
+    public BO.Order OrderUpdate(int orderId, int productId, int newAmount)
     {
         try
         {
             if (GetStatus(dal?.Order.Get(orderFunc => orderFunc?.Id == orderId) ?? throw new BO.DalConfigException("Error in configuration process")) != BO.OrderStatus.Confirmed) // check if the order is'n sent.
                 throw new BO.StatusErrorException("can't updating the order becouse it's alredy sent.");
 
-            if (dal.Order.GetList().ToList().Any(order => order?.Id == orderId)) // check if it exsit an order with this id.
+            if (!dal.Order.GetList().ToList().Any(order => order?.Id == orderId)) // check if it exsit an order with this id.
+                throw new BO.EntityNotExistException($"There is no order with such id: {orderId}");
+
+            DO.OrderItem orderItem = dal.OrderItem.Get(item => item?.OrderId == orderId && item?.ProductId == productId);
+
+            DO.Product product = dal.Product.Get(productFunc => productFunc?.ProductId == productId);
+
+            if (orderItem.Equals(default(DO.OrderItem))) // there is'n an order item with these ids, than add a new order item with this produc
             {
-                DO.OrderItem orderItem = dal.OrderItem.Get(item => item?.OrderId == orderId &&
-                item?.ProductId == productId);
+                if (product.InStock < newAmount) // check if there is enough in stock
+                    throw new BO.NotExsitInStockException("the product is out of stock");
 
-                DO.Product product = dal.Product.Get(productFunc => productFunc?.ProductId == productId);
+                orderItem.OrderId = orderId;
+                orderItem.ProductId = product.ProductId;
+                orderItem.Amount = newAmount;
+                orderItem.Price = product.Price * newAmount;
 
-                if (orderItem.Equals(default(DO.OrderItem))) // there is'n an order item with these ids, than add a new order item with this produc
+                dal.OrderItem.Add(orderItem);
+
+                product.InStock = product.InStock - newAmount;
+            }
+            else // the product alredy exist in the order, than 
+            {
+                if (newAmount > orderItem.Amount && product.InStock < newAmount) // check if there is enough in stock
+                    throw new BO.NotExsitInStockException("the product is out of stock for this amount, you can try again with less amount");
+
+                product.InStock -= newAmount - orderItem.Amount;
+
+                orderItem.Amount = newAmount;
+
+                if (newAmount == 0)
                 {
-                    if (product.InStock < newAmount) // check if there is enough in stock
-                        throw new BO.NotExsitInStockException("the product is out of stock");
-
-                    orderItem.OrderId = orderId;
-                    orderItem.ProductId = product.ProductId;
-                    orderItem.Amount = newAmount;
-                    orderItem.Price = product.Price * newAmount;
-
-                    dal.OrderItem.Add(orderItem);
-
-                    product.InStock = product.InStock - newAmount;
+                    dal.OrderItem.Delete(orderItem.ItemId);
                 }
-                else // the product alredy exist in the order, than 
+                else
                 {
-                    if (product.InStock < newAmount) // check if there is enough in stock
-                        throw new BO.NotExsitInStockException("the product is out of stock for this amount, you can try again with less amount");
-
-                    product.InStock = product.InStock - (newAmount - orderItem.Amount);
-
-                    orderItem.Amount = newAmount;
-
                     dal.OrderItem.Update(orderItem);
                 }
 
-                dal.Product.Update(product);
             }
-            else
-            {
-                throw new BO.EntityNotExistException($"There is no order with such id: {orderId}");
-            }
+
+            dal.Product.Update(product);
+            return GetDetailsOrder(orderId);
         }
         catch (BO.BlExceptions ex)
         {
@@ -279,7 +283,7 @@ internal class Order : BlApi.IOrder
     public IEnumerable<OrderForList?> GetOrderAndOrderByName(IEnumerable<OrderForList?> orderForLists)
     {
         return from item in orderForLists
-               orderby item.CustomerName 
+               orderby item.CustomerName
                select item;
     }
 

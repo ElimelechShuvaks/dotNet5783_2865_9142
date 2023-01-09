@@ -14,7 +14,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Products\ProductWindow.xaml.cs" />
+	  <Compile Remove="Products windows\ProductWindow.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Page Remove="Products\ProductWindow.xaml" />
+	  <Page Remove="Products windows\ProductWindow.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>

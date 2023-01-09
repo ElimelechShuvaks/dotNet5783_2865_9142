@@ -1,7 +1,7 @@
 ﻿using System.Windows;
+using PL.Products;
 
-
-namespace PL.Products
+namespace PL
 {
     /// <summary>
     /// Interaction logic for AdminWindow.xaml

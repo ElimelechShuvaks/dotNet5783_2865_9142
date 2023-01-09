@@ -31,9 +31,12 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
         set { orderForLists = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("OrderForLists")); }
     }
 
-    public IEnumerable<BO.OrderStatistics> OrderStatistics { get; set; }
-
-    Action<BO.OrderStatus?> action;
+    private IEnumerable<BO.OrderStatistics> orderStatistics;
+    public IEnumerable<BO.OrderStatistics> OrderStatistics
+    {
+        get => orderStatistics;
+        set { orderStatistics = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("OrderStatistics")); }
+    }
 
     IBl bl = BlApi.Factory.get();
 
@@ -62,15 +65,27 @@ public partial class orderForListWindow : Window, INotifyPropertyChanged
 
     private void OrderListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.OrderForList orderForList = (OrderListView.SelectedItem as BO.OrderForList)!;
-        BO.Order order = bl.Order.GetDetailsOrder(orderForList.OrderId);
-
-        action = (BO.OrderStatus? status) =>
+        if (OrderListView.SelectedItem is BO.OrderForList orderForList)
         {
-            orderForList.Status = status;
-            OrderForLists = OrderForLists.Select(item => item).ToList();
-        };
-        new OrderWindow(order, true, action).ShowDialog();
+            BO.Order order = bl.Order.GetDetailsOrder(orderForList.OrderId);
+
+            Action<BO.OrderStatus?> statusAction = (BO.OrderStatus? status) =>
+            {
+                orderForList.Status = status;
+                OrderForLists = OrderForLists.Select(item => item).ToList();
+            };
+
+            Action<BO.Order> orderUpdateAction = (BO.Order order) =>
+            {
+                orderForList.TotalPrice = order.TotalPrice;
+                orderForList.AmountOfItems = order.Items.Count();
+
+                OrderForLists = OrderForLists.Select(item => item).ToList();
+            };
+            new OrderWindow(order, true, statusAction, orderUpdateAction).ShowDialog();
+
+            OrderStatistics = bl?.Order.GetOrderStatiscs(OrderForLists)!;
+        }
     }
 
 }

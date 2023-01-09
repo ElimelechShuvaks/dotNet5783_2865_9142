@@ -53,7 +53,7 @@ public interface IOrder
     /// <param name="idOrder"></param>
     /// <param name="newAmount"></param>
     /// <returns></returns>
-    public void OrderUpdate(int orderId, int productId, int newAmount);
+    public Order OrderUpdate(int orderId, int productId, int newAmount);
 
     /// <summary>
     /// The func order the List by name.

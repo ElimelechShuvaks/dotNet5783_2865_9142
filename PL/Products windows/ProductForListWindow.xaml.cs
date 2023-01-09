@@ -57,7 +57,7 @@ public partial class ProductForListWindow : Window, INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Adding a product by the managerץ
+    /// Adding a product by the manager
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -69,10 +69,11 @@ public partial class ProductForListWindow : Window, INotifyPropertyChanged
 
     private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.ProductForList productForList = (ProductListView.SelectedItem as BO.ProductForList)!;
+        if (ProductListView.SelectedItem is BO.ProductForList productForList)
+        {
+            action = () => { ProductForList = ProductForList.Select(item => item); };
 
-        action = () => {ProductForList = ProductForList.Select(item => item); };
-
-        new ProductWindow(productForList.Id, action).ShowDialog();
+            new ProductWindow(productForList.Id, action).ShowDialog(); 
+        }
     }
 }

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using BO;
 using System.ComponentModel;
 
-namespace PL.Products;
+namespace PL;
 
 /// <summary>
 /// Interaction logic for CartWindow.xaml
