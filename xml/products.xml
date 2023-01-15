@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Product>
+    <ProductId>688314</ProductId>
+    <Name>Toyota Corolla</Name>
+    <Price>602900</Price>
+    <Category>Simple</Category>
+    <InStock>9</InStock>
+  </Product>
+  <Product>
+    <ProductId>432427</ProductId>
+    <Name>Toyota Yaris</Name>
+    <Price>925000</Price>
+    <Category>Simple</Category>
+    <InStock>125</InStock>
+  </Product>
+  <Product>
+    <ProductId>802688</ProductId>
+    <Name>Hyundai i40</Name>
+    <Price>540000</Price>
+    <Category>Simple</Category>
+    <InStock>209</InStock>
+  </Product>
+  <Product>
+    <ProductId>944339</ProductId>
+    <Name>Hyundai Ioniq</Name>
+    <Price>368000</Price>
+    <Category>Simple</Category>
+    <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ProductId>257364</ProductId>
+    <Name>Mazda 3</Name>
+    <Price>770900</Price>
+    <Category>Simple</Category>
+    <InStock>209</InStock>
+  </Product>
+  <Product>
+    <ProductId>236683</ProductId>
+    <Name>SEAT Ibiza</Name>
+    <Price>178990</Price>
+    <Category>Simple</Category>
+    <InStock>125</InStock>
+  </Product>
+  <Product>
+    <ProductId>854675</ProductId>
+    <Name>SEAT Leon</Name>
+    <Price>162800</Price>
+    <Category>Simple</Category>
+    <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ProductId>317662</ProductId>
+    <Name>Skoda Rapid</Name>
+    <Price>430000</Price>
+    <Category>Simple</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ProductId>564160</ProductId>
+    <Name>Skoda Octavia</Name>
+    <Price>770900</Price>
+    <Category>Simple</Category>
+    <InStock>63</InStock>
+  </Product>
+  <Product>
+    <ProductId>107767</ProductId>
+    <Name>Ford Focus</Name>
+    <Price>178990</Price>
+    <Category>Simple</Category>
+    <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ProductId>125009</ProductId>
+    <Name>Geely Geometric</Name>
+    <Price>634400</Price>
+    <Category>Electric</Category>
+    <InStock>76</InStock>
+  </Product>
+  <Product>
+    <ProductId>628910</ProductId>
+    <Name>MG ZS EV</Name>
+    <Price>540000</Price>
+    <Category>Electric</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ProductId>905031</ProductId>
+    <Name>Hyundai buys</Name>
+    <Price>152000</Price>
+    <Category>Electric</Category>
+    <InStock>63</InStock>
+  </Product>
+  <Product>
+    <ProductId>137940</ProductId>
+    <Name>Tesla Model 3</Name>
+    <Price>320000</Price>
+    <Category>Electric</Category>
+    <InStock>88</InStock>
+  </Product>
+  <Product>
+    <ProductId>208825</ProductId>
+    <Name>Tesla Model y</Name>
+    <Price>320000</Price>
+    <Category>Electric</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ProductId>497821</ProductId>
+    <Name>Tesla Model s</Name>
+    <Price>103900</Price>
+    <Category>Electric</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ProductId>662317</ProductId>
+    <Name>Tesla Model x</Name>
+    <Price>1880000</Price>
+    <Category>Electric</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ProductId>524441</ProductId>
+    <Name>Aiways U5</Name>
+    <Price>299469</Price>
+    <Category>Electric</Category>
+    <InStock>248</InStock>
+  </Product>
+  <Product>
+    <ProductId>206439</ProductId>
+    <Name>Kia Niro Plus</Name>
+    <Price>848590</Price>
+    <Category>Electric</Category>
+    <InStock>18</InStock>
+  </Product>
+  <Product>
+    <ProductId>986460</ProductId>
+    <Name>Hyundai Ioniq 5</Name>
+    <Price>848590</Price>
+    <Category>Electric</Category>
+    <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ProductId>339419</ProductId>
+    <Name>Toyota Rav 4</Name>
+    <Price>150000</Price>
+    <Category>Suv</Category>
+    <InStock>63</InStock>
+  </Product>
+  <Product>
+    <ProductId>300801</ProductId>
+    <Name>Toyota Highlander</Name>
+    <Price>1745000</Price>
+    <Category>Suv</Category>
+    <InStock>209</InStock>
+  </Product>
+  <Product>
+    <ProductId>135118</ProductId>
+    <Name>Mercedes GLB Class</Name>
+    <Price>142900</Price>
+    <Category>Suv</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ProductId>894552</ProductId>
+    <Name>Jeep Compass</Name>
+    <Price>1745000</Price>
+    <Category>Suv</Category>
+    <InStock>150</InStock>
+  </Product>
+  <Product>
+    <ProductId>795720</ProductId>
+    <Name>Jeep Wrangler</Name>
+    <Price>289900</Price>
+    <Category>Suv</Category>
+    <InStock>76</InStock>
+  </Product>
+  <Product>
+    <ProductId>655721</ProductId>
+    <Name>Cadillac Escalade</Name>
+    <Price>195900</Price>
+    <Category>Suv</Category>
+    <InStock>49</InStock>
+  </Product>
+  <Product>
+    <ProductId>790779</ProductId>
+    <Name>Volvo XC90</Name>
+    <Price>899990</Price>
+    <Category>Suv</Category>
+    <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ProductId>265768</ProductId>
+    <Name>Volvo XC60</Name>
+    <Price>289000</Price>
+    <Category>Suv</Category>
+    <InStock>63</InStock>
+  </Product>
+  <Product>
+    <ProductId>665052</ProductId>
+    <Name>Porsche Macan</Name>
+    <Price>715000</Price>
+    <Category>Suv</Category>
+    <InStock>63</InStock>
+  </Product>
+  <Product>
+    <ProductId>770492</ProductId>
+    <Name>Porsche Cayenne</Name>
+    <Price>144981</Price>
+    <Category>Suv</Category>
+    <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ProductId>571491</ProductId>
+    <Name>Chevrolet Camaro</Name>
+    <Price>162500</Price>
+    <Category>Sport</Category>
+    <InStock>125</InStock>
+  </Product>
+  <Product>
+    <ProductId>380047</ProductId>
+    <Name>Ford Mustang</Name>
+    <Price>770900</Price>
+    <Category>Sport</Category>
+    <InStock>150</InStock>
+  </Product>
+  <Product>
+    <ProductId>312541</ProductId>
+    <Name>Audi A3</Name>
+    <Price>189000</Price>
+    <Category>Sport</Category>
+    <InStock>209</InStock>
+  </Product>
+  <Product>
+    <ProductId>779550</ProductId>
+    <Name>Audi TT</Name>
+    <Price>1450000</Price>
+    <Category>Sport</Category>
+    <InStock>209</InStock>
+  </Product>
+  <Product>
+    <ProductId>428096</ProductId>
+    <Name>Volkswagen - Polo</Name>
+    <Price>349900</Price>
+    <Category>Sport</Category>
+    <InStock>125</InStock>
+  </Product>
+  <Product>
+    <ProductId>857751</ProductId>
+    <Name>Nissan GT-R</Name>
+    <Price>430000</Price>
+    <Category>Sport</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ProductId>316500</ProductId>
+    <Name>Alfa Romeo Giulia</Name>
+    <Price>699900</Price>
+    <Category>Sport</Category>
+    <InStock>125</InStock>
+  </Product>
+  <Product>
+    <ProductId>722689</ProductId>
+    <Name>mini cooper</Name>
+    <Price>469900</Price>
+    <Category>Sport</Category>
+    <InStock>91</InStock>
+  </Product>
+  <Product>
+    <ProductId>623962</ProductId>
+    <Name>Cupra Leon</Name>
+    <Price>540000</Price>
+    <Category>Sport</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ProductId>611572</ProductId>
+    <Name>Maserati MC20</Name>
+    <Price>1745000</Price>
+    <Category>Sport</Category>
+    <InStock>125</InStock>
+  </Product>
+  <Product>
+    <ProductId>204494</ProductId>
+    <Name>Audi A8</Name>
+    <Price>144900</Price>
+    <Category>Luxury</Category>
+    <InStock>125</InStock>
+  </Product>
+  <Product>
+    <ProductId>988026</ProductId>
+    <Name>Volvo S90</Name>
+    <Price>1880000</Price>
+    <Category>Luxury</Category>
+    <InStock>63</InStock>
+  </Product>
+  <Product>
+    <ProductId>529597</ProductId>
+    <Name>Genesis G80</Name>
+    <Price>602900</Price>
+    <Category>Luxury</Category>
+    <InStock>49</InStock>
+  </Product>
+  <Product>
+    <ProductId>981488</ProductId>
+    <Name>BMW 5 Series</Name>
+    <Price>577900</Price>
+    <Category>Luxury</Category>
+    <InStock>150</InStock>
+  </Product>
+  <Product>
+    <ProductId>662718</ProductId>
+    <Name>Bentley Flying Spur</Name>
+    <Price>770900</Price>
+    <Category>Luxury</Category>
+    <InStock>125</InStock>
+  </Product>
+  <Product>
+    <ProductId>498080</ProductId>
+    <Name>Cadillac CT5</Name>
+    <Price>189000</Price>
+    <Category>Luxury</Category>
+    <InStock>76</InStock>
+  </Product>
+  <Product>
+    <ProductId>736593</ProductId>
+    <Name>BYD here</Name>
+    <Price>178990</Price>
+    <Category>Luxury</Category>
+    <InStock>9</InStock>
+  </Product>
+  <Product>
+    <ProductId>805618</ProductId>
+    <Name>BMW 7 Series</Name>
+    <Price>134900</Price>
+    <Category>Luxury</Category>
+    <InStock>76</InStock>
+  </Product>
+  <Product>
+    <ProductId>133749</ProductId>
+    <Name>Mercedes S</Name>
+    <Price>925000</Price>
+    <Category>Luxury</Category>
+    <InStock>88</InStock>
+  </Product>
+  <Product>
+    <ProductId>846645</ProductId>
+    <Name>Audi A7</Name>
+    <Price>1745000</Price>
+    <Category>Luxury</Category>
+    <InStock>88</InStock>
+  </Product>
+</ArrayOfProduct>
