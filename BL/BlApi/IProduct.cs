@@ -45,6 +45,5 @@ public interface IProduct
     public void UpdateProduct(Product product);
 
     public IEnumerable<ProductForList?> GetProductAndOrderByName(IEnumerable<ProductForList?> productForLists);
-
-
+    ProductForList GetProductForList(int id);
 }

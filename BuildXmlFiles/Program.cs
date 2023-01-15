@@ -31,6 +31,8 @@ internal class Program
         _element.Save(@"..\xml\config.xml");
 
         s_Initialize();
+
+        Console.WriteLine("success build and feel the files");
     }
 
 

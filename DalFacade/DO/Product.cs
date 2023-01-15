@@ -35,10 +35,8 @@ public struct Product
     /// </summary>
     public int InStock { get; set; }
 
-    public override string ToString() => $@"Product ProductId: {ProductId}
-Name: {Name}
-Category: {Category}
-Price: {Price}
-Amount in stock: {InStock}
-";
-}
+    public override string ToString() => $@"Product ProductId: {ProductId}" + '\n' +
+                                            $@"Name: {Name}" + '\n' + 
+                                            $@"Category: {Category}" + '\n' +
+                                            $@"Price: {Price}" + '\n' +
+                                            $@"Amount in stock: {InStock}";}

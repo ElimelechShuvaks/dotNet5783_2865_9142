@@ -15,13 +15,12 @@ public partial class ProductWindow : Window
 
     private BlApi.IBl? bl = BlApi.Factory.get();
 
-    Action action;
-
+    Action<int> action;
     /// <summary>
     /// ctor with 1 parameter for add product.
     /// </summary>
     public BO.Product product { get; set; } = new Product();
-    public ProductWindow(Action senderAction)
+    public ProductWindow(Action<int> senderAction)
     {
 
         action = senderAction;
@@ -35,7 +34,7 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="bl"></param>
     /// <param name="ProductId"></param>
-    public ProductWindow(int ProductId, Action senderAction)
+    public ProductWindow(int ProductId, Action<int> senderAction)
     {
         action = senderAction;
         product = bl?.Product.ProductDetailsManger(ProductId)!;
@@ -55,7 +54,7 @@ public partial class ProductWindow : Window
         try
         {
             bl?.Product.AddProduct(product);
-            action();
+            action(product.Id);
             Close();
         }
         catch (BlExceptions ex)
@@ -75,7 +74,7 @@ public partial class ProductWindow : Window
         try
         {
             bl?.Product.UpdateProduct(product);
-            action();
+            action(product.Id);
             Close();
         }
         catch (BlExceptions ex)

@@ -1,12 +1,11 @@
 ﻿using BlApi;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
-
+using System.Collections.ObjectModel;
 
 namespace PL.Products;
 
@@ -19,8 +18,8 @@ public partial class ProductForListWindow : Window, INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private IEnumerable<BO.ProductForList> productForList;
-    public IEnumerable<BO.ProductForList> ProductForList
+    private ObservableCollection<BO.ProductForList> productForList;
+    public ObservableCollection<BO.ProductForList> ProductForList
     {
         get { return productForList; }
         set { productForList = value; if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("ProductForList")); }
@@ -30,7 +29,7 @@ public partial class ProductForListWindow : Window, INotifyPropertyChanged
 
     public ProductForListWindow()
     {
-        ProductForList = bl.Product.ProductListRequest()!;
+        ProductForList = new ObservableCollection<BO.ProductForList>(bl.Product.ProductListRequest()!);
 
         InitializeComponent();
 
@@ -63,17 +62,14 @@ public partial class ProductForListWindow : Window, INotifyPropertyChanged
     /// <param name="e"></param>
     private void addProductButton_Click(object sender, RoutedEventArgs e)
     {
-        action = () => {ProductForList = ProductForList.Select(item => item); };
-        new ProductWindow(action).ShowDialog();
+        new ProductWindow(id => ProductForList.Add(bl.Product.GetProductForList(id))).ShowDialog();
     }
 
     private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (ProductListView.SelectedItem is BO.ProductForList productForList)
         {
-            action = () => { ProductForList = ProductForList.Select(item => item); };
-
-            new ProductWindow(productForList.Id, action).ShowDialog(); 
+            new ProductWindow(productForList.Id, id => ProductForList[ProductListView.SelectedIndex] = bl.Product.GetProductForList(id)).ShowDialog();   
         }
     }
 }

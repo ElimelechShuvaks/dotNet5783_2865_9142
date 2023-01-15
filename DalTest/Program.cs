@@ -19,15 +19,15 @@ while (true)
     switch ((Menu)choice)
     {
         case Menu.Product:
-            choisesProduct(dal?? throw new DO.DalConfigException("Error in configuration process"));
+            choisesProduct(dal ?? throw new DO.DalConfigException("Error in configuration process"));
             break;
 
         case Menu.Order:
-            choises_Order(dal?? throw new DO.DalConfigException("Error in configuration process"));
+            choises_Order(dal ?? throw new DO.DalConfigException("Error in configuration process"));
             break;
 
         case Menu.OrderItem:
-            choises_Orderitem(dal?? throw new DO.DalConfigException("Error in configuration process"));
+            choises_Orderitem(dal ?? throw new DO.DalConfigException("Error in configuration process"));
             break;
 
         case Menu.Exsit:
@@ -152,13 +152,13 @@ OrderItem CinOrderItem()
     int intNum = 0;
     double doubleNum = 0;
 
-    Console.WriteLine("type an Order ProductId");
+    Console.WriteLine("type an order item Id");
     ret.ItemId = IntTryParse(ref intNum);
 
-    Console.WriteLine("type a product ProductId");
+    Console.WriteLine("type a Product Id");
     ret.ProductId = IntTryParse(ref intNum);
 
-    Console.WriteLine("type an Order ProductId");
+    Console.WriteLine("type an Order Id");
     ret.OrderId = IntTryParse(ref intNum);
 
     Console.WriteLine("type an amount of the product");
@@ -190,72 +190,63 @@ void choisesProduct(IDal dal)
         Product product = new Product(); // for add and update functions.
         int intNum = 0; // for add, get and delete functions.
 
-        switch ((Functions)choiseProduct)
+        try
         {
-            case Functions.ToAdd:
+            switch ((Functions)choiseProduct)
+            {
+                case Functions.ToAdd:
 
-                try
-                {
                     intNum = dal.Product.Add(CinProduct(product));
                     Console.WriteLine($"Prints the id :{intNum} of the new product");
-                }
-                catch (IdExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case Functions.ToGet:
+                    break;
 
-                try
-                {
+                case Functions.ToGet:
+
                     Console.WriteLine("cin the id thet you want to Get:");
                     IntTryParse(ref intNum);
                     Console.WriteLine(dal.Product.Get(product => product?.ProductId == intNum));
-                }
-                catch (EntityNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case Functions.TogetArray:
+                    break;
 
-                PrintList(dal.Product.GetList());
+                case Functions.TogetArray:
 
-                break;
+                    PrintList(dal.Product.GetList());
 
-            case Functions.ToDel:
+                    break;
 
-                try
-                {
+                case Functions.ToDel:
+
                     Console.WriteLine("cin id for product thet you want to Delete:");
                     dal.Product.Delete(IntTryParse(ref intNum));
-                }
-                catch (EntityNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case Functions.ToUpdata:
+                    break;
 
-                try
-                {
+                case Functions.ToUpdata:
+
                     dal.Product.Update(CinProduct(product));
-                }
-                catch (IdNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case Functions.Exsit:
-                return;
+                    break;
 
-            default:
-                Console.WriteLine("Invalid selection");
-                break;
+                case Functions.Exsit:
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid selection");
+                    break;
+            }
+        }
+        catch (IdExistException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (EntityNotExistException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (IdNotExistException ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 }
@@ -279,75 +270,65 @@ void choises_Order(IDal dal)
         chice_Order = IntTryParse(ref chice_Order);
         Order order = new Order();// for add and update functions.
         int intNum = 0; // for add, get and delete functions.
-
-        switch ((Functions)chice_Order)
+        try
         {
-            case Functions.ToAdd:
+            switch ((Functions)chice_Order)
+            {
+                case Functions.ToAdd:
 
-                try
-                {
                     intNum = dal.Order.Add(CinOrder(order));
                     Console.WriteLine("Prints the id of the new order");
                     Console.WriteLine(intNum);
-                }
-                catch (IdExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case Functions.ToGet:
+                    break;
 
-                try
-                {
+                case Functions.ToGet:
+
                     Console.WriteLine("cin the id order thet you want to Get:");
                     IntTryParse(ref intNum);
                     Console.WriteLine(dal.Order.Get(order => order?.Id == intNum));
-                }
-                catch (EntityNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case Functions.TogetArray:
+                    break;
 
-                IEnumerable<Order?> newList = dal.Order.GetList();
-                PrintList(newList);
+                case Functions.TogetArray:
 
-                break;
+                    IEnumerable<Order?> newList = dal.Order.GetList();
+                    PrintList(newList);
 
-            case Functions.ToDel:
+                    break;
 
-                try
-                {
+                case Functions.ToDel:
+
                     Console.WriteLine("cin id for order thet you want to Delete:");
                     dal.Order.Delete(IntTryParse(ref intNum));
-                }
-                catch (EntityNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case Functions.ToUpdata:
+                    break;
 
-                try
-                {
+                case Functions.ToUpdata:
+
                     dal.Order.Update(CinOrder(order));
-                }
-                catch (IdNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case Functions.Exsit:
-                return;
+                    break;
 
-            default:
-                Console.WriteLine("Invalid selection");
-                break;
+                case Functions.Exsit:
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid selection");
+                    break;
+            }
+        }
+        catch (IdExistException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (EntityNotExistException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (IdNotExistException ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 }
@@ -371,37 +352,25 @@ void choises_Orderitem(IDal dal)
 "
 );
 
-        switch ((OrderItemFunctions)IntTryParse(ref orderChice))
+        try
         {
-            case OrderItemFunctions.Add:
+            switch ((OrderItemFunctions)IntTryParse(ref orderChice))
+            {
+                case OrderItemFunctions.Add:
 
-                try
-                {
                     Console.WriteLine(dal.OrderItem.Add(CinOrderItem()));
-                }
-                catch (IdExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case OrderItemFunctions.Get:
+                    break;
 
-                try
-                {
+                case OrderItemFunctions.Get:
+
                     Console.WriteLine("type an Order Item id");
                     IntTryParse(ref intNum);
                     Console.WriteLine(dal.OrderItem.Get(orderItem => orderItem?.ItemId == intNum));
-                }
-                catch (EntityNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case OrderItemFunctions.GetBy_2Id:
-                try
-                {
+                    break;
+
+                case OrderItemFunctions.GetBy_2Id:
                     Console.WriteLine("type an Order id");
                     IntTryParse(ref intNum);
 
@@ -409,56 +378,53 @@ void choises_Orderitem(IDal dal)
                     IntTryParse(ref intNum2);
 
                     Console.WriteLine(dal.OrderItem.Get(o => o?.ProductId == intNum2 && o?.OrderId == intNum));
-                }
-                catch (EntityNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case OrderItemFunctions.GetItemArray:
+                    break;
 
-                Console.WriteLine("type an order id of Order item");
-                IntTryParse(ref intNum);
-                PrintList(dal.OrderItem.GetList(o => o?.OrderId == intNum));
+                case OrderItemFunctions.GetItemArray:
 
-                break;
+                    Console.WriteLine("type an order id of Order item");
+                    IntTryParse(ref intNum);
+                    PrintList(dal.OrderItem.GetList(o => o?.OrderId == intNum));
 
-            case OrderItemFunctions.GetArray:
+                    break;
 
-                PrintList(dal.OrderItem.GetList());
+                case OrderItemFunctions.GetArray:
 
-                break;
+                    PrintList(dal.OrderItem.GetList());
 
-            case OrderItemFunctions.Del:
-                try
-                {
+                    break;
+
+                case OrderItemFunctions.Del:
                     Console.WriteLine("type an Order Item id to Delete");
                     dal.OrderItem.Delete(IntTryParse(ref intNum));
-                }
-                catch (EntityNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case OrderItemFunctions.Updata:
-                try
-                {
+                    break;
+
+                case OrderItemFunctions.Updata:
                     dal.OrderItem.Update(CinOrderItem());
-                }
-                catch (IdNotExistException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                break;
 
-            case OrderItemFunctions.Exsit:
-                return;
+                    break;
 
-            default:
-                Console.WriteLine("Invalid selection");
-                break;
+                case OrderItemFunctions.Exsit:
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid selection");
+                    break;
+            }
+        }
+        catch (IdExistException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (EntityNotExistException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (IdNotExistException ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 }

@@ -56,9 +56,14 @@ internal class DalXmlOrder : IOrder
 
     public void Delete(int id)
     {
-        (from element in XmlTools.LoadListFromXElement(orderPath).Elements()
-         where Convert.ToInt32(element.Element("Id")) == id
-         select element).FirstOrDefault()!.Remove();
+        XElement root = XmlTools.LoadListFromXElement(orderPath);
+
+        XElement? delElement = (from element in root.Elements()
+                               where Convert.ToInt32(element.Element("Id")!.Value) == id
+                               select element).FirstOrDefault() ?? throw new DO.IdNotExistException("No order exists with such an ID");
+        delElement.Remove();
+
+        XmlTools.SaveXElementToXelFile(root, orderPath);
     }
 
     public DO.Order Get(Func<DO.Order?, bool>? func)
@@ -94,10 +99,10 @@ internal class DalXmlOrder : IOrder
 
     public void Update(DO.Order order)
     {
-        XElement root = XmlTools.LoadListFromXElement(orderPath);
-
         Delete(order.Id);
 
+        XElement root = XmlTools.LoadListFromXElement(orderPath);
+     
         root.Add(new XElement("Order",
                     new XElement("Id", order.Id),
                     new XElement("CustomerName", order.CustomerName),

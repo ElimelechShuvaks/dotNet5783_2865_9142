@@ -17,13 +17,18 @@ internal class Product : BlApi.IProduct
 
         bool f = func is null;
         return (from product in products
-                select new BO.ProductForList()
-                {
-                    Id = (int)product?.ProductId!,
-                    Name = product?.Name,
-                    Category = (BO.Categories)product?.Category!,
-                    Price = (double)product?.Price!,
-                }).Where(productForList => f ? f : func!(productForList));
+                select getProductForList(product)).Where(productForList => f ? f : func!(productForList));
+    }
+
+    private ProductForList getProductForList(DO.Product? product)
+    {
+        return new BO.ProductForList()
+        {
+            Id = (int)product?.ProductId!,
+            Name = product?.Name,
+            Category = (BO.Categories)product?.Category!,
+            Price = (double)product?.Price!,
+        };
     }
 
     public BO.Product ProductDetailsManger(int idProduct)
@@ -190,5 +195,8 @@ internal class Product : BlApi.IProduct
                orderby item.Category , item.Price
                select item;
     }
+
+    public ProductForList GetProductForList(int id)
+  => getProductForList(dal.Product.Get(p => p?.ProductId == id));
 }
 
