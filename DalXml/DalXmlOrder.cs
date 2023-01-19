@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Xml.Linq;
 
@@ -35,6 +36,7 @@ internal class DalXmlOrder : IOrder
         return order;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Order order)
     {
         int configRunNum = XmlTools.GetConfigNumber(configPath, "num_runOrder");
@@ -54,6 +56,7 @@ internal class DalXmlOrder : IOrder
         return configRunNum;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement root = XmlTools.LoadListFromXElement(orderPath);
@@ -66,6 +69,7 @@ internal class DalXmlOrder : IOrder
         XmlTools.SaveXElementToXelFile(root, orderPath);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order Get(Func<DO.Order?, bool>? func)
     {
         try
@@ -81,6 +85,7 @@ internal class DalXmlOrder : IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Order?> GetList(Func<DO.Order?, bool>? func = null)
     {
         if (func == null)
@@ -97,6 +102,7 @@ internal class DalXmlOrder : IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order order)
     {
         Delete(order.Id);
