@@ -1,6 +1,7 @@
 ﻿
 
 using BO;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -9,6 +10,7 @@ internal class Product : BlApi.IProduct
     private DalApi.IDal? dal = DalApi.Factory.Get();
     private DO.Product product = new();
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> ProductListRequest(Func<BO.ProductForList?, bool>? func = null)
     {
         IEnumerable<DO.Product?> products = dal?.Product.GetList() ?? throw new BO.DalConfigException("Error in configuration process");
@@ -31,6 +33,7 @@ internal class Product : BlApi.IProduct
         };
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product ProductDetailsManger(int idProduct)
     {
         try
@@ -65,6 +68,7 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem ProductDetailsClient(BO.Cart newCart, int idProduct)
     {
         BO.ProductItem newProductItem = new();
@@ -107,6 +111,7 @@ internal class Product : BlApi.IProduct
         return newProductItem;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void AddProduct(BO.Product newProduct)
     {
         try
@@ -138,6 +143,7 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void RemoveProduct(int idProduct)
     {
         try
@@ -158,6 +164,7 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateProduct(BO.Product newProduct)
     {
         try
@@ -189,6 +196,7 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<ProductForList?> GetProductAndOrderByName(IEnumerable<ProductForList?> productForLists)
     {
         return from item in productForLists
@@ -196,7 +204,8 @@ internal class Product : BlApi.IProduct
                select item;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public ProductForList GetProductForList(int id)
-  => getProductForList(dal.Product.Get(p => p?.ProductId == id));
+        => getProductForList(dal!.Product.Get(p => p?.ProductId == id));
 }
 

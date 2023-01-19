@@ -1,5 +1,6 @@
 ﻿using BO;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -7,6 +8,7 @@ internal class Cart : BlApi.ICart
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart AddToCart(BO.Cart cart, int idProduct)
     {
         try
@@ -61,6 +63,7 @@ internal class Cart : BlApi.ICart
         return cart;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart ProductUpdateCart(BO.Cart cart, int idProduct, int newQuantity)
     {
         if (newQuantity < 0)
@@ -105,6 +108,7 @@ internal class Cart : BlApi.ICart
         return cart;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void ConfirmationOrderToCart(BO.Cart cart)
     {
         try
@@ -173,6 +177,7 @@ internal class Cart : BlApi.ICart
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void ResetCart(BO.Cart cart)
     {
         //reset the cart

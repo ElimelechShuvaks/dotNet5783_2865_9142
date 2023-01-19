@@ -69,4 +69,10 @@ public interface IOrder
     /// <param name="orderForLists"></param>
     /// <returns></returns>
     public IEnumerable< BO.OrderStatistics> GetOrderStatiscs(IEnumerable<OrderForList?> orderForLists);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public int? nextOrderSending();
 }

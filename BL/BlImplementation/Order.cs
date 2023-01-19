@@ -3,6 +3,7 @@
 using BO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -10,6 +11,7 @@ internal class Order : BlApi.IOrder
 {
     private DalApi.IDal? dal = DalApi.Factory.Get();
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order GetDetailsOrder(int idOrder)
     {
         if (idOrder > 0) // vaild id.
@@ -68,6 +70,7 @@ internal class Order : BlApi.IOrder
         return (orderItems, orderItems.Sum(orderItem => orderItem?.Amount * orderItem?.Price));
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList> OrderForListRequest()
     {
         try
@@ -94,6 +97,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order OrderShippingUpdate(int idOrder)
     {
         try
@@ -126,6 +130,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
         try
@@ -160,40 +165,13 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking OrderTracking(int idOrder)
     {
         try
         {
             DO.Order order = dal?.Order.Get(orderFunc => orderFunc?.Id == idOrder) ?? throw new BO.DalConfigException("Error in configuration process"); ;
-            BO.OrderTracking orderTracking = new BO.OrderTracking
-            {
-                OrderId = order.Id,
-                Status = GetStatus(order),
-                TuplesOfDateAndDescription = new List<Tuple<DateTime?, string?>>()
-            };
-
-            switch (orderTracking.Status)
-            {
-                case BO.OrderStatus.Confirmed:
-
-                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
-                    break;
-
-                case BO.OrderStatus.Shipied:
-
-                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
-                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent")!);
-                    break;
-
-                case BO.OrderStatus.Deliveried:
-                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
-                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent")!);
-                    orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.DeliveryDate, "The order is deliveried")!);
-                    break;
-
-                default:
-                    break;
-            }
+            OrderTracking orderTracking = helpOrderTracking(order);
 
             return orderTracking;
         }
@@ -201,6 +179,41 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.EntityNotExistException(ex.Message, ex);
         }
+    }
+
+    private OrderTracking helpOrderTracking(DO.Order order)
+    {
+        BO.OrderTracking orderTracking = new BO.OrderTracking
+        {
+            OrderId = order.Id,
+            Status = GetStatus(order),
+            TuplesOfDateAndDescription = new List<Tuple<DateTime?, string?>>()
+        };
+
+        switch (orderTracking.Status)
+        {
+            case BO.OrderStatus.Confirmed:
+
+                orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
+                break;
+
+            case BO.OrderStatus.Shipied:
+
+                orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
+                orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent")!);
+                break;
+
+            case BO.OrderStatus.Deliveried:
+                orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.OrderDate, "The order has been created")!);
+                orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.ShipDate, "The order has been sent")!);
+                orderTracking.TuplesOfDateAndDescription.Add(Tuple.Create(order.DeliveryDate, "The order is deliveried")!);
+                break;
+
+            default:
+                break;
+        }
+
+        return orderTracking;
     }
 
     /// <summary>
@@ -219,6 +232,7 @@ internal class Order : BlApi.IOrder
         return BO.OrderStatus.Confirmed;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order OrderUpdate(int orderId, int productId, int newAmount)
     {
         try
@@ -280,6 +294,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderForList?> GetOrderAndOrderByName(IEnumerable<OrderForList?> orderForLists)
     {
         return from item in orderForLists
@@ -287,6 +302,7 @@ internal class Order : BlApi.IOrder
                select item;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderStatistics> GetOrderStatiscs(IEnumerable<OrderForList?> orderForLists)
     {
         return from item in orderForLists
@@ -296,5 +312,22 @@ internal class Order : BlApi.IOrder
                    Status = j.Key,
                    CountSumStatus = j.Count()
                };
+    }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public int? nextOrderSending()
+    {
+        try
+        {
+            IEnumerable<OrderTracking> orderTrackings = dal!.Order.GetList(order => order?.DeliveryDate is null).Select(order => helpOrderTracking(order.GetValueOrDefault()));
+            return orderTrackings.MinBy(orderTracking =>
+                                        orderTracking.TuplesOfDateAndDescription![orderTracking.TuplesOfDateAndDescription.Count() - 1].Item1
+                                        .GetValueOrDefault())?.OrderId;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 }
