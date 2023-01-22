@@ -49,5 +49,9 @@ public partial class MainWindow : Window
 
     private void NewOrderButton_Click(object sender, RoutedEventArgs e) => new ProductCatalogWindow().ShowDialog();
 
+    private void Simulator(object sender, RoutedEventArgs e)
+    {
+      new SimulatorWindow.SimulatorWindow().Show();
+    }
 }
 

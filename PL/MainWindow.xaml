@@ -7,8 +7,8 @@
         xmlns:localTo="clr-namespace:PL.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" FontFamily="Castellar"
-        DataContext="{Binding RelativeSource={RelativeSource self}}">
-
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
+        Icon="image\mainWindow\mainbakeground.jpg">
 
     <Window.Background>
         <ImageBrush ImageSource="image\mainWindow\mainbakeground.jpg" />
@@ -29,7 +29,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-          
+
         </Grid.ColumnDefinitions>
 
         <Button Content="Admin" Click="AdminButton_Click"  Grid.Column="1" Grid.Row="2" Style="{StaticResource styleButton}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" />
@@ -45,6 +45,7 @@
                 <Button Content="Track" Width="100" Height="25" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" Click="ShowOrderTracking" Style="{StaticResource styleButton}"/>
             </Grid>
         </Border>
+        <Button Content="Simulator" Grid.Row="1" Click="Simulator" Grid.Column="1" Style="{StaticResource styleButton}" HorizontalAlignment="Left" Margin="232,60,0,80"/>
 
     </Grid>
 
