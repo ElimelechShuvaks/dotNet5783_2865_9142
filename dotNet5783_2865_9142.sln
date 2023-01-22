@@ -34,7 +34,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{1E51A587-C0B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{B5CE3EB3-D13F-4B52-A150-BF241527C5D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildXmlFiles", "BuildXmlFiles\BuildXmlFiles.csproj", "{1BF1FEA8-9EE1-40D3-8E78-D4CEB6B68465}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildXmlFiles", "BuildXmlFiles\BuildXmlFiles.csproj", "{1BF1FEA8-9EE1-40D3-8E78-D4CEB6B68465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +118,14 @@ Global
 		{1BF1FEA8-9EE1-40D3-8E78-D4CEB6B68465}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1BF1FEA8-9EE1-40D3-8E78-D4CEB6B68465}.Release|x64.ActiveCfg = Release|Any CPU
 		{1BF1FEA8-9EE1-40D3-8E78-D4CEB6B68465}.Release|x64.Build.0 = Release|Any CPU
+		{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}.Debug|x64.Build.0 = Debug|Any CPU
+		{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}.Release|x64.ActiveCfg = Release|Any CPU
+		{5F2A9C4C-CBC3-42D8-8EBA-D60BE5A3A368}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

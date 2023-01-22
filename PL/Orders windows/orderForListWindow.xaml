@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
-        Title="orderForListWindow" Height="640" Width="800"  DataContext="{Binding RelativeSource={RelativeSource self}}">
-
+        Title="orderForListWindow" Height="640" Width="800"  DataContext="{Binding RelativeSource={RelativeSource self}}"
+>
     <Window.Background>
         <ImageBrush ImageSource="\image\mainWindow\mainbakeground.jpg" Stretch="UniformToFill"/>
     </Window.Background>

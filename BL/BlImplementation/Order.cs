@@ -324,10 +324,9 @@ internal class Order : BlApi.IOrder
                                         orderTracking.TuplesOfDateAndDescription![orderTracking.TuplesOfDateAndDescription.Count() - 1].Item1
                                         .GetValueOrDefault())?.OrderId;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-
-            throw;
+            throw ex;
         }
     }
 }
