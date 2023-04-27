@@ -1,4 +1,1 @@
-i tray to write for targil 0
-# dotNet5783_2865_9142
-Simcha Elimelech
-final commit for stage 0
+פרויקט במערכת חלונות לניהול חנות, כתוב ב Dot.net – C# ,בנוי בארכיטקטורת שכבות, שימוש עם Design pattern , תצוגת WPF.
